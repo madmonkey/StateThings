@@ -1,0 +1,57 @@
+﻿<script type="text/html" id="certifyApplications-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div>
+                <ul class="nav nav-tabs" role="tablist" data-bind="foreach: Applications">
+                    <li data-bind="css: { active: $index() == 0 }"><a class="leadSmaller bold" data-bind="attr:{ href: '#' + ApplicationName()}, html: ApplicationName" role="tab" data-toggle="tab"></a></li>
+                </ul>
+            </div>
+            <div class="tab-content" data-bind="foreach: Applications">
+                <div class="tab-pane" data-bind="attr:{ id: ApplicationName()}, css: { active: $index() == 0 }">
+                    <br />
+                    <span class="lead">Test Progress for <span data-bind="html: ApplicationName"></span></span>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <span>Unit Tested</span>
+                        </div>
+                        <div class="col-xs-4">
+                            <span>Verified</span>
+                        </div>
+                        <div class="col-xs-4">
+                            <span>Certified</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" data-bind="style: { width: QAStatus.PercentUnitTested }">
+                                    <span style="color:black;"><span data-bind="html: QAStatus.PercentUnitTested"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" data-bind="style: { width: QAStatus.PercentVerified }">
+                                    <span style="color:black;"><span data-bind="html: QAStatus.PercentVerified"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="padRight">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" data-bind="style: { width: QAStatus.PercentCertified }">
+                                        <span style="color:black;"><span data-bind="html: QAStatus.PercentCertified"></span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <span>A form's progress may vary from the overall application progress when a form is used by more than one application.</span>
+                    <br />
+                    <div data-bind="template: { name: 'certifyRequestForms-template' }"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

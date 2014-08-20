@@ -1,0 +1,91 @@
+﻿<script type="text/html" id="fields-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel-group" data-bind="attr: { id: 'accordian_fields' }">
+                <h2 class="pull-left">
+                    <a class="pull-left glyphicon glyphicon-collapse-down" style="margin-top: 5px" data-toggle="collapse" data-bind="attr:{ 'data-parent': 'accordian_fields', href: '#collapse_fields' }"></a>
+                    <span>&nbsp;Fields</</span>
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel-collapse collapse in" data-bind="attr: { id: 'collapse_fields' }">
+                    <div class="panel-body">
+                        <div class="row">
+                            <table style="margin-left: 14px" class="col-xs-12">
+                                <tr class="propertiesHeader">
+                                    <td></td>
+                                    <th>
+                                        <span class="pull-left">Type</span>
+                                    </th>
+                                    <th>
+                                        <span class="pull-left">Length</span>
+                                    </th>
+                                    <th>
+                                        <span class="pull-left">Frequency</span>
+                                    </th>
+                                    <th>
+                                        <span class="pull-left">Separator</span>
+                                    </th>
+                                    <th>
+                                        <span class="pull-left">Prefix</span>
+                                    </th>
+                                    <th>
+                                        <span class="pull-left">Suffix</span>
+                                    </th>
+                                    <th>
+                                        <span class="pull-left">Value</span>
+                                    </th>
+                                </tr>
+                                <tr style="height:10px"></tr>
+                                <!-- ko foreach: FormFields -->
+                                <tr class="propertiesRow" style="vertical-align:top">
+                                    <td>
+                                        <div>
+                                            <a target="_blank" data-bind="attr: { href: FieldDetailsUrl }">
+                                                <span class="formFieldName" data-bind="html: Name"></span>
+                                            </a>
+                                            <span class="formFieldTooltip" data-bind="html: Tooltip"></span>
+                                            <div class="additionalFieldDetails" data-bind="visible: OptionListName().length > 0">
+                                                <a target="_blank" data-bind="attr: { href: ListDetailsUrl }">
+                                                    <span data-bind="html: OptionListName"></span>
+                                                    <span>list</span>
+                                                </a>
+                                            </div>
+                                            <div class="additionalFieldDetails" data-bind="visible: IsHiddenField">
+                                                <span>Hidden</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="pull-left leadSmaller" data-bind="html: Type"></span>
+                                    </td>
+                                    <td>
+                                        <span class="pull-left leadSmaller" data-bind="html: Length"></span>
+                                    </td>
+                                    <td>
+                                        <span class="pull-left leadSmaller" data-bind="html: Frequency"></span>
+                                    </td>
+                                    <td>
+                                        <span class="pull-left leadSmaller" data-bind="html: Separator"></span>
+                                    </td>
+                                    <td>
+                                        <span class="pull-left leadSmaller" data-bind="html: Prefix"></span>
+                                    </td>
+                                    <td>
+                                        <span class="pull-left leadSmaller" data-bind="html: Suffix"></span>
+                                    </td>
+                                    <td>
+                                        <span class="pull-left leadSmaller" data-bind="html: DefaultValue"></span>
+                                    </td>
+                                </tr>
+                                <!-- /ko -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

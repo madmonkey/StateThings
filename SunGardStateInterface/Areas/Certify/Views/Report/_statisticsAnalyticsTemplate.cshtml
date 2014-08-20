@@ -1,0 +1,62 @@
+﻿<script type="text/html" id="statisticsAnalytics-template">
+    <div class="row">
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Verified</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: CountCurrentVerifyPassed"></span>
+        </div>
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Certified</span>
+        </div>
+
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: CountCurrentCertifyPassed"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Unverified</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: CountUnVerifiedTestCases"></span>
+        </div>
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Uncertified</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: CountUnCertifiedTestCases"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Average test cases verified per day</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: AverageVerified"></span>
+        </div>
+
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Average test cases certified per day</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: AverageCertified"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Projected verification completion date</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: VerificationCompletionDate"></span>
+        </div>
+
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Projected certification completion date</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: CertificationCompletionDate"></span>
+        </div>
+    </div>
+</script>
+

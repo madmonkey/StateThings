@@ -1,0 +1,20 @@
+﻿@model StateInterface.Areas.Design.Models.RequestFormModel
+<div class="row">
+    <div class="col-xs-12">
+        <div data-bind="template: { name: 'properties-template' }"></div>
+        <div data-bind="template: { name: 'fields-template' }"></div>
+        <div data-bind="template: { name: 'transactions-template' }"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    var initialData = @Html.Raw(Model.InitialData)
+</script>
+@Html.Partial("_propertiesTemplate")
+@Html.Partial("_fieldsTemplate")
+@Html.Partial("_transactionsTemplate")
+@Html.Partial("_criteriaTemplate")
+@Html.Partial("_applicationAssociationModal")
+
+@section scripts{
+    @Scripts.Render("~/bundles/stateinterface_design_form_details")
+}

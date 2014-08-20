@@ -1,0 +1,47 @@
+﻿@model StateInterface.Areas.Connect.Models.SpecificationsModel
+@{
+    ViewBag.Title = "Specifications";
+}
+<div class="row padLeft">
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-6">
+                <span class="h2 pull-left">Specifications</span>
+                <div class="loading padLeft pull-left" style="margin-top: 20px; margin-left:10px;" data-bind="visible: formsAreLoading"></div>
+            </div>
+            <div class="col-xs-6">
+                <div class="pull-right padLeft leadSmaller" style="margin-top: 28px">
+                    <span class="padRight">Records Center</span>
+                    <select data-bind="options: RecordsCenters, optionsText: 'Name', optionsValue: 'Id', value: FormsRequestParameters.RecordsCenterId"></select>
+                    <a href="#" data-bind="click: getForms" class="glyphicon glyphicon-play-circle padLeft" title="Get Forms"></a>
+                </div>
+            </div>
+        </div>
+        <div data-bind="template: { name: 'noFormsFound-template' }"></div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div data-bind="template: { name: 'category-template' }"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="noFormsFound-template">
+    <div class="row" data-bind="if: showNoFormsFound() === true">
+        <div class="col-xs-12">
+            <br />
+            <br />
+            <h2 class="text-center text-danger">No forms were found in this Records Center</h2>
+        </div>
+    </div>
+</script>
+
+<script type="text/javascript">
+    var initialData = @Html.Raw(Model.InitialData)
+</script>
+
+@Html.Partial("_categoryTemplate")
+
+@section scripts{
+    @Scripts.Render("~/bundles/stateinterface_connect_specifications")
+}

@@ -1,0 +1,33 @@
+﻿<script type="text/html" id="testCase-template">
+    <div class="row">
+        <div class="col-xs-11 col-xs-offset-1">
+            <div data-bind="attr: { id: $parents[1].ApplicationName() + 'tc_' + $root.parseName($parents[0].Name()) + TestCaseId() }">
+                <div class="padHeaderSmall borderLight">
+                    <b>
+                        <span class="padLeft lead-2">
+                            <span>Test Case</span>&nbsp;
+                            <span data-bind="text: TestCaseId"></span>&nbsp;-&nbsp;
+                            <span data-bind="text: CurrentStage"></span>&nbsp;
+                            <span data-bind="if: HasPassed() === true">Passed</span>
+                            <span data-bind="if: HasPassed() === false">Failed</span>
+                            <span data-bind="if: HasPassed() === null">Pending</span>
+                        </span>
+                    </b>
+                    <span data-bind="visible: $root.showPassFailCommands" class="pull-right padRight leadSmaller">
+                        <a href="#" title="Test Passed" class="padLeft padRight glyphicon glyphicon-thumbs-up" data-bind="visible: ShowPassCommand, click: $root.queryPassTestCase"></a>
+                        <a href="#" title="Test Failed" class="padRight glyphicon glyphicon-thumbs-down" data-bind="click: $root.queryFailTestCase"></a>
+                        <a href="#" title="Reset Testing" class="glyphicon glyphicon-fast-backward" data-bind="visible: ShowResetCommand, click: $root.queryResetTestCase"></a>
+                    </span>
+                </div>
+                <div class="padLeft">
+                    <span class="padHeaderSmall requiredField" data-bind="html: RequiredFields"></span>
+                    <span class="padHeaderSmall" data-bind="html: OptionalFields"></span>
+                </div>
+            </div>
+            <div>
+                <div data-bind="template: { name: 'testCaseHistoryTemplate-template'}"></div>
+            </div>
+        </div>
+    </div>
+    <br />
+</script>

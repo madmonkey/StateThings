@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "Report Help";
+}
+<div>    
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="pull-left"><h2 class="padLeft">State Interface Report Help</h2></div>
+        </div>
+    </div>
+    <br />
+   <div class="row">
+        <div class="col-xs-12">
+            <p class="padLeft">
+                The data is generated during the QA process and is collected and summarized in the report to reflect the certification progress. The certification progress includes 2 phases - verification and certification. The same calculation is performed for each phase.
+            </p>
+            <p class="padLeft">
+                The percentages are calculated by form, by category and by records center.
+            </p>
+            <p class="padLeft">
+                The form percentage is calculated by adding the passed test cases, dividing the result by the total number and multiplying by 100.
+            </p>
+            <p class="padLeft">
+                The category percentage is calculated by adding all forms’ test cases that have passed within a given category, dividing the result by the total of its forms’ test cases within that given category and multiplying by 100.
+            </p>
+            <p class="padLeft">
+                The records center percentage is calculated by adding all test cases that have passed, dividing the result by the total number of test cases and then multiplying by 100.
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="lead bold text-left">
+                Definitions
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-5">
+            <p class="leadSmaller">
+                Verified/ Certified 
+            </p>
+        </div>
+        <div class="col-xs-7">
+            the number of test cases that have verified by quality assurance/ certified by the state agency.
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-5">
+            <p class="leadSmaller">
+                Unverified/ Uncertified
+            </p>
+        </div>
+        <div class="col-xs-7">
+            the number of test cases that have not verified by quality assurance/ certified by the state agency.
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-5">
+            <p class="leadSmaller">
+                Average test cases verified/ certified per day
+            </p>
+        </div>
+        <div class="col-xs-7">
+            the mean value of the number of test cases that have verified/ certified on each day worked.
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-5">
+            <p class="leadSmaller">
+                Projected verification/certification date 
+            </p>
+        </div>
+        <div class="col-xs-7">
+            this date is derived by using the verified/certified averages and the number of unverified/uncertified test cases. It projects the number of days required to pass all of the unverified/uncertified test cases using the calculated average. It then maps out the calendar date using a standard 5-day work week (holidays not included).
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="lead bold text-left">
+                Ad-hoc reporting
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-5">
+            <p class="leadSmaller">
+                Scheduled completion date 
+            </p>
+        </div>
+        <div class="col-xs-7">
+            the targeted date to complete the verification/certification process. 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-5">
+            <p class="leadSmaller">
+                Average test cases estimated per day 
+            </p>
+        </div>
+        <div class="col-xs-7">
+            the minimum number of test cases that need to pass in order to meet the targeted date. It is calculated using the number of test cases that are required to pass and then dividing it by the number of remaining business days. When the certification is selected, it uses data from both verification and certification.
+        </div>
+    </div>
+
+
+</div>

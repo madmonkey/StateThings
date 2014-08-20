@@ -1,0 +1,35 @@
+﻿@model StateInterface.Areas.Certify.Models.StatisticsRecordsCenterModel
+@{
+    ViewBag.Title = @Model.RecordsCenter.Name + " Certification Report";
+    Layout = "../Shared/_ReportLayout.cshtml";
+}
+<div class="row">
+    <div class="col-xs-12">
+        <span class="lead pull-right">State Interface Certification Status</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <span class="leadSmaller pull-right">@DateTime.UtcNow.ToLocalTime()</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div data-bind="template: { name: 'statisticsHeader-template' }"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div data-bind="template: { name: 'statisticsPrint-template' }"></div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    var initialData = @Html.Raw(Model.InitialData)
+</script>
+@Html.Partial("_statisticsHeaderTemplate")
+@Html.Partial("_statisticsPrintTemplate")
+@Html.Partial("_statisticsStatusCategoryTemplate")
+@section scripts{
+    @Scripts.Render("~/bundles/stateinterface_certify_statistics")
+}

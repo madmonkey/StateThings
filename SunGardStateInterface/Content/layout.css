@@ -1,0 +1,98 @@
+﻿@import url('themes/base/jquery-ui.css');
+.gridster ul {
+    list-style:none;
+}
+input[type=text] {
+        width:100%;
+        height:1.2em;
+}
+input[type=datepicker] {
+    width: 100%;
+    height: 1.2em;
+    
+}
+input[type=datejs] {
+    width: 100%;
+    height: 1.2em;
+    
+}
+textarea {
+    -moz-resize:none;
+    -ms-resize:none;
+    -o-resize:none;
+    resize:none;
+    width:100%;  
+    padding-bottom:1em;                
+    overflow:hidden;        
+    min-height:1px;
+}
+
+label {
+    font-size:small;
+    white-space:nowrap;    
+    padding-top:1em; 
+}
+select {
+    -moz-min-width:100%;
+    -ms-min-width:100%;
+    -o-min-width:100%;
+    -webkit-min-width:100%;
+    min-width:100%;
+    max-width: 100%;
+    height:2.2em;
+    margin-bottom:-1.5em;
+}
+
+.validationElement {
+    background-color: red;
+}
+.error {
+    color: red;
+}
+.err {
+    border: solid 1px red
+}
+.error input {
+    border: 1px solid red;
+}
+.error textarea {
+    border: 1px solid red;
+}
+.medium {
+    font-size: medium;
+}
+.large {
+    font-size: large;
+}
+.x-large {
+    font-size: x-large;
+}
+.small {
+    font-size: small;
+}
+.center {
+    text-align: center;
+}
+.right {
+    text-align: right;
+}
+.left {
+    text-align: left;
+}
+.top {
+    vertical-align: top;
+}
+.bottom {
+    vertical-align: bottom;
+}
+.middle {
+    vertical-align: middle;
+}
+.bold {
+    font-weight: bold;
+}
+.italic {
+    font-style: italic;
+}
+.normal { }
+

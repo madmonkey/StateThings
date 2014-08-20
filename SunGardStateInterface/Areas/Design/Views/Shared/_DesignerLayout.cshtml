@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/bundles/layout/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("head", required: false)
+</head>
+<body class="container">
+    <div>
+        @RenderBody()
+    </div>
+    <br />
+    <br />
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/stateinterface")
+    @Scripts.Render("~/bundles/stateinterface.designer")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

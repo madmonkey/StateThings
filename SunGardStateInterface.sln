@@ -1,0 +1,231 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunGardStateInterface.Web", "SunGardStateInterface\SunGardStateInterface.Web.csproj", "{B1C01CC5-67F0-4E90-A7A4-06D7655046B4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{06FC1619-FBD0-4D88-8097-FED26091DF7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateInterface.Repository", "StateInterface.Repository\StateInterface.Repository.csproj", "{ECDA16EF-3405-424D-B52F-A804A12E3883}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateInterface.Model", "StateInterface.Model\StateInterface.Model.csproj", "{00703F5F-0F81-4373-AB3D-53219F0D7D16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateInterface.Test", "StateInterface.Test\StateInterface.Test.csproj", "{4F539D04-E35F-4E12-8B00-4BA5391966C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateInterface.Service", "StateInterface.Service\StateInterface.Service.csproj", "{6685C5C1-ADEF-4663-A3CF-1C84C365D3B0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{35686814-14E5-4B82-A24B-2396CF39419A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{17D51DF1-B25A-4036-A4C2-69D357422A62}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{192C3B7D-40EF-4404-B338-18B758F633F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{1F0A6ADB-C794-4CCB-A92F-3B70668CE44C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{1C288C95-9272-4BDE-AA30-F859363F5A9B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{13E1AC58-A8B6-481D-A97C-130D75F86CBC}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateInterface.Designer.Model", "StateInterface.Designer.Domain\StateInterface.Designer.Model.csproj", "{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateInterface.Designer.Repository", "StateInterface.Designer.Repository\StateInterface.Designer.Repository.csproj", "{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Designer.Tasks", "Designer.Tasks\Designer.Tasks.csproj", "{A5E57C20-58C8-4AE7-9AE8-2A85E44BC912}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateInterface.UI.Test", "StateInterface.UI.Test\StateInterface.UI.Test.csproj", "{5E4F697D-29DD-4F99-9759-5B36ED39C0B9}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 10
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://psjdevtest:8080/tfs/psj
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = StateInterface.Model\\StateInterface.Model.csproj
+		SccProjectTopLevelParentUniqueName1 = SunGardStateInterface.sln
+		SccProjectName1 = StateInterface.Model
+		SccLocalPath1 = StateInterface.Model
+		SccProjectUniqueName2 = StateInterface.Repository\\StateInterface.Repository.csproj
+		SccProjectTopLevelParentUniqueName2 = SunGardStateInterface.sln
+		SccProjectName2 = StateInterface.Repository
+		SccLocalPath2 = StateInterface.Repository
+		SccProjectUniqueName3 = StateInterface.Service\\StateInterface.Service.csproj
+		SccProjectTopLevelParentUniqueName3 = SunGardStateInterface.sln
+		SccProjectName3 = StateInterface.Service
+		SccLocalPath3 = StateInterface.Service
+		SccProjectUniqueName4 = StateInterface.Test\\StateInterface.Test.csproj
+		SccProjectTopLevelParentUniqueName4 = SunGardStateInterface.sln
+		SccProjectName4 = StateInterface.Test
+		SccLocalPath4 = StateInterface.Test
+		SccProjectUniqueName5 = SunGardStateInterface\\SunGardStateInterface.Web.csproj
+		SccProjectTopLevelParentUniqueName5 = SunGardStateInterface.sln
+		SccProjectName5 = SunGardStateInterface
+		SccLocalPath5 = SunGardStateInterface
+		SccProjectUniqueName6 = StateInterface.Designer.Domain\\StateInterface.Designer.Model.csproj
+		SccProjectTopLevelParentUniqueName6 = SunGardStateInterface.sln
+		SccProjectName6 = StateInterface.Designer.Domain
+		SccLocalPath6 = StateInterface.Designer.Domain
+		SccProjectUniqueName7 = StateInterface.Designer.Repository\\StateInterface.Designer.Repository.csproj
+		SccProjectTopLevelParentUniqueName7 = SunGardStateInterface.sln
+		SccProjectName7 = StateInterface.Designer.Repository
+		SccLocalPath7 = StateInterface.Designer.Repository
+		SccProjectUniqueName8 = Designer.Tasks\\Designer.Tasks.csproj
+		SccProjectTopLevelParentUniqueName8 = SunGardStateInterface.sln
+		SccProjectName8 = Designer.Tasks
+		SccLocalPath8 = Designer.Tasks
+		SccProjectUniqueName9 = StateInterface.UI.Test\\StateInterface.UI.Test.csproj
+		SccProjectTopLevelParentUniqueName9 = SunGardStateInterface.sln
+		SccProjectName9 = StateInterface.UI.Test
+		SccLocalPath9 = StateInterface.UI.Test
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+		Test|Any CPU = Test|Any CPU
+		Test|x86 = Test|x86
+		TestRelease|Any CPU = TestRelease|Any CPU
+		TestRelease|x86 = TestRelease|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1C01CC5-67F0-4E90-A7A4-06D7655046B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1C01CC5-67F0-4E90-A7A4-06D7655046B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1C01CC5-67F0-4E90-A7A4-06D7655046B4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B1C01CC5-67F0-4E90-A7A4-06D7655046B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1C01CC5-67F0-4E90-A7A4-06D7655046B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1C01CC5-67F0-4E90-A7A4-06D7655046B4}.Release|x86.ActiveCfg = Release|Any CPU
+		{B1C01CC5-67F0-4E90-A7A4-06D7655046B4}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{B1C01CC5-67F0-4E90-A7A4-06D7655046B4}.Test|Any CPU.Build.0 = Test|Any CPU
+		{B1C01CC5-67F0-4E90-A7A4-06D7655046B4}.Test|x86.ActiveCfg = Test|Any CPU
+		{B1C01CC5-67F0-4E90-A7A4-06D7655046B4}.TestRelease|Any CPU.ActiveCfg = TestRelease|Any CPU
+		{B1C01CC5-67F0-4E90-A7A4-06D7655046B4}.TestRelease|Any CPU.Build.0 = TestRelease|Any CPU
+		{B1C01CC5-67F0-4E90-A7A4-06D7655046B4}.TestRelease|x86.ActiveCfg = TestRelease|Any CPU
+		{ECDA16EF-3405-424D-B52F-A804A12E3883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECDA16EF-3405-424D-B52F-A804A12E3883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECDA16EF-3405-424D-B52F-A804A12E3883}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ECDA16EF-3405-424D-B52F-A804A12E3883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECDA16EF-3405-424D-B52F-A804A12E3883}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECDA16EF-3405-424D-B52F-A804A12E3883}.Release|x86.ActiveCfg = Release|Any CPU
+		{ECDA16EF-3405-424D-B52F-A804A12E3883}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{ECDA16EF-3405-424D-B52F-A804A12E3883}.Test|Any CPU.Build.0 = Test|Any CPU
+		{ECDA16EF-3405-424D-B52F-A804A12E3883}.Test|x86.ActiveCfg = Test|Any CPU
+		{ECDA16EF-3405-424D-B52F-A804A12E3883}.TestRelease|Any CPU.ActiveCfg = TestRelease|Any CPU
+		{ECDA16EF-3405-424D-B52F-A804A12E3883}.TestRelease|Any CPU.Build.0 = TestRelease|Any CPU
+		{ECDA16EF-3405-424D-B52F-A804A12E3883}.TestRelease|x86.ActiveCfg = TestRelease|Any CPU
+		{00703F5F-0F81-4373-AB3D-53219F0D7D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00703F5F-0F81-4373-AB3D-53219F0D7D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00703F5F-0F81-4373-AB3D-53219F0D7D16}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{00703F5F-0F81-4373-AB3D-53219F0D7D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00703F5F-0F81-4373-AB3D-53219F0D7D16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00703F5F-0F81-4373-AB3D-53219F0D7D16}.Release|x86.ActiveCfg = Release|Any CPU
+		{00703F5F-0F81-4373-AB3D-53219F0D7D16}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{00703F5F-0F81-4373-AB3D-53219F0D7D16}.Test|Any CPU.Build.0 = Test|Any CPU
+		{00703F5F-0F81-4373-AB3D-53219F0D7D16}.Test|x86.ActiveCfg = Test|Any CPU
+		{00703F5F-0F81-4373-AB3D-53219F0D7D16}.TestRelease|Any CPU.ActiveCfg = TestRelease|Any CPU
+		{00703F5F-0F81-4373-AB3D-53219F0D7D16}.TestRelease|Any CPU.Build.0 = TestRelease|Any CPU
+		{00703F5F-0F81-4373-AB3D-53219F0D7D16}.TestRelease|x86.ActiveCfg = TestRelease|Any CPU
+		{4F539D04-E35F-4E12-8B00-4BA5391966C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F539D04-E35F-4E12-8B00-4BA5391966C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F539D04-E35F-4E12-8B00-4BA5391966C8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4F539D04-E35F-4E12-8B00-4BA5391966C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F539D04-E35F-4E12-8B00-4BA5391966C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F539D04-E35F-4E12-8B00-4BA5391966C8}.Release|x86.ActiveCfg = Release|Any CPU
+		{4F539D04-E35F-4E12-8B00-4BA5391966C8}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{4F539D04-E35F-4E12-8B00-4BA5391966C8}.Test|Any CPU.Build.0 = Test|Any CPU
+		{4F539D04-E35F-4E12-8B00-4BA5391966C8}.Test|x86.ActiveCfg = Test|Any CPU
+		{4F539D04-E35F-4E12-8B00-4BA5391966C8}.TestRelease|Any CPU.ActiveCfg = TestRelease|Any CPU
+		{4F539D04-E35F-4E12-8B00-4BA5391966C8}.TestRelease|Any CPU.Build.0 = TestRelease|Any CPU
+		{4F539D04-E35F-4E12-8B00-4BA5391966C8}.TestRelease|x86.ActiveCfg = TestRelease|Any CPU
+		{6685C5C1-ADEF-4663-A3CF-1C84C365D3B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6685C5C1-ADEF-4663-A3CF-1C84C365D3B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6685C5C1-ADEF-4663-A3CF-1C84C365D3B0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6685C5C1-ADEF-4663-A3CF-1C84C365D3B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6685C5C1-ADEF-4663-A3CF-1C84C365D3B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6685C5C1-ADEF-4663-A3CF-1C84C365D3B0}.Release|x86.ActiveCfg = Release|Any CPU
+		{6685C5C1-ADEF-4663-A3CF-1C84C365D3B0}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{6685C5C1-ADEF-4663-A3CF-1C84C365D3B0}.Test|Any CPU.Build.0 = Test|Any CPU
+		{6685C5C1-ADEF-4663-A3CF-1C84C365D3B0}.Test|x86.ActiveCfg = Test|Any CPU
+		{6685C5C1-ADEF-4663-A3CF-1C84C365D3B0}.TestRelease|Any CPU.ActiveCfg = TestRelease|Any CPU
+		{6685C5C1-ADEF-4663-A3CF-1C84C365D3B0}.TestRelease|Any CPU.Build.0 = TestRelease|Any CPU
+		{6685C5C1-ADEF-4663-A3CF-1C84C365D3B0}.TestRelease|x86.ActiveCfg = TestRelease|Any CPU
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.Debug|x86.ActiveCfg = Debug|x86
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.Debug|x86.Build.0 = Debug|x86
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.Release|x86.ActiveCfg = Release|x86
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.Release|x86.Build.0 = Release|x86
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.Test|Any CPU.Build.0 = Test|Any CPU
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.Test|x86.ActiveCfg = Test|x86
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.Test|x86.Build.0 = Test|x86
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.TestRelease|Any CPU.ActiveCfg = TestRelease|Any CPU
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.TestRelease|Any CPU.Build.0 = TestRelease|Any CPU
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.TestRelease|x86.ActiveCfg = TestRelease|x86
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB}.TestRelease|x86.Build.0 = TestRelease|x86
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.Debug|x86.ActiveCfg = Debug|x86
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.Debug|x86.Build.0 = Debug|x86
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.Release|x86.ActiveCfg = Release|x86
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.Release|x86.Build.0 = Release|x86
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.Test|Any CPU.Build.0 = Test|Any CPU
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.Test|x86.ActiveCfg = Test|x86
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.Test|x86.Build.0 = Test|x86
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.TestRelease|Any CPU.ActiveCfg = TestRelease|Any CPU
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.TestRelease|Any CPU.Build.0 = TestRelease|Any CPU
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.TestRelease|x86.ActiveCfg = TestRelease|x86
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3}.TestRelease|x86.Build.0 = TestRelease|x86
+		{A5E57C20-58C8-4AE7-9AE8-2A85E44BC912}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5E57C20-58C8-4AE7-9AE8-2A85E44BC912}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5E57C20-58C8-4AE7-9AE8-2A85E44BC912}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A5E57C20-58C8-4AE7-9AE8-2A85E44BC912}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5E57C20-58C8-4AE7-9AE8-2A85E44BC912}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5E57C20-58C8-4AE7-9AE8-2A85E44BC912}.Release|x86.ActiveCfg = Release|Any CPU
+		{A5E57C20-58C8-4AE7-9AE8-2A85E44BC912}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{A5E57C20-58C8-4AE7-9AE8-2A85E44BC912}.Test|Any CPU.Build.0 = Test|Any CPU
+		{A5E57C20-58C8-4AE7-9AE8-2A85E44BC912}.Test|x86.ActiveCfg = Test|Any CPU
+		{A5E57C20-58C8-4AE7-9AE8-2A85E44BC912}.TestRelease|Any CPU.ActiveCfg = TestRelease|Any CPU
+		{A5E57C20-58C8-4AE7-9AE8-2A85E44BC912}.TestRelease|Any CPU.Build.0 = TestRelease|Any CPU
+		{A5E57C20-58C8-4AE7-9AE8-2A85E44BC912}.TestRelease|x86.ActiveCfg = TestRelease|Any CPU
+		{5E4F697D-29DD-4F99-9759-5B36ED39C0B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E4F697D-29DD-4F99-9759-5B36ED39C0B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E4F697D-29DD-4F99-9759-5B36ED39C0B9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5E4F697D-29DD-4F99-9759-5B36ED39C0B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E4F697D-29DD-4F99-9759-5B36ED39C0B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E4F697D-29DD-4F99-9759-5B36ED39C0B9}.Release|x86.ActiveCfg = Release|Any CPU
+		{5E4F697D-29DD-4F99-9759-5B36ED39C0B9}.Test|Any CPU.ActiveCfg = Release|Any CPU
+		{5E4F697D-29DD-4F99-9759-5B36ED39C0B9}.Test|Any CPU.Build.0 = Release|Any CPU
+		{5E4F697D-29DD-4F99-9759-5B36ED39C0B9}.Test|x86.ActiveCfg = Release|Any CPU
+		{5E4F697D-29DD-4F99-9759-5B36ED39C0B9}.TestRelease|Any CPU.ActiveCfg = TestRelease|Any CPU
+		{5E4F697D-29DD-4F99-9759-5B36ED39C0B9}.TestRelease|Any CPU.Build.0 = TestRelease|Any CPU
+		{5E4F697D-29DD-4F99-9759-5B36ED39C0B9}.TestRelease|x86.ActiveCfg = TestRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B1C01CC5-67F0-4E90-A7A4-06D7655046B4} = {17D51DF1-B25A-4036-A4C2-69D357422A62}
+		{ECDA16EF-3405-424D-B52F-A804A12E3883} = {1F0A6ADB-C794-4CCB-A92F-3B70668CE44C}
+		{00703F5F-0F81-4373-AB3D-53219F0D7D16} = {35686814-14E5-4B82-A24B-2396CF39419A}
+		{4F539D04-E35F-4E12-8B00-4BA5391966C8} = {1C288C95-9272-4BDE-AA30-F859363F5A9B}
+		{6685C5C1-ADEF-4663-A3CF-1C84C365D3B0} = {192C3B7D-40EF-4404-B338-18B758F633F5}
+		{7E1C2F24-623C-4BB4-BF06-27DB8E3E5CAB} = {35686814-14E5-4B82-A24B-2396CF39419A}
+		{40657902-A97E-4D4E-AA7C-7D1E9343E9F3} = {1F0A6ADB-C794-4CCB-A92F-3B70668CE44C}
+		{A5E57C20-58C8-4AE7-9AE8-2A85E44BC912} = {192C3B7D-40EF-4404-B338-18B758F633F5}
+		{5E4F697D-29DD-4F99-9759-5B36ED39C0B9} = {1C288C95-9272-4BDE-AA30-F859363F5A9B}
+	EndGlobalSection
+	GlobalSection(NDepend) = preSolution
+		Project = ".\SunGardStateInterface.ndproj"
+	EndGlobalSection
+EndGlobal

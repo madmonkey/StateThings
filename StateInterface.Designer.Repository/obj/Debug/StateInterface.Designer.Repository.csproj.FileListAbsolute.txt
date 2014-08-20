@@ -1,0 +1,14 @@
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Repository\bin\Debug\StateInterface.Designer.Repository.dll.config
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Repository\bin\Debug\StateInterface.Designer.Repository.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Repository\bin\Debug\StateInterface.Designer.Repository.pdb
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Repository\bin\Debug\FluentNHibernate.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Repository\bin\Debug\Iesi.Collections.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Repository\bin\Debug\NHibernate.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Repository\bin\Debug\StateInterface.Designer.Model.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Repository\bin\Debug\StateInterface.Designer.Model.pdb
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Repository\bin\Debug\FluentNHibernate.xml
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Repository\bin\Debug\Iesi.Collections.xml
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Repository\bin\Debug\NHibernate.xml
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Repository\obj\Debug\StateInterface.Designer.Repository.csprojResolveAssemblyReference.cache
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Repository\obj\Debug\StateInterface.Designer.Repository.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Repository\obj\Debug\StateInterface.Designer.Repository.pdb

@@ -1,0 +1,12 @@
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Repository\bin\Debug\StateInterface.Repository.dll.config
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Repository\bin\Debug\StateInterface.Repository.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Repository\bin\Debug\StateInterface.Repository.pdb
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Repository\bin\Debug\EntityFramework.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Repository\bin\Debug\EntityFramework.SqlServer.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Repository\bin\Debug\StateInterface.Model.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Repository\bin\Debug\StateInterface.Model.pdb
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Repository\bin\Debug\EntityFramework.xml
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Repository\bin\Debug\EntityFramework.SqlServer.xml
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Repository\obj\Debug\StateInterface.Repository.csprojResolveAssemblyReference.cache
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Repository\obj\Debug\StateInterface.Repository.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Repository\obj\Debug\StateInterface.Repository.pdb

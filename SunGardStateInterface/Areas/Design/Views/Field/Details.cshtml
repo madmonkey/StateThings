@@ -1,0 +1,16 @@
+﻿@model StateInterface.Areas.Design.Models.FieldDetailsModel
+
+<div class="row">
+    <div class="col-xs-12">
+        <div data-bind="template: { name: 'field-template' }"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var initialData = @Html.Raw(Model.InitialData)
+</script>
+@Html.Partial("_fieldTemplate")
+
+@section scripts{
+    @Scripts.Render("~/bundles/stateinterface_design_field_Details")
+}

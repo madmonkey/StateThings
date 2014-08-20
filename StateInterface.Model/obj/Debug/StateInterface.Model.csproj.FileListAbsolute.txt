@@ -1,0 +1,5 @@
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Model\bin\Debug\StateInterface.Model.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Model\bin\Debug\StateInterface.Model.pdb
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Model\obj\Debug\StateInterface.Model.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Model\obj\Debug\StateInterface.Model.pdb
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Model\obj\Debug\StateInterface.Model.csprojResolveAssemblyReference.cache

@@ -1,0 +1,102 @@
+﻿<script type="text/html" id="snippetField-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="pull-left">                
+                <span>Fields</span>
+                <a href="#" data-bind="visible: $root.CanDesignManage, click: addField" class="glyphicon glyphicon-plus-sign padLeft" title="Add Field"></a>
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                
+                <table class="fieldTable">
+                    <thead>
+                        <tr class="propertiesHeader">
+                            <td></td>
+                            <th>
+                                <span class="padLeft">Type</span>
+                            </th>
+                            <th>
+                                <span class="padLeft">Length</span>
+                            </th>
+                            <th>
+                                <span class="padLeft">Frequency</span>
+                            </th>
+                            <th>
+                                <span class="padLeft">Separator</span>
+                            </th>
+                            <th>
+                                <span class="padLeft">Prefix</span>
+                            </th>
+                            <th>
+                                <span class="padLeft">Suffix</span>
+                            </th>
+                            <th>
+                                <span class="padLeft">Value</span>
+                            </th>
+                            <th>
+                                <span class="padLeft">Upper</span>
+                            </th>
+                            <th>
+                                <span class="padLeft">PadChar</span>
+                            </th>
+                            <th>
+                                <span class="padLeft">Trim</span>
+                            </th>
+                            <td></td>
+                        </tr>
+                        <tr style="height:10px"></tr>
+                    </thead>
+                    <tbody data-bind="foreach: TransactionSnippetFields">
+                        <tr class="propertiesRow" style="vertical-align:top">
+                            <td>
+                                <div>
+                                    <span class="formFieldName" data-bind="html: TagName"></span>
+                                    <span class="formFieldTooltip" data-bind="html: ToolTip"></span>
+                                    <div class="additionalFieldDetails" data-bind="html:TransformFormat"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="padLeft leadSmaller" data-bind="html: Field"></span>
+                            </td>
+                            <td>
+                                <span class="padLeft leadSmaller" data-bind="html: Length"></span>
+                            </td>
+                            <td>
+                                <span class="padLeft leadSmaller" data-bind="html: Frequency"></span>
+                            </td>
+                            <td>
+                                <span class="padLeft leadSmaller" data-bind="html: Separator"></span>
+                            </td>
+                            <td>
+                                <span class="padLeft leadSmaller" data-bind="html: Prefix"></span>
+                            </td>
+                            <td>
+                                <span class="padLeft leadSmaller" data-bind="html: Suffix"></span>
+                            </td>
+                            <td>
+                                <span class="padLeft leadSmaller" data-bind="html: DefaultValue"></span>
+                            </td>
+                            <td>
+                                <span class="padLeft leadSmaller" data-bind="html: MakeUpperCase"></span>
+                            </td>
+                            <td>
+                                <span class="padLeft leadSmaller" data-bind="html: PadCharacterDec"></span>
+                            </td>
+                            <td>
+                                <span class="padLeft leadSmaller" data-bind="html: TrimInputToLength"></span>
+                            </td>
+                            <td style="width:40px">
+                                <div>
+                                    <a href="#" data-bind="visible: $root.CanDesignManage, click: $parent.editField" class="glyphicon glyphicon-edit padHeaderSmall" title="Edit Field"></a>
+                                    <a href="#" data-bind="visible: $root.CanDesignManage, click: $parent.deleteField" class="glyphicon glyphicon-remove-circle padHeaderSmall" title="Delete Field"></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    
+</script>

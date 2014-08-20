@@ -1,0 +1,45 @@
+﻿<script type="text/html" id="statisticsStatusCategory-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div data-bind="foreach: Categories">
+                <div class="banner">
+                    <div class="category" data-bind="html: Name"></div>
+                    <span class="medium-header">
+                        <span>-</span>
+                        <span data-bind="html: Statistics.TotalTestCases"></span>
+                        <span>test cases,</span>
+                        <span data-bind="html: Statistics.PercentVerified"></span>
+                        <span>verified,</span>
+                        <span data-bind="html: Statistics.PercentCertified"></span>
+                        <span>certified</span>
+                    </span>
+                </div>
+                <br />
+                <div style="margin-left:30px;" data-bind="foreach: Forms">
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <div class="form">
+                                <span data-bind="html: FormId"></span>
+                                <span>-</span>
+                                <span data-bind="html: Title"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="pull-right">
+                                <span data-bind="html: Statistics.PercentVerified"></span>
+                                <span>verified</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="pull-right">
+                                <span data-bind="html: Statistics.PercentCertified"></span>
+                                <span>certified</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+</script>

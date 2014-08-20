@@ -1,0 +1,146 @@
+﻿<div class="modal fade" data-bind="bootstrapShowModal: snippetFieldModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+                <h3>Transaction Field <span class="lead" data-bind="html: SelectedField.TagName"></span></h3>
+            </div>
+            <form role="form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div>
+                            <span data-bind="visible: fieldNameWarning, text: 'Warning: Changing Tag Name may break the transaction!'" class="errorMessage"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Type</label>
+                                <select autofocus class="fieldInput padSelect" data-bind="options: AvailableTypes, optionsText: 'Value', optionsValue: 'Key', value: SelectedField.Field"></select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Tag Name</label>
+                                <div>
+                                    <input class="fieldInput" type="text" maxlength="50" data-bind="value: SelectedField.TagName, css: {error: SelectedField.TagName.hasError}, valueUpdate:'afterkeydown'">
+                                    <span class="errorMessage">*</span>                                    
+                                </div>
+                                <div>
+                                    <span data-bind="visible: SelectedField.TagName.hasError, text: SelectedField.TagName.validationMessage" class="errorMessage"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Prefix</label>
+                                <input class="fieldInput" type="text" maxlength="250" data-bind="value: SelectedField.Prefix">
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Suffix</label>
+                                <input class="fieldInput" type="text" maxlength="250" data-bind="value: SelectedField.Suffix">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Tool Tip</label>
+                                <input class="fieldInput" type="text" maxlength="100" data-bind="value: SelectedField.ToolTip">
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label data-bind="visible: isLength">Length</label>
+                                <input class="fieldInput" type="text" data-bind="visible: isLength, value: SelectedField.Length, css: {error: SelectedField.Length.hasError}, valueUpdate:'afterkeydown'">
+                                <div>
+                                    <span data-bind="visible: SelectedField.Length.hasError, text: SelectedField.Length.validationMessage" class="errorMessage"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label data-bind="visible: isFrequency">Frequency</label>
+                                <input class="fieldInput" type="text" data-bind="visible: isFrequency, value: SelectedField.Frequency, css: {error: SelectedField.Frequency.hasError}, valueUpdate:'afterkeydown'">
+                                <div>
+                                    <span data-bind="visible: SelectedField.Frequency.hasError, text: SelectedField.Frequency.validationMessage" class="errorMessage"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label data-bind="visible: isSeparator">Separator</label>
+                                <input class="fieldInput" type="text" maxlength="5" data-bind="visible: isSeparator, value: SelectedField.Separator">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label data-bind="visible: isPad">Pad Character Decimal</label>
+                                <input class="fieldInput" type="text" data-bind="visible: isPad, value: SelectedField.PadCharacterDec, css: {error: SelectedField.PadCharacterDec.hasError}, valueUpdate:'afterkeydown'">
+                                <div>
+                                    <span data-bind="visible: SelectedField.PadCharacterDec.hasError, text: SelectedField.PadCharacterDec.validationMessage" class="errorMessage"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label data-bind="visible: isTrimInput">Trim Input To Length</label>
+                                <input class="fieldInput" type="text" data-bind="visible: isTrimInput, value: SelectedField.TrimInputToLength, css: {error: SelectedField.TrimInputToLength.hasError}, valueUpdate:'afterkeydown'">
+                                <div>
+                                    <span data-bind="visible: SelectedField.TrimInputToLength.hasError, text: SelectedField.TrimInputToLength.validationMessage" class="errorMessage"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label data-bind="visible: isTransformLabel">Transform Format</label>
+                                <div data-bind="if: isList">
+                                    <select class="fieldInput padSelect" data-bind="options: AvailableOptions, optionsText: 'Value', optionsValue: 'Key', value: SelectedField.TransformFormat, optionsAfterRender: setSelectedOption"></select>
+                                </div>
+                                <div data-bind="ifnot: isList">
+                                    <input class="fieldInput" type="text" maxlength="50" data-bind="visible: isTransform, value: SelectedField.TransformFormat">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label data-bind="visible: isDefaultValue">Default Value</label>
+                                <input class="fieldInput" type="text" maxlength="50" data-bind="visible: isDefaultValue, value: SelectedField.DefaultValue">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="checkbox">
+                                <label data-bind="visible: isCarriageReturn">
+                                    <input type="checkbox" data-bind="visible: isCarriageReturn, checked: SelectedField.AcceptCarriageReturns"> Accept carriage returns
+                                </label>
+                            </div>
+                        </div>
+                       <div class="col-xs-6">
+                            <div class="checkbox">
+                                <label data-bind="visible: isUpper">
+                                    <input type="checkbox" data-bind="visible: isUpper, checked: SelectedField.MakeUpperCase"> Use Upper Case
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" data-dismiss="modal" class="btn btn-primary" data-bind="click: updateSnippetField, css: {linkDisabled: isSnippetFieldError}">Save</a>
+                    <a class="btn btn-default" data-dismiss="modal">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

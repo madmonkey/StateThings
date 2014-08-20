@@ -1,0 +1,39 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/bootstrap/css")
+    @Styles.Render("~/bundles/themes/base/css")
+    @Styles.Render("~/bundles/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("head", false)
+</head>
+<body class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <img src="~/Images/SunGard.png" alt="SunGard Public Sector"/>
+            <hr />
+        </div>
+        @RenderBody()
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-xs-12">
+            <hr />
+            <p class="text-center">
+                SunGard Public Sector Inc. • 1000 Business Center Drive • Lake Mary, FL 32746 • www.sungardps.com • 800-727-8088
+            </p>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bootstrap")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/stateinterface")
+    
+    @RenderSection("scripts", required: false)
+</body>
+</html>

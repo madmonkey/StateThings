@@ -1,0 +1,19 @@
+﻿<script type="text/html" id="certifyCriteria-template">
+    <div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="padLeft">
+                    <div>
+                        <span class="lead bold padLeft" data-bind="html: Name"></span>
+                        <a href="#" title="Toggle Test History" class="pull-right padRight glyphicon glyphicon-tasks" style="margin-top:14px;" data-bind="click: $root.toggleTestHistory"></a>
+                    </div>
+                </p>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div data-bind="template: { name: 'testCase-template', foreach: TestCases }"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

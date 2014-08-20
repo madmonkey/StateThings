@@ -1,0 +1,55 @@
+﻿@using StateInterface.Properties;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    @*    <meta name="viewport" content="width=device-width, initial-scale=1.0">*@
+    @Styles.Render("~/bootstrap/css")
+    @Styles.Render("~/bundles/themes/base/css")
+    @Styles.Render("~/bundles/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+    <meta name="description" content="SunGard State Interface" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body class="container">
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="@Url.Action("Index", "Home", new { Area = "" })"><span class="padLeft"><b>SUNGARD<span style="font-size:.7em;">&reg;</span></b></span></a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="@Url.Action("Index", "Home", new { Area = "" })">Home</a></li>
+            <li><a href="@Url.Action("Index", "Home", new { Area = "Design" })">Design</a></li>
+            <li><a href="@Url.Action("Index", "Home", new { Area = "Certify" })">Certify</a></li>
+            <li><a href="@Url.Action("Index", "Home", new { Area = "Connect" })">Connect</a></li>
+        </ul>
+    </nav>
+    <div>
+        <div class="row">
+            <div class="col-xs-12 text-right">
+                <span class="padRight">Hello, @User.Identity.Name</span>@if(!string.IsNullOrWhiteSpace(Settings.Default.Environment)){<span class="padRight" style="color:red;font-weight:bold;"> - @Settings.Default.Environment</span>}
+            </div>
+        </div>
+        @RenderBody()
+    </div>
+    <br />
+    <br />
+    <div class="padLeft">
+        <p class="text-center">&copy; @DateTime.Now.Year - SunGard Public Sector</p>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bootstrap")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/stateinterface")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

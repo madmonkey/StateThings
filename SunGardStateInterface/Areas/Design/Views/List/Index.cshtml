@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "List Design";
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="pull-right padRight leadSmaller">
+            <span class="padRight">Records Center</span><select data-bind="options: RecordsCenterSelector.RecordsCenters, optionsText: 'Name', optionsValue: 'Name', value: RecordsCenterSelector.SelectedRecordsCenterName"></select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="pull-left"><h2 class="padLeft">List Design</h2></div>
+        <div class="pull-left padLeft" style="margin-top:15px;"><div class="loading" data-bind="visible: listsAreLoading"></div></div>
+    </div>
+</div>
+<div data-bind="template: { name: 'noListFound-template' }"></div>
+<div class="row">
+    <div class="col-xs-12">
+        <div data-bind="template: { name: 'optionListsList-template' }"></div>
+    </div>
+</div>
+<script type="text/html" id="noListFound-template">
+    <div class="row" data-bind="if: showNoListsFound() === true">
+        <div class="col-xs-12">
+            <br />
+            <br />
+            <h2 class="text-center text-danger">No lists were found for this Records Center</h2>
+        </div>
+    </div>
+</script>
+
+<script type="text/javascript">
+    var initialData = @Html.Raw(Model.InitialData)
+</script>
+
+@Html.Partial("_optionListsListTemplate")
+
+@section scripts{
+    @Scripts.Render("~/bundles/stateinterface_design_list")
+}

@@ -1,0 +1,38 @@
+﻿@model StateInterface.Areas.Certify.Models.ReportModel
+@{
+    ViewBag.Title = "Certification";
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="pull-left"><h2 class="padLeft">State Interface Report</h2></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="padLeft"><p class="lead">Records Centers</p></div>
+        <div class="padLeft leadSmaller" data-bind="foreach: RecordsCenters">
+            <div class="row">
+                <div class="col-xs-1">
+                    <span data-bind="html:Name"></span>
+                </div>
+
+                <div class="col-xs-9">
+                    <span data-bind="html:Description"></span>
+                </div>
+
+                <div class="col-xs-2">
+                    <div class="pull-right padRight">
+                        <a target="_blank" title="Certification Status Report" class="glyphicon glyphicon-stats" data-bind="attr:{href: $root.GetCertificationStatusUrl() + '/' + Name()}"></a>
+                        <a target="_blank" title="Open Issues Report" class="glyphicon glyphicon-fire padLeft" data-bind="attr:{href: $root.GetOpenIssuesUrl() + '/' + Name()}"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var initialData = @Html.Raw(Model.InitialData)
+</script>
+@section scripts{
+    @Scripts.Render("~/bundles/stateinterface_certify")
+}

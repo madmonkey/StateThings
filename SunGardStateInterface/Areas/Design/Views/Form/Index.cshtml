@@ -1,0 +1,42 @@
+﻿@model StateInterface.Areas.Design.Models.FormModel
+@{
+    ViewBag.Title = "Forms Design";
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="pull-right padRight leadSmaller">
+            <span class="padRight">Records Center</span><select data-bind="options: RecordsCenterSelector.RecordsCenters, optionsText: 'Name', optionsValue: 'Name', value: RecordsCenterSelector.SelectedRecordsCenterName"></select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="pull-left"><h2 class="padLeft">Form Design</h2></div>
+        <div class="pull-left padLeft" style="margin-top:15px;"><div class="loading" data-bind="visible: formsAreLoading"></div></div>
+    </div>
+</div>
+<div data-bind="template: { name: 'noFormsFound-template' }"></div>
+<div class="row">
+    <div class="col-xs-12">
+        <div data-bind="template: { name: 'requestFormsList-template' }"></div>
+    </div>
+</div>
+<script type="text/html" id="noFormsFound-template">
+    <div class="row" data-bind="if: showNoFormsFound() === true">
+        <div class="col-xs-12">
+            <br />
+            <br />
+            <h2 class="text-center text-danger">No forms were found in this Records Center</h2>
+        </div>
+    </div>
+</script>
+
+<script type="text/javascript">
+    var initialData = @Html.Raw(Model.InitialData)
+</script>
+
+@Html.Partial("_requestFormsListTemplate")
+
+@section scripts{
+    @Scripts.Render("~/bundles/stateinterface_design_form")
+}

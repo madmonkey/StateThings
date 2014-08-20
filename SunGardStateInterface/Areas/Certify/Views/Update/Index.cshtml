@@ -1,0 +1,54 @@
+﻿@model StateInterface.Areas.Certify.Models.CertifyUpdateModel
+@{
+    ViewBag.Title = "Certification Update";
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="pull-right padRight leadSmaller">
+            <span class="padRight">Records Center</span><select data-bind="options: RecordsCenterSelector.RecordsCenters, optionsText: 'Name', optionsValue: 'Name', value: RecordsCenterSelector.SelectedRecordsCenterName"></select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="pull-left"><h2 class="padLeft">Update State Interface Certification</h2></div>
+        <div class="pull-left padLeft" style="margin-top:15px;"><div class="loading" data-bind="visible: formsAreLoading"></div></div>
+        <div class="pull-right padRight padHeader"><a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" href="@Url.Action("Help")"></a></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="pull-right padLeft leadSmaller">
+            <span class="padLeft padRight">Category</span><select data-bind="options: CategoryOptions, optionsText: 'Name', optionsValue: 'Id', value: CertificationParameters.CategoryId"></select><a href="#" data-bind="click: getForms" class="glyphicon glyphicon-play-circle padLeft padRight" title="Get Forms"></a>
+        </div>
+    </div>
+</div>
+<br />
+<div data-bind="template: { name: 'noFormsFound-template' }"></div>
+<div class="row">
+    <div class="col-xs-12">
+        <div data-bind="template: { name: 'certifyApplications-template' }"></div>
+    </div>
+</div>
+<script type="text/html" id="noFormsFound-template">
+    <div class="row" data-bind="if: showNoFormsFound() === true">
+        <div class="col-xs-12">
+            <br />
+            <br />
+            <h2 class="text-center text-danger">No forms were found in this Records Center for this Category</h2>
+        </div>
+    </div>
+</script>
+<script type="text/javascript">
+    var initialData = @Html.Raw(Model.InitialData)
+</script>
+@Html.Partial("_certifyApplicationsTemplate")
+@Html.Partial("_certifyRequestFormsTemplate")
+@Html.Partial("_certifyCriteriaSansFieldsTemplate")
+@Html.Partial("_requiredFieldTemplate")
+@Html.Partial("_optionalFieldTemplate")
+@Html.Partial("_testCaseSansFieldsTemplate")
+@Html.Partial("_testCaseHistoryTemplate")
+@section scripts{
+    @Scripts.Render("~/bundles/stateinterface_certify_update")
+}

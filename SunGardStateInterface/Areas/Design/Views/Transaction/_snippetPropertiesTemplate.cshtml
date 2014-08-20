@@ -1,0 +1,32 @@
+﻿<script type="text/html" id="snippetProperties-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div>
+                <span class="leadLarger" data-bind="html:TokenName"></span>    
+                <a href="#" data-bind="visible: CanDesignManage, click: editSnippet" class="glyphicon glyphicon-edit padLeft" title="Edit Transaction Properties"></a>                         
+            </div>
+            <div><span class="leadSmaller" data-bind="html: Description"></span></div>
+            <br />
+            <div class="leadSmaller">
+                <span>Definition: </span>
+                <span data-bind="html: TransactionDefinition"></span>
+            </div>
+            <div class="leadSmaller">
+                <span>Criteria: </span>
+                <span data-bind="html: Criteria"></span>
+            </div>
+            <div class="leadSmaller">
+                <span>Include Prefix and Suffix: </span>
+                <span data-bind="html: IncludePrefixAndSuffix"></span>
+            </div>
+            <div class="leadSmaller">
+                <span>Created: </span>
+                <span data-bind="html: Created">/</span>
+            </div>
+            <div class="leadSmaller">
+                <span>Updated: </span>
+                <span data-bind="html: Updated"></span>
+            </div>
+        </div>
+    </div>
+</script>

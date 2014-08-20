@@ -1,0 +1,77 @@
+﻿@model StateInterface.Areas.Certify.Models.OpenIssuesModel
+@{
+    ViewBag.Title = "Open Issues";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <span class="record" data-bind="html: RecordsCenter.Name"></span>
+        <div data-bind="visible: Applications().length > 0">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div data-bind="visible: TotalFailedTestCases() > 1">
+                        <span>There are</span>
+                        <span data-bind="html: TotalFailedTestCases"></span>
+                        <span>failed test cases.</span>
+                    </div>
+                    <div data-bind="visible: TotalFailedTestCases() === 1">
+                        <span>There is</span>
+                        <span data-bind="html: TotalFailedTestCases"></span>
+                        <span>failed test case.</span>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <div>
+                <ul class="nav nav-tabs" role="tablist" data-bind="foreach: Applications">
+                    <li data-bind="css: { active: $index() == 0 }">
+                        <a class="leadSmaller bold" data-bind="attr:{ href: '#' + Name()}, html: Name" role="tab" data-toggle="tab"></a>
+                    </li>
+                </ul>
+                <br />
+            </div>
+            <div class="tab-content" data-bind="foreach: Applications">
+                <div class="tab-pane" data-bind="attr:{ id: Name()}, css: { active: $index() == 0 }">
+                    <div data-bind="foreach: Categories">
+                        <span class="category" data-bind="html: Name"></span>
+                        <div data-bind="foreach: Forms">
+                            <div data-bind="attr:{ id: 'accordian_' + $parents[1].Name() + $parents[0].Name() + FormId()}">
+                                <div class="padLeft">
+                                    <span>
+                                        <a class="glyphicon glyphicon-collapse-down" style="display:inline;" data-toggle="collapse" data-bind="attr:{ 'data-parent': 'accordian_' + $parents[1].Name() + $parents[0].Name() + FormId(), href: '#collapse_' + $parents[1].Name() + $parents[0].Name() + FormId()}"></a>
+                                        <a target="_blank" data-bind="attr: { href: FormDetailsUrl }">
+                                            <span style="font-size:1.5em" data-bind="html: FormId"></span>
+                                        </a>
+                                        <span style="font-size:1.2em" data-bind="html: Description"></span>
+                                    </span>
+                                </div>
+                                <div data-bind="attr:{ id: 'collapse_' + $parents[1].Name() + $parents[0].Name() + FormId()}" class="collapse">
+                                    <div class="padLeft" data-bind="foreach: Criteria">
+                                        <span data-bind="html: Name"></span>
+                                        <span data-bind="html: TransactionName"></span>
+                                        <div class="padLeft" data-bind="foreach: TestCases">
+                                            <a target="_blank" data-bind="attr: { href: UpdateFormUrl }, html: Name"></a>
+                                            <div data-bind="html: FailureInfo"></div>
+                                            <div class="padBottom" data-bind="html: Note"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-bind="visible: Applications().length === 0">
+            <h3 class="text-center text-success">There are no outstanding issues for this Records Center</h3>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var initialData = @Html.Raw(Model.InitialData)
+</script>
+
+@section scripts{
+    @Scripts.Render("~/bundles/stateinterface_certify_openissues")
+}

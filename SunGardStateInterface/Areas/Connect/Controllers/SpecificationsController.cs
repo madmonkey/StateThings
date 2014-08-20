@@ -1,0 +1,65 @@
+﻿using Newtonsoft.Json;
+using StateInterface.Areas.Connect.Models;
+using StateInterface.Designer.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace StateInterface.Areas.Connect.Controllers
+{
+    public class SpecificationsController : Controller
+    {
+        private IDesignerTasks _designerTasks;
+        public SpecificationsController(IDesignerTasks designerTasks)
+        {
+            _designerTasks = designerTasks;
+        }
+        [HttpGet]
+        public ActionResult Index()
+        {
+            var recordsCenters = _designerTasks.GetRecordsCenters();
+
+            var specificationsModel = new SpecificationsModel(recordsCenters, Url.Action("GetForms"));
+
+            specificationsModel.InitialData = JsonConvert.SerializeObject(specificationsModel);
+            return View(specificationsModel);
+        }
+        [HttpPost]
+        public ActionResult GetForms(FormsRequestParametersModel formsRequest)
+        {
+            var categories = _designerTasks.GetCategories();
+            var recordsCenter = _designerTasks.GetRecordsCenters().FirstOrDefault(x => x.Id == formsRequest.RecordsCenterId);
+            var formProjections = _designerTasks.GetFormProjections(formsRequest.RecordsCenterId);
+
+            List<CategoryModel> categoryModels = new List<CategoryModel>();
+
+            foreach (var category in categories.OrderBy(x => x.Name))
+            {
+                var forms = formProjections.Where(x => x.RequestFormCategories.Any(y => y.Category.Name == category.Name));
+
+                if (forms.Any())
+                {
+                    categoryModels.Add(new CategoryModel(
+                        category,
+                        forms,
+                        string.Format("{0}/{1}", Url.Action("Details", "Form", new { area = "Design" }), recordsCenter.Name)
+                    ));
+                }
+            }
+
+            var uncategorizedForms = formProjections.Where(x => !x.RequestFormCategories.Any());
+            if (uncategorizedForms.Any())
+            {
+                categoryModels.Add(new CategoryModel(
+                        "Uncategorized",
+                        uncategorizedForms,
+                        string.Format("{0}/{1}", Url.Action("Details", "Form", new { area = "Design" }), recordsCenter.Name)
+                    ));
+            }
+
+            return Json(categoryModels);
+        }
+    }
+}

@@ -1,0 +1,117 @@
+﻿<script type="text/html" id="field-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="padHeader">
+                <span class="leadLarger">@ViewBag.Title</span>
+                <div class="pull-right">
+                    @*<a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" href="@Url.Action("Help")"></a>*@
+                </div>
+            </div>
+            <div class="leadSmaller">
+                <span data-bind="html: ToolTip"></span>
+            </div>
+            <div class="leadSmaller">
+                <span data-bind="html: Description"></span>
+            </div>
+            <div class="leadSmaller" data-bind="visible: IsHiddenField">
+                <span>Hidden</span>
+            </div>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <table>
+                <tr class="propertiesRow">
+                    <td>
+                        <span class="leadSmaller">Field Type</span>
+                    </td>
+                    <td>
+                        <span class="leadSmaller" data-bind="html:Type"></span>
+                    </td>
+                </tr>
+                <tr class="propertiesRow">
+                    <td>
+                        <span class="leadSmaller">Length</span>
+                    </td>
+                    <td>
+                        <span class="leadSmaller" data-bind="html:Length"></span>
+                    </td>
+                </tr>
+                <tr class="propertiesRow">
+                    <td>
+                        <span class="leadSmaller">Frequency</span>
+                    </td>
+                    <td>
+                        <span class="leadSmaller" data-bind="html:Frequency"></span>
+                    </td>
+                </tr>
+                <tr class="propertiesRow">
+                    <td>
+                        <span class="leadSmaller">Separator</span>
+                    </td>
+                    <td>
+                        <span class="leadSmaller" data-bind="html:Separator"></span>
+                    </td>
+                </tr>
+                <tr class="propertiesRow">
+                    <td>
+                        <span class="leadSmaller">Prefix</span>
+                    </td>
+                    <td>
+                        <span class="leadSmaller" data-bind="html:Prefix"></span>
+                    </td>
+                </tr>
+                <tr class="propertiesRow">
+                    <td>
+                        <span class="leadSmaller">Suffix</span>
+                    </td>
+                    <td>
+                        <span class="leadSmaller" data-bind="html:Suffix"></span>
+                    </td>
+                </tr>
+                <tr class="propertiesRow">
+                    <td>
+                        <span class="leadSmaller">Value</span>
+                    </td>
+                    <td>
+                        <span class="leadSmaller" data-bind="html:DefaultValue"></span>
+                    </td>
+                </tr>
+                <tr class="propertiesRow">
+                    <td>
+                        <span class="leadSmaller">Format</span>
+                    </td>
+                    <td>
+                        <span class="leadSmaller" data-bind="html:TransformFormat"></span>
+                    </td>
+                </tr>
+                <tr class="propertiesRow">
+                    <td>
+                        <span class="leadSmaller">Accepts Return</span>
+                    </td>
+                    <td>
+                        <span class="leadSmaller" data-bind="html:AcceptReturn"></span>
+                    </td>
+                </tr>
+                <tr class="propertiesRow">
+                    <td>
+                        <span class="leadSmaller padRight">Make Uppercase</span>
+                    </td>
+                    <td>
+                        <span class="leadSmaller" data-bind="html:MakeUppercase"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <br />
+            <p class="leadSmaller bold">Forms Using This Field</p>
+            <div class="leadSmaller" data-bind="foreach: FormsUsing">
+                <span class="padRight" data-bind="html: FormId"></span>
+            </div>
+        </div>
+    </div>
+</script>

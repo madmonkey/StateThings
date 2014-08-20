@@ -1,0 +1,374 @@
+﻿html {
+    overflow-y: scroll;
+}
+
+hr {
+    color: darkblue;
+    background: darkblue;
+    height: 1px;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+.padLeft {
+    padding-left: 10px;
+}
+
+.padHeader {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.padHeaderSmall {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.padRight {
+    padding-right: 10px;
+}
+
+.padTop {
+    padding-top: 10px;
+}
+
+.padBottom {
+    padding-bottom: 10px;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.borderDark {
+    background-color: #e4dede;
+}
+
+.borderLight {
+    background-color: #cfd4e8;
+}
+
+.borderLight-2 {
+    background-color: #e3e6f1;
+}
+
+.borderDark-2 {
+    background-color: #c2cae6;
+}
+
+.borderBlack {
+    background-color: #000000;
+    color: white;
+}
+
+.borderHeader {
+    background-color: #9799c7;
+}
+
+.largeText {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
+}
+
+.largeInput {
+    width: 550px;
+}
+
+.stateInterfaceLead {
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', 'DejaVu Sans Condensed', sans-serif;
+    font-size: 36px;
+}
+
+.stateInterfaceLead-Small {
+    font-size: 24px;
+}
+
+.requiredField {
+    font-weight: bold;
+    color: #0b0b80;
+}
+
+.btn, .btn-primary, .btn-default, .navbar, .form-control, .modal-content, .progress, .panel-group, .panel {
+    border-radius: 0;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+.lead {
+    font-size: 24px;
+}
+
+.lead-2 {
+    font-size: 16px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.leadLarger {
+    font-size: 38px;
+    font-weight: bold;
+}
+
+.leadSmaller {
+    font-size: 16px;
+}
+
+.failed {
+    color: red;
+}
+
+.glyphicon{
+    font-size:18px;
+}
+
+.glyphicon-white, .glyphicon-white a {
+    color: #fff;
+}
+
+.dashboardIcon{
+    font-size: 120px;
+    background-color:#2672ec;
+    padding:20px;
+}
+
+.medium-header {
+    font-size: 1.3em;
+    text-align: right;
+}
+
+.big-header {
+    font-size: 1.6em;
+    text-align: right;
+}
+
+.record {
+    font-size: 3em;
+    display: inline;
+    color: black;
+}
+
+.application {
+    font-size: 2.4em;
+    color:black;
+    display: inline;
+}
+
+.category {
+    font-size: 2em;
+    color: black;
+    display: inline;
+}
+
+.form {
+    color: black;
+    font-size: 1.3em;
+}
+
+.banner {
+    background-color: #dddddd;
+    padding-left: 1em;
+}
+
+.error {
+    border: 1px;
+    border-style: solid;
+    border-color: red;
+    outline-color:  red;
+}
+
+.errorMessage {
+    color: red;
+}
+
+.linkDisabled {
+    color: gray;
+    pointer-events: none;
+}
+
+.fieldInputWide {
+    width: 569px;
+}
+
+.fieldInput {
+    width: 250px;
+}
+
+.fieldInputMedium {
+    width: 555px;
+}
+
+.fieldTable {
+    margin-left: 15px; 
+    margin-right:10px
+}
+
+.padSelect {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.padCheck {
+    padding-top: 17px;
+}
+
+/* -------------- Form -------------- */
+
+.formLink {
+    font-size: 1.3em;
+}
+
+.formFieldName {
+    font-weight: bolder;
+    font-size: 1.12em;
+    line-height:28px
+}
+
+.formFieldTooltip {
+    font-size: 1.0em;
+    margin: 14px 0 0 0;
+}
+
+.additionalFieldDetails {
+    font-size: .85em;
+    line-height: 10px;
+    margin: 8px;
+}
+
+.fieldNode {
+    font-weight: bold;
+    color: #0b0b80;
+    border: 1px solid;
+    margin: 3px 3px 3px 3px;
+    padding: 3px 4px 3px 4px;
+    line-height: 30px;
+}
+
+.textNode {
+    font-weight: bold;
+    color: #0FAA0F;
+    border: 1px solid;
+    margin: 3px 3px 3px 3px;
+    padding: 3px 4px 3px 4px;
+    line-height: 30px;
+}
+
+.hiddenField {
+    color: #3388ff;
+}
+
+.evenFormField {
+    background-color: #e3e6f1;
+}
+
+.listLink {
+    font-size: 1.3em;
+}
+
+.propertiesHeader {
+    font-size: 13pt;
+    border-bottom: 1px solid;
+    line-height: 30px;
+    border-color: #888888;
+}
+
+.propertiesRow {
+    border-bottom: 1pt solid;
+    border-color: #cccccc;
+}
+
+.panel-heading , .panel-body {
+padding: 3px;
+}
+
+/* -------------- Loader -------------- */
+.loading {
+    margin: 5px;
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #c30;
+    border-top: 2px solid #c30;
+    border-radius: 100%;
+    height: 30px;
+    width: 30px;
+    -webkit-animation: spin .6s infinite linear;
+    -moz-animation: spin .6s infinite linear;
+    -ms-animation: spin .6s infinite linear;
+    -o-animation: spin .6s infinite linear;
+    animation: spin .6s infinite linear;
+}
+
+@keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(359deg);
+        -moz-transform: rotate(359deg);
+        -o-transform: rotate(359deg);
+        -ms-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+
+@-moz-keyframes spin {
+    from {
+        -moz-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -moz-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+
+@-ms-keyframes spin {
+    from {
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -ms-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+
+@-o-keyframes spin {
+    from {
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -o-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}

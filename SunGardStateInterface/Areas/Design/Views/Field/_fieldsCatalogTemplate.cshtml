@@ -1,0 +1,18 @@
+﻿<script type="text/html" id="fieldsCatalog-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <br />
+                <div class="padLeft">
+                    <div class="col-xs-6" data-bind="foreach: Fields.slice(0, fieldsSplit())">
+                        <div data-bind="template: { name: 'fieldsCatalogItem-template' }"></div>
+                    </div>
+                    <div class="col-xs-6" data-bind="foreach: Fields.slice(fieldsSplit(), Fields().length)">
+                        <div data-bind="template: { name: 'fieldsCatalogItem-template' }"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_fieldsCatalogItemTemplate")
+</script>

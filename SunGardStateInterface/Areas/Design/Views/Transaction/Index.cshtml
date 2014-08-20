@@ -1,0 +1,45 @@
+﻿@model StateInterface.Areas.Design.Models.SnippetModel
+@{
+    ViewBag.Title = "Transaction Design";
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="pull-right padRight leadSmaller">
+            <span class="padRight">Records Center</span><select data-bind="options: RecordsCenterSelector.RecordsCenters, optionsText: 'Name', optionsValue: 'Name', value: RecordsCenterSelector.SelectedRecordsCenterName"></select>
+        </div>
+    </div>
+</div>
+<div class="padLeft padRight">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="h2">Transactions Design<a href="#" data-bind="visible: CanDesignManage, click: addSnippet" class="glyphicon glyphicon-plus-sign padLeft" title="Add Transaction"></a></div>
+            <div class="loading" style="margin-left: 350px; margin-top: -40px;" data-bind="visible: snippetsAreLoading"></div>
+        </div>
+    </div>
+    <div data-bind="template: { name: 'noSnippetFound-template' }"></div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div data-bind="template: { name: 'snippetList-template' }"></div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="noSnippetFound-template">
+    <div class="row" data-bind="visible: showNoSnippetFound()">
+        <div class="col-xs-12">
+            <br />
+            <br />
+            <h2 class="text-center text-danger">No transaction snippets were found for this Records Center</h2>
+        </div>
+    </div>
+</script>
+
+<script type="text/javascript">
+    var initialData = @Html.Raw(Model.InitialData)
+</script>
+
+@Html.Partial("_snippetListTemplate")
+@Html.Partial("_snippetModal")
+
+@section scripts{
+    @Scripts.Render("~/bundles/stateinterface_design_snippet")
+}

@@ -1,0 +1,67 @@
+﻿@{
+    Layout = "../Shared/_DesignerLayout.cshtml";
+}
+<form>
+    <div class="gridster" data-bind="template:{afterRender: renderGrid}">
+        <ul id=" container" data-bind="template: { name: controlType, foreach: controls}"></ul>
+    </div>
+</form>
+@Html.Partial("_Controls")
+
+@section scripts{
+    <script src="~/Scripts/jquery.gridster.with-extras.min.js"></script>
+    <script src="~/Scripts/stateinterface.design.layout.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            var initializeVM = function(data) {
+                var self = this;
+                this.renderGrid = function() {
+                        var gridster = $(".gridster ul").gridster({
+                            widget_margins: [16, 16],
+                            widget_base_dimensions: [8, 8],
+                            min_cols: 12,
+                            min_rows: 36,
+                            avoid_overlapped_widgets: false,
+                            autogenerate_stylesheet: true
+                        }).data('gridster').disable();
+
+                        $("select").each(function (idx, ele) {
+                            var parents = this.getAttribute('data-parent');
+                            if (parents.length > 0) {
+                                $(this).chained('#' + parents);
+                            }
+                        });
+                        $("input[type=datepicker]").datepicker();
+                    },
+                    this.controlType = function(c, ctx) {
+                        return c.Type;
+                    },
+                    this.mapObservable = function(control) {
+                        switch (control.Type) {
+                            case ("numeric"):
+                            {
+                                control.Value = ko.observable().extend({ numeric: "must be numeric" });
+                                break;
+                            }
+                            case ("ssn"):
+                            {
+                                control.Value = ko.observable().extend({ mask: "999-99-9999" });
+                                break;
+                            }
+                            default:
+                            {
+                                control.Value = ko.observable();
+                                break;
+                            }
+                        }
+                        return control;
+                    },
+                    this.controls = ko.observableArray(ko.utils.arrayMap(data, function(control) {
+                        return new self.mapObservable(control);
+                    }));
+            };
+            var vm = new initializeVM(@Html.Raw(Json.Encode(Model)));
+            ko.applyBindings(vm);
+        });
+    </script>
+}

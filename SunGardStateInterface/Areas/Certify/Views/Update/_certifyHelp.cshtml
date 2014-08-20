@@ -1,0 +1,160 @@
+﻿<div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="pull-left"><h2 class="padLeft">State Interface Certification Help</h2></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="padLeft">
+                The QA process for state interface forms centers around the test case. Each Criteria on the form requires one or more test cases to certify the criteria. The test cases are derived from the fields in the transaction and the properties of the criteria. Each test case lists the fields that participate in the test case. Fields that are required are shown in bold like <span class="requiredField">THIS</span>. Optional fields are shown in normal text. A test case can be in one of three phases, Unit Test, Verify and Certify and transitions moves the phases in the order listed below.
+            </p>
+            <p class="padLeft">
+                Currently the certification system does not have a workflow to indicate the form's development status. Therefore, it's the responsibility of the team to communicate with when a test case can begin and when test cases on a transaction must be reset due to changes on the form.
+            </p>
+            <p class="padLeft">
+                The following actions can be performed on a test case.
+            </p>
+            <p class="padLeft">
+                <i class="glyphicon glyphicon-thumbs-up"></i>&nbsp;Test Passed
+            </p>
+            <p class="padLeft">
+                <i class="glyphicon glyphicon-thumbs-down"></i>&nbsp;Test Failed
+            </p>
+            <p class="padLeft">
+                <i class="glyphicon glyphicon-fast-backward"></i>&nbsp;Reset Testing to Unit Test Pending
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="lead bold text-left">
+                Test Case Workflow
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2">
+            <p class="lead">
+                Unit Test
+            </p>
+        </div>
+        <div class="col-xs-10">
+            <div class="row">
+                <div class="col-xs-3">
+                    <p>
+                        <span>Unit Test Pending</span>
+                    </p>
+                </div>
+                <div class="col-xs-9">
+                    <p>
+                        The test case is at the beginning of the QA process. A test case in this state hasn't started yet or was manually reset due to a change.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <p>
+                        <span>
+                            Unit Test Failed
+                        </span>
+                    </p>
+                </div>
+                <div class="col-xs-9">
+                    <p>
+                        The test case failed the unit test. Some action is required to reconile the issue.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-xs-2">
+            <p>
+                <span class="lead">Verification</span>
+            </p>
+        </div>
+        <div class="col-xs-10">
+            <div class="row">
+                <div class="col-xs-3">
+                    <p>
+                        <span>Verify Pending</span>
+                    </p>
+                </div>
+                <div class="col-xs-9">
+                    <p>
+                        The test case has been unit tested. The test case is ready for Verification.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <p>
+                        <span>
+                            Verify Failed
+                        </span>
+                    </p>
+                </div>
+                <div class="col-xs-9">
+                    <p>
+                        The test case failed verification. Some action is required to reconile the issue.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-xs-2">
+            <p>
+                <span class="lead">Certification</span>
+            </p>
+        </div>
+        <div class="col-xs-10">
+            <div class="row">
+                <div class="col-xs-3">
+                    <p>
+                        <span>Certify Pending</span>
+                    </p>
+                </div>
+                <div class="col-xs-9">
+                    <p>
+                        The test case has been verified at the customer site on either a test or production system. The test case is ready for Certification.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <p>
+                        <span>
+                            Certify Failed
+                        </span>
+                    </p>
+                </div>
+                <div class="col-xs-9">
+                    <p>
+                        The test case failed certification. Some action is required to reconcile the issue.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <p>
+                        <span>
+                            Certify Passed
+                        </span>
+                    </p>
+                </div>
+                <div class="col-xs-9">
+                    <p>
+                        The test case has been certified at the customer site. The test case is finalized and the scenario is ready for production use.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+﻿<script type="text/html" id="statisticsStatusApplication-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div>
+                <ul class="nav nav-tabs" role="tablist" data-bind="foreach: Applications">
+                    <li data-bind="css: { active: $index() == 0 }"><a class="leadSmaller bold" data-bind="attr:{ href: '#' + Name()}, html: Name" role="tab" data-toggle="tab"></a></li>
+                </ul>
+            </div>
+            <div class="tab-content" data-bind="foreach: Applications">
+                <div class="tab-pane" data-bind="attr:{ id: Name()}, css: { active: $index() == 0 }">
+                    <br />
+                    <span class="lead">Test progress for <span data-bind="html: Name"></span></span>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <span class="medium-header">
+                                <span data-bind="html: Statistics.TotalTestCases"></span>
+                                <span>test cases,</span>
+                                <span data-bind="html: Statistics.PercentVerified"></span>
+                                <span>verified,</span>
+                                <span data-bind="html: Statistics.PercentCertified"></span>
+                                <span>certified</span>
+                            </span>
+                        </div>
+                    </div>
+                    <br />
+                    <div data-bind="template: { name: 'statisticsStatusCategory-template' }"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,44 @@
+﻿<script type="text/html" id="criteria-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="margin-left:30px;">
+                <div class="row">
+                    <div>
+                        <div class="padLeft leadSmaller" data-bind="foreach: Criteria">
+                            <h4 data-bind="html: Name"></h4>
+                            <div class="col-xs-12">
+                                <div class="col-xs-2 pull-left">
+                                    <p class="leadsmaller">Required:</p>
+                                </div>
+
+                                <div class="col-xs-10 pull-left" data-bind="foreach: RequiredFields">
+                                    <span class="leadSmaller" data-bind="html: Name"></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12" data-bind="visible: ConditionalFields().length > 0">
+                                <div class="col-xs-2 pull-left">
+                                    <p class="leadSmaller">Conditional:</p>
+                                </div>
+
+                                <div class="col-xs-10 pull-left" data-bind="foreach: ConditionalFields">
+                                    <span class="leadSmaller" data-bind="html: Name"></span>
+                                    <span class="leadSmaller" data-bind="html: Condition"></span>
+                                    <span class="leadSmaller" data-bind="html: CheckValue"></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12" data-bind="visible: OptionalFields().length > 0">
+                                <div class="col-xs-2 pull-left">
+                                    <p class="leadSmaller">Optional:</p>
+                                </div>
+
+                                <div class="col-xs-10 pull-left" data-bind="foreach: OptionalFields">
+                                    <span class="leadSmaller" data-bind="html: Name"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

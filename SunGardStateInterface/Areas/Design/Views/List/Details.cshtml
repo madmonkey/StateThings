@@ -1,0 +1,24 @@
+﻿@model StateInterface.Areas.Design.Models.OptionListModel
+<div class="row">
+    <div class="col-xs-12">
+        <div data-bind="template: { name: 'optionListProperties-template' }"></div>
+        <div class="leadSmaller">
+            <div data-bind="foreach: OptionListItems">
+                <div data-bind="template: { name: 'optionListItem-template' }"></div>
+                <div data-bind="if: (OptionListItems.length > 0)">
+                    <div class="padBottom"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var initialData = @Html.Raw(Model.InitialData)
+</script>
+
+@Html.Partial("_optionListPropertiesTemplate")
+@Html.Partial("_optionListItemTemplate")
+@section scripts{
+    @Scripts.Render("~/bundles/stateinterface_design_list_details")
+}

@@ -1,0 +1,34 @@
+﻿<script type="text/html" id="text">
+    <li data-bind="css: {error: Value.hasError}, attr:{'data-row': Row, 'data-col': Column, 'data-sizex': ColSpan, 'data-sizey': RowSpan}">
+        <textarea data-bind="id: Name, name: Name, attr:{'maxlength':Length, 'title':Description, 'rows':RowSpan, 'data-sizey':RowSpan}, value: Value, valueUpdate:'afterkeydown', 'class': Style"></textarea>
+    </li>
+</script>
+<script type="text/html" id="numeric">
+    <li data-bind="css: {error: Value.hasError}, attr:{'data-row': Row, 'data-col': Column, 'data-sizex': ColSpan, 'data-sizey': RowSpan}">
+        <input type="text" data-bind="id: Name, name: Name, attr:{'maxlength':Length, 'title':Description, 'rows':RowSpan, 'data-sizey':RowSpan, 'class': Style}, value: Value, valueUpdate:'afterkeydown'" />
+    </li>
+</script>
+<script type="text/html" id="date">
+    <li data-bind="css: {error: Value.hasError}, attr:{'data-row': Row, 'data-col': Column, 'data-sizex': ColSpan, 'data-sizey': RowSpan}">
+        <input type="datepicker" data-bind="id: Name, name: Name, attr:{'maxlength':Length, 'title':Description, 'rows':RowSpan, 'data-sizey':RowSpan, 'class': Style}, value: Value, valueUpdate:'afterkeydown'" />
+    </li>
+</script>
+<script type="text/html" id="ssn">
+    <li data-bind="css: {error: Value.hasError}, attr:{'data-row': Row, 'data-col': Column, 'data-sizex': ColSpan, 'data-sizey': RowSpan}">
+        <textarea data-bind="id: Name, name: Name, attr:{'maxlength':Length, 'title':Description, 'rows':RowSpan, 'data-sizey':RowSpan, 'class': Style}, value: Value, valueUpdate:'afterkeydown'"></textarea>
+    </li>
+</script>
+<script type="text/html" id="label">
+    <li data-bind="attr:{'data-row': Row, 'data-col': Column, 'data-sizex': ColSpan, 'data-sizey': RowSpan}">
+        <label data-bind="text: Caption, attr:{'class': Style}"></label>
+    </li>
+</script>
+<script type="text/html" id="select">
+    <li data-bind="attr:{'data-row': Row, 'data-col': Column, 'data-sizex': ColSpan, 'data-sizey': RowSpan}">
+        <select data-bind="attr:{'class': Style, 'id': Id, 'name': Name, 'data-parent': ParentId}, foreach: OptionList">
+            <option data-bind="value: Code, text: Description, attr:{'class': ParentLink}"></option>
+        </select>
+    </li>
+</script>
+
+

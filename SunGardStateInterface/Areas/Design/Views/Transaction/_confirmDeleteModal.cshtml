@@ -1,0 +1,20 @@
+﻿<div class="modal fade" data-bind="bootstrapShowModal: confirmDeleteModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+                <h4 class="modal-title">Confirm Delete</h4>
+            </div>
+            <form role="form">
+                <div class="modal-body">
+                    <h4>Are you sure you want to delete field <span class="lead" data-bind="html: SelectedField.TagName"></span> ?</h4>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" data-dismiss="modal" class="btn btn-primary" data-bind="click: deleteSnippetField">Yes</a>
+                    <a class="btn btn-default" data-dismiss="modal">No</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</div>

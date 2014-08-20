@@ -1,0 +1,6 @@
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.UI.Test\bin\Debug\StateInterface.UI.Test.dll.config
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.UI.Test\bin\Debug\StateInterface.UI.Test.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.UI.Test\bin\Debug\StateInterface.UI.Test.pdb
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.UI.Test\obj\Debug\StateInterface.UI.Test.csprojResolveAssemblyReference.cache
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.UI.Test\obj\Debug\StateInterface.UI.Test.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.UI.Test\obj\Debug\StateInterface.UI.Test.pdb

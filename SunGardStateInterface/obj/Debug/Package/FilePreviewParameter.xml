@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="Default Web Site/SunGardStateInterface" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\tfsdev\\Beatles\\StateInterfacePortal\\Dev\\Dev\\SunGardStateInterface\\SunGardStateInterface\\obj\\Debug\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\tfsdev\\Beatles\\StateInterfacePortal\\Dev\\Dev\\SunGardStateInterface\\SunGardStateInterface\\obj\\Debug\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="StateInterfaceContext-Web.config Connection String" description="" value="Data Source=.;Initial Catalog=StateInterface;Integrated Security=True;MultipleActiveResultSets=True" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\tfsdev\\Beatles\\StateInterfacePortal\\Dev\\Dev\\SunGardStateInterface\\SunGardStateInterface\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='StateInterfaceContext']/@connectionString" />
+  </parameter>
+</parameters>

@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="StateInterface.Designer.Model.RequestForm">
+    <Position X="13.25" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>IECCAAIABNKgIUAEGAhAAAKAkCAgACAhADAAAABAAAA=</HashCode>
+      <FileName>Form\RequestForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SubmissionMode" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="FieldElements" />
+      <Property Name="RequestFormCategories" />
+      <Property Name="FormFields" />
+      <Property Name="LabelElements" />
+      <Property Name="Transactions" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StateInterface.Designer.Model.OptionField">
+    <Position X="9" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAgAAAAIAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Field\OptionField.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="OptionList" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.TextField" BaseTypeListCollapsed="true">
+    <Position X="11.25" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAQAACAgABAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Field\TextField.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FormatMask" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="StateInterface.Designer.Model.OptionList">
+    <Position X="6" Y="17.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAQAACAlAAACAQAAAAAAAAAAIEAAAAAA=</HashCode>
+      <FileName>Field\OptionList.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="OptionListItems" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StateInterface.Designer.Model.OptionListItem">
+    <Position X="3" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgAAAEAABgAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Field\OptionListItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.Category">
+    <Position X="7.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACIAAAAACgAQAACAhAAAQABAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Association\Category.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="RequestFormCategories" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StateInterface.Designer.Model.State" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="27.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACIAAAAACgAQAACAhAAAQAAAJAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Association\State.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="StateInterface.Designer.Model.FieldCategory" Collapsed="true">
+    <Position X="7.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAABAAAAABAAAAEAAAAAAAAAAAAAAAAiAA=</HashCode>
+      <FileName>Association\FieldCategory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.FieldState" Collapsed="true">
+    <Position X="7.25" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAABACAAEAAAAAAAAAAAABAAAgAA=</HashCode>
+      <FileName>Association\FieldState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.RequestFormCategory">
+    <Position X="10.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAABEAAAABAAAAIAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Association\RequestFormCategory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="RequestForm" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.TxHeader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BACCAAAAAAAAAUQACAhAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Header\TxHeader.cs</FileName>
+      <NewMemberFileName>Association\RequestFormState.cs</NewMemberFileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="StateInterface.Designer.Model.Criteria">
+    <Position X="21.75" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAACAAAAAAAgIQAEKAhABAAAAAAAQAEAAAAAAAEQAAA=</HashCode>
+      <FileName>Transaction\Criteria.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="CriteriaNodes" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StateInterface.Designer.Model.CriteriaNode">
+    <Position X="17" Y="19.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACQgAAAAAAAAAAAAFAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transaction\CriteriaNode.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FieldCriteria" />
+      <Property Name="TxNode" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.FieldCriteria">
+    <Position X="14" Y="20" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACACAAAAAACAAAQAAABAAAAAAIgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transaction\FieldCriteria.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.Header" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIGgAAAAAAgAQAECAhAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Header\Header.cs</FileName>
+      <NewMemberFileName>Transaction\Transaction.cs</NewMemberFileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="StateInterface.Designer.Model.HeaderFieldNode">
+    <Position X="19.25" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABGAAAAEAAARCAAAAAAgAA=</HashCode>
+      <FileName>Header\HeaderFieldNode.cs</FileName>
+      <NewMemberFileName>Transaction\TxFieldNode.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.HeaderNode">
+    <Position X="18" Y="12.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAIABAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Header\HeaderNode.cs</FileName>
+      <NewMemberFileName>Transaction\TxNode.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.HeaderTextNode">
+    <Position X="17" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAA=</HashCode>
+      <FileName>Header\HeaderTextNode.cs</FileName>
+      <NewMemberFileName>Transaction\TxTextNode.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.Field">
+    <Position X="10.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gQACAABAAAAhAQAECChAABxDAIBKEBIhRuAAAAAAGCA=</HashCode>
+      <FileName>Field\Field.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="FieldStates" />
+      <Property Name="FieldCategories" />
+      <Property Name="FormFields" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StateInterface.Designer.Model.FieldElement">
+    <Position X="20" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Form\FieldElement.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FormField" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.FormElement" Collapsed="true">
+    <Position X="16.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACACAAAAAAgAAAIABBwAAQBAAAAAACBgIEACGAAAA=</HashCode>
+      <FileName>Form\FormElement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.FormField">
+    <Position X="19.5" Y="3.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAQAAKAhAAAQNAIAAABIAAAAAAAEAwAA=</HashCode>
+      <FileName>Form\FormField.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Requestform" />
+      <Property Name="Field" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StateInterface.Designer.Model.LabelElement" Collapsed="true">
+    <Position X="13.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAA=</HashCode>
+      <FileName>Form\FormLabel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.OptionElement">
+    <Position X="17.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Form\OptionElement.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Field" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.StyleDefinition" Collapsed="true">
+    <Position X="24.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAEAAAAAAAQAAAAIAIgAQgIBAAAAAAAAAAAAA=</HashCode>
+      <FileName>Form\StyleDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.TextElement">
+    <Position X="15.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Form\TextElement.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Field" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.PropertyExtensions" Collapsed="true">
+    <Position X="26" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EntityBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.Transaction">
+    <Position X="16.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAEAAgAQAEKAhAAAACIAAAQAIAAABAAAHAAAA=</HashCode>
+      <FileName>Transaction\Transaction.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Criterion" />
+      <Property Name="TxNodes" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StateInterface.Designer.Model.TxFieldNode">
+    <Position X="14" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAACAAAQEAAAQCAAAAAAAAA=</HashCode>
+      <FileName>Transaction\TxFieldNode.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FormField" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="StateInterface.Designer.Model.TxNode">
+    <Position X="14" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgCAAAAAAAAAAAAIABAAAAAAAAAAABAAAAAAAEAAAA=</HashCode>
+      <FileName>Transaction\TxNode.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="CriteriaNodeList" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Enum Name="StateInterface.Designer.Model.SubmissionMode">
+    <Position X="20.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Form\RequestForm.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FormatMaskType" Collapsed="true">
+    <Position X="11.25" Y="22.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAACAQAAAAABAAAACAAAAAA=</HashCode>
+      <FileName>Field\TextField.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="StateInterface.Designer.Model.FieldCriteriaCondition" Collapsed="true">
+    <Position X="24.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAGAAAAAAAAAAAAgAAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transaction\FieldCriteria.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="StateInterface.Designer.Model.TextSizes" Collapsed="true">
+    <Position X="27.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAgAAAIAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Form\StyleDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="StateInterface.Designer.Model.VerticalAlignment" Collapsed="true">
+    <Position X="24.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAIAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Form\StyleDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="StateInterface.Designer.Model.HorizontalAlignment" Collapsed="true">
+    <Position X="26" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACACAAAAIAAA=</HashCode>
+      <FileName>Form\StyleDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9.75" />
+</ClassDiagram>

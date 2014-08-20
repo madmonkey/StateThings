@@ -1,0 +1,27 @@
+﻿<div class="modal fade" data-bind="bootstrapShowModal: applicationAssociationModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+                <h3>Application Association <span data-bind="html: FormId"></span></h3>
+            </div>
+            <form role="form">
+                <div class="modal-body">
+                    <span class="leadSmaller">Please select the applications that use this form</span>
+                    <table style="width:100%;">
+                        <tr class="bold leadSmaller" data-bind="foreach: ApplicationsForEdit">
+                            <td>
+                                <span><input type="checkbox" data-bind="checked: IsSelected"></span>
+                                <span data-bind="html: Name"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" data-dismiss="modal" class="btn btn-primary" data-bind="click: saveApplications">Save</a>
+                    <a class="btn btn-default" data-dismiss="modal">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

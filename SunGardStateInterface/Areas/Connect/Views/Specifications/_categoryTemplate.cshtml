@@ -1,0 +1,18 @@
+﻿<script type="text/html" id="category-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div data-bind="foreach: Categories">
+                <span class="lead" data-bind="html: Name"></span>
+                <div data-bind="foreach: Forms">
+                    <div class="padLeft">
+                        <a target="_blank" data-bind="attr: { href: FormSpecUrl }">
+                            <span class="leadSmaller" data-bind="html: FormId"></span>
+                            <span>-</span>
+                            <span class="leadSmaller" data-bind="html: Title"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,16 @@
+﻿@model StateInterface.Areas.Connect.Models.HomeModel
+@{
+    ViewBag.Title = "Connect Home";
+}
+<div class="row padLeft">
+    <div class="col-xs-12">
+        <h2>Connect</h2>
+    </div>
+</div>
+<script type="text/javascript">
+    var initialData = @Html.Raw(Model.InitialData)
+</script>
+
+@section scripts{
+    @Scripts.Render("~/bundles/stateinterfaceconnecthome")
+}

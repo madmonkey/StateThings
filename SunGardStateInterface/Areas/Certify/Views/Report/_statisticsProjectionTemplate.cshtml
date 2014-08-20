@@ -1,0 +1,42 @@
+﻿<script type="text/html" id="statisticsProjection-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="lead">Velocity Calculator</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="padLeft">Project velocity through </span>
+            <span class="padLeft"><input type="radio" name="verifyCertify" value="false" data-bind="checked: $root.isCertification" /> Verification</span>
+            <span class="padLeft"><input type="radio" name="verifyCertify" value="true" data-bind="checked: $root.isCertification" /> Certification</span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-xs-5">
+            <span class="padLeft">If I want to be complete by</span>
+            <input style="width:100px;" type="text" id="datepicker" placeholder="mm/dd/yyyy" data-bind="value: $root.estimatedDate, css: {error: $root.estimatedDate.hasError}, valueUpdate:'afterkeydown'" />
+            <a href="#" title="Calculate Average" data-bind="click: $root.calculateAverage, css: { linkDisabled: $root.estimatedDate.hasError}" class="glyphicon glyphicon-play-circle padHeaderSmall"></a>
+        </div>
+        <div class="col-xs-7">
+            <span data-bind="visible: $root.average() != null && $root.estimatedDate.hasError() === false">
+                You'll need to complete <span class="lead" data-bind="text: $root.average"></span> test cases/day
+            </span>
+                <span data-bind="visible: $root.estimatedDate.hasError, text: $root.estimatedDate.validationMessage" class="errorMessage"></span>
+</div>
+    </div>
+    <br />
+    <div class="row">
+       <div class="col-xs-5">
+            <span class="padLeft">If I average </span>
+           <input style="width:80px;" type="text" data-bind="value: $root.estimatedAverage, css: {error: $root.estimatedAverage.hasError}, valueUpdate:'afterkeydown'" />
+           <span> test cases per day</span>
+           <a href="#" title="Calculate Date" data-bind="click: $root.calculateDate, css: { linkDisabled: $root.estimatedAverage.hasError}" class="glyphicon glyphicon-play-circle padHeaderSmall"></a>
+        </div>
+        <div class="col-xs-7">
+            <span data-bind="visible: $root.date() != null && $root.estimatedAverage.hasError() === false">You'll be complete on <span class="lead" data-bind="text: $root.date"></span></span>
+            <span data-bind="visible: $root.estimatedAverage.hasError, text: $root.estimatedAverage.validationMessage" class="errorMessage"></span>
+        </div>
+    </div>
+</script>
+

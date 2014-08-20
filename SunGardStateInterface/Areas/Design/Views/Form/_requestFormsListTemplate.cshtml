@@ -1,0 +1,25 @@
+﻿<script type="text/html" id="requestFormsList-template">
+    <br />
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-6" data-bind="foreach: RequestForms.slice(0, requestFormsSplit())">
+                    <div class="padLeft">
+                        <a target="_blank" data-bind="attr: { href: FormDetailsUrl } ">
+                            <span class="formLink" data-bind="html: FormId, attr: { Title: Title } "></span>
+                            <span class="leadSmaller" data-bind="html: Title"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-6" data-bind="foreach: RequestForms.slice(requestFormsSplit(), requestFormsSplit() + requestFormsSplit())">
+                    <div class="padLeft">
+                        <a target="_blank" data-bind="attr: { href: FormDetailsUrl } ">
+                            <span class="formLink" data-bind="html: FormId, attr: { Title: Title } "></span>
+                            <span class="leadSmaller" data-bind="html: Title"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,29 @@
+﻿<script type="text/html" id="transactions-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel-group" data-bind="attr: { id: 'accordian_transactions' }">
+                <h2 class="pull-left">
+                    <a class="pull-left glyphicon glyphicon-collapse-down" style="margin-top: 5px" data-toggle="collapse" data-bind="attr:{ 'data-parent': 'accordian_transactions', href: '#collapse_transactions' }"></a>
+                    &nbsp;Transactions
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel-collapse collapse in" data-bind="attr: { id: 'collapse_transactions' }">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-12" data-bind="foreach: Transactions">
+                                <h3 data-bind="html: Name"></h3>
+                                <div data-bind="foreach: TxNodes">
+                                    <span data-bind="css: { fieldNode: IsField, textNode: !IsField() }"><span class="leadSmaller" data-bind="html: DisplayValue"></span></span>
+                                </div>
+                                <div data-bind="template: { name: 'criteria-template' }"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

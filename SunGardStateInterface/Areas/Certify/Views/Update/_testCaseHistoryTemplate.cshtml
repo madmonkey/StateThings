@@ -1,0 +1,18 @@
+﻿<script type="text/html" id="testCaseHistoryTemplate-template">
+    <div class="padLeft" data-bind="if: $root.showTestHistory">
+        <p class="leadSmaller" data-bind="visible: TestCaseHistoryList().length > 0">Test History</p>
+        <div data-bind="foreach: TestCaseHistoryList">
+            <div class="padBottom">
+                <div data-bind="css:{ failed: HasPassed() === false}">
+                    <b><span data-bind="html: QaAction"></span>
+                    <span data-bind="html: HasPassed()=== null ? 'Reset' : HasPassed()=== true ? 'Passed' : 'Failed'"></span></b> on
+                    <span data-bind="html: OccurredAt"></span> by
+                    <span class="padRight" data-bind="html: PerformedBy"></span>
+                </div>
+                <div class="padLeft padRight" data-bind="visible: Note, css:{ failed: HasPassed() === false}">
+                    <span data-bind="html: Note" style="white-space: pre-wrap"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
