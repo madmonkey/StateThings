@@ -7,8 +7,8 @@ $(function () {
     });
     vm.average = ko.observable();
     vm.date = ko.observable();
-    vm.estimatedDate = ko.observable().extend({ validateIsDate: '', validateIsFutureDate: '' });
-    vm.estimatedAverage = ko.observable().extend({ validateIsPostiveNumber: '' });
+    vm.estimatedDate = ko.observable().extend({ initializeValidation: '', validateIsDate: '', validateIsFutureDate: '' });
+    vm.estimatedAverage = ko.observable().extend({ initializeValidation: '', validateIsPostiveNumber: '' });
     vm.isCertification = ko.observable("true");
     vm.isAverageInput = ko.observable(false);
 

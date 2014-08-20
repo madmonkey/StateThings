@@ -1,17 +1,23 @@
 ﻿@model StateInterface.Areas.Design.Models.TransactionSnippetModel
-<div class="padLeft padRight">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="pull-right">
-                <a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" href="@Url.Action("Help")"></a>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-xs-12">
+        @* This is so that the navigation lines up when the recordsCenterSelector is not part of the page *@
+        <div class="recordsCenterSelectorPlaceHolder"></div>
     </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <div data-bind="template: { name: 'snippetProperties-template' }"></div>
-            <div data-bind="template: { name: 'snippetField-template' }"></div>
-        </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <ol class="breadcrumb">
+            <li><a data-bind="attr: { href: DesignHomeUrl }">Design</a></li>
+            <li><a data-bind="attr: { href: TransactionsHomeUrl }">Transactions</a></li>
+            <li class="active"><span data-bind="html: TokenName"></span></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div data-bind="template: { name: 'snippetProperties-template' }"></div>
+        <div data-bind="template: { name: 'snippetField-template' }"></div>
     </div>
 </div>
 <script type="text/javascript">

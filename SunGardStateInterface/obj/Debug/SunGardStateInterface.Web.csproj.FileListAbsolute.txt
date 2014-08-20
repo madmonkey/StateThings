@@ -11,7 +11,6 @@ C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStat
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\Newtonsoft.Json.dll
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\StateInterface.Designer.Model.dll
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\StateInterface.Designer.Repository.dll
-C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\StateInterface.Service.dll
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\System.Net.Http.Formatting.dll
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\System.Spatial.dll
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\System.Web.Helpers.dll
@@ -28,12 +27,10 @@ C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStat
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\WebGrease.dll
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\FluentNHibernate.dll
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\NHibernate.dll
-C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\StateInterface.Model.dll
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\Iesi.Collections.dll
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\Designer.Tasks.pdb
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\StateInterface.Designer.Model.pdb
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\StateInterface.Designer.Repository.pdb
-C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\StateInterface.Service.pdb
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\Antlr3.Runtime.pdb
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\Autofac.xml
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\Autofac.Integration.Mvc.xml
@@ -57,7 +54,6 @@ C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStat
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\System.Web.WebPages.Razor.xml
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\FluentNHibernate.xml
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\NHibernate.xml
-C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\StateInterface.Model.pdb
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\Iesi.Collections.xml
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\de\Microsoft.Data.Edm.resources.dll
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\es\Microsoft.Data.Edm.resources.dll

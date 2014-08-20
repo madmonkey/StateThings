@@ -8,24 +8,22 @@ namespace StateInterface.Areas.Design.Models
     {
         public RecordsCenterSelectorModel RecordsCenterSelector { get; set; }
         public List<RequestFormCatalogProjectionModel> RequestForms { get; set; }
+
         public string InitialData { get; set; }
         public GetFormsParametersModel GetFormsParameters { get; set; }
         public string GetFormsUrl { get; set; }
         public string FormDetailsUrl { get; set; }
-        public string FormEditUrl { get; set; }
+        public string DesignHomeUrl { get; set; }
 
         public FormModel()
         {
             GetFormsParameters = new GetFormsParametersModel();
             RequestForms = new List<RequestFormCatalogProjectionModel>();
         }
-        public FormModel(User user, IEnumerable<RecordsCenter> recordsCenters, string getFormsUrl, string formDetailsUrl, string formEditUrl)
+        public FormModel(User user, IEnumerable<RecordsCenter> recordsCenters)
             :this()
         {
             RecordsCenterSelector = new RecordsCenterSelectorModel(user, recordsCenters);
-            GetFormsUrl = getFormsUrl;
-            FormDetailsUrl = formDetailsUrl;
-            FormEditUrl = formEditUrl;
         }
     }
 }

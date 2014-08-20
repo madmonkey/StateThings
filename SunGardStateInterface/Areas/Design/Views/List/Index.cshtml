@@ -1,7 +1,4 @@
-﻿
-@{
-    ViewBag.Title = "List Design";
-}
+﻿@model StateInterface.Areas.Design.Models.ListModel
 <div class="row">
     <div class="col-xs-12">
         <div class="pull-right padRight leadSmaller">
@@ -11,6 +8,10 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
+        <ol class="breadcrumb">
+            <li><a data-bind="attr: { href: DesignHomeUrl }">Design</a></li>
+            <li class="active">Lists</li>
+        </ol>
         <div class="pull-left"><h2 class="padLeft">List Design</h2></div>
         <div class="pull-left padLeft" style="margin-top:15px;"><div class="loading" data-bind="visible: listsAreLoading"></div></div>
     </div>

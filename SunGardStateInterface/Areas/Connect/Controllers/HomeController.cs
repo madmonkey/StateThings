@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Designer.Tasks;
+using Newtonsoft.Json;
 using StateInterface.Areas.Connect.Models;
 using StateInterface.Designer.Model;
 using System;

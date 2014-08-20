@@ -222,6 +222,15 @@ a:link {
     padding-top: 17px;
 }
 
+/* -------------- Generic  -------------- */
+.recordsCenterSelectorPlaceHolder {
+    padding-bottom: 24px;
+}
+
+.itemUsingItem {
+    font-size: .8em;
+}
+
 /* -------------- Form -------------- */
 
 .formLink {
@@ -275,11 +284,20 @@ a:link {
     font-size: 1.3em;
 }
 
-.propertiesHeader {
-    font-size: 13pt;
+.fieldPropertiesTableHeader {
     border-bottom: 1px solid;
     line-height: 30px;
     border-color: #888888;
+}
+
+.fieldPropertiesColumnHeader {
+    font-size: 12pt;
+    padding-left: 10px;
+}
+
+.fieldPropertiesContent {
+    font-size: 12pt;
+    padding-left:10px;
 }
 
 .propertiesRow {

@@ -9,7 +9,6 @@ using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
-using StateInterface.Service;
 using StateInterface.Designer.Model;
 using Designer.Tasks;
 using StateInterface.Designer.Repository;

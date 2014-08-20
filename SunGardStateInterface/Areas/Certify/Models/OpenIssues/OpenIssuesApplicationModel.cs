@@ -24,14 +24,14 @@ namespace StateInterface.Areas.Certify.Models
             updateFormUrl = string.Format("{0}#{1}tc_", updateFormUrl, application.Name);
 
             var categories = failedForApplication
-                .SelectMany(x => x.Criteria.Transaction.RequestForm.RequestFormCategories
-                    .Select(y => y.Category))
+                .SelectMany(x => x.Criteria.Transaction.RequestForm.Categories
+                    .Select(y => y))
                 .Distinct();
             foreach (var category in categories)
             {
                 var failedForCategory = failedForApplication
-                    .Where(x => x.Criteria.Transaction.RequestForm.RequestFormCategories
-                        .Any(y => y.Category.Id == category.Id));
+                    .Where(x => x.Criteria.Transaction.RequestForm.Categories
+                        .Any(y => y.Id == category.Id));
 
                 var openIssuesCategory = new OpenIssuesCategoryModel(category, failedForCategory, formDetailsUrl, updateFormUrl);
                 Categories.Add(openIssuesCategory);

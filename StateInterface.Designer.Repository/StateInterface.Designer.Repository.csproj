@@ -143,7 +143,6 @@
     <Compile Include="Maps\HeaderTextNodeMap.cs" />
     <Compile Include="Maps\HeaderNodeMap.cs" />
     <Compile Include="Maps\HeaderMap.cs" />
-    <Compile Include="Maps\RequestFormCategoryMap.cs" />
     <Compile Include="Maps\FieldElementMap.cs" />
     <Compile Include="Maps\FormFieldMap.cs" />
     <Compile Include="Maps\RequestFormCategoryProjectionMap.cs" />

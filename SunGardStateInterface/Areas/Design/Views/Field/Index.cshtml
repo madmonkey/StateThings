@@ -8,7 +8,11 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <div class="pull-left"><h2 class="padLeft">@ViewBag.Title</h2></div>
+        <ol class="breadcrumb">
+            <li><a data-bind="attr: { href: DesignHomeUrl }">Design</a></li>
+            <li class="active">Fields</li>
+        </ol>
+        <div class="pull-left"><h2 class="padLeft">Field Design</h2></div>
         <div class="pull-left padLeft" style="margin-top:15px;"><div class="loading" data-bind="visible: fieldsAreLoading"></div></div>
     </div>
 </div>
@@ -29,6 +33,7 @@
 <script type="text/javascript">
     var initialData = @Html.Raw(Model.InitialData)
 </script>
+
 @Html.Partial("_fieldsCatalogTemplate")
 
 @section scripts{

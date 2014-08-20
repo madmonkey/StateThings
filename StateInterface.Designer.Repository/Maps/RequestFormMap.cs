@@ -27,9 +27,8 @@ namespace StateInterface.Designer.Repository.Mappings
             HasMany(x => x.FieldElements).AsBag().OrderBy("Sequence").Cascade.AllDeleteOrphan();
             HasMany(x => x.FormFields).AsBag().OrderBy("Sequence").Cascade.AllDeleteOrphan();
             HasMany(x => x.Transactions).AsBag().OrderBy("Sequence").Cascade.AllDeleteOrphan();
-            HasMany(x => x.RequestFormCategories).AsBag().Cascade.AllDeleteOrphan();
+            HasManyToMany(x => x.Categories).AsBag().Cascade.All().Table("RequestFormCategory");
             HasManyToMany(x => x.Applications).AsBag().Cascade.All().Table("RequestFormApplication");
-
             Map(x => x.SubmissionMode, "SubmissionMode_Id").CustomType<SubmissionMode>();
         }
     }

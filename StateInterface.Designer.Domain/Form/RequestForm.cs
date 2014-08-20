@@ -32,7 +32,7 @@ namespace StateInterface.Designer.Model
         public virtual string Description { get; set; }
         public virtual IList<FieldElement> FieldElements { get; set; }
         public virtual RecordsCenter RecordsCenter { get; set; }
-        public virtual IList<RequestFormCategory> RequestFormCategories { get; set; }
+        public virtual IList<Category> Categories { get; set; }
         public virtual IList<Application> Applications { get; set; }
         public virtual IList<FormField> FormFields { get; set; }
         public virtual IList<LabelElement> LabelElements { get; set; }
@@ -49,7 +49,7 @@ namespace StateInterface.Designer.Model
             FieldElements = new List<FieldElement>();
             Transactions = new List<Transaction>();
             FormFields = new List<FormField>();
-            RequestFormCategories = new List<RequestFormCategory>();
+            Categories = new List<Category>();
             Applications = new List<Application>();
             TestCases = new List<TestCase>();
 
@@ -94,9 +94,9 @@ namespace StateInterface.Designer.Model
             RecordsCenter = sourceRequestForm.RecordsCenter;
 
             //todo: RequestFormCategory should be elimated and handled with the same structure as Applications
-            foreach (var sourceRequestFormCategories in sourceRequestForm.RequestFormCategories)
+            foreach (var category in sourceRequestForm.Categories)
             {
-                RequestFormCategories.Add(new RequestFormCategory(this, sourceRequestFormCategories.Category));
+                Categories.Add(category);
             }
 
             foreach (var sourceApplication in sourceRequestForm.Applications)

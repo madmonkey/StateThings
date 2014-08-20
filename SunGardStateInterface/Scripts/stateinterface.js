@@ -77,103 +77,34 @@ $(function () {
             }
         };
 
-        ko.extenders.validateIsPostiveNumber = function (target, overrideMessage) {
-            //add some sub-observables to our observable
-            target.hasError = ko.observable();
-            target.validationMessage = ko.observable();
+        ko.extenders.initializeValidation = function (target) {
+            target.hasError = ko.observable(false);
+            target.validationMessage = ko.observable('');
 
-            //define a function to do validation
+            function validate(newValue) {
+                target.hasError(false);
+                target.validationMessage('');
+            }
+            target.subscribe(validate);
+            return target;
+        };
+
+        ko.extenders.validateIsPostiveNumber = function (target, overrideMessage) {
             function validate(newValue) {
                 var expression = /[^0-9.]/;
                 target.hasError(expression.test(newValue));
                 target.validationMessage(overrideMessage || "Input must be a positive number");
             }
-
-            //initial validation - on page load
-            //validate(target());
-
-            //validate whenever the value changes
             target.subscribe(validate);
-
-            //return the original observable
             return target;
         };
 
         ko.extenders.validateIsPostiveInteger = function (target, overrideMessage) {
-            target.hasError = ko.observable();
-            target.validationMessage = ko.observable();
-
-            function validate(newValue) {
-                console.log(newValue + ':' + target.value);
-                var expression = /[^0-9]/;
-                target.hasError(expression.test(newValue));
-                console.log(expression.test(newValue));
-                target.validationMessage(overrideMessage || "Input must be a positive digit.");
-            }
-
-            target.subscribe(validate);
-            return target;
-        };
-
-        ko.extenders.validateIsMin = function (target, number, overrideMessage) {
-            target.hasError = ko.observable();
-            target.validationMessage = ko.observable();
-            target.minimumValue = ko.observable(parseInt(number));
-
-            function validate(newValue) {
-                target.hasError(parseInt(newValue) <= target.minimumValue());
-                target.validationMessage(overrideMessage || "Input must be greater than " + target.minimumValue());
-            }
-
-            target.subscribe(validate);
-            return target;
-        };
-
-        ko.extenders.validateIsMax = function (target, number, overrideMessage) {
-            target.hasError = ko.observable();
-            target.validationMessage = ko.observable();
-            target.minimumValue = ko.observable(parseInt(number));
-
-            function validate(newValue) {
-                target.hasError(parseInt(newValue) >= target.minimumValue());
-                target.validationMessage(overrideMessage || "Input must be less than " + target.minimumValue());
-            }
-
-            target.subscribe(validate);
-            return target;
-        };
-
-        ko.extenders.validateIsWholeNumberInRange = function (target, parameters) {
-            target.hasError = ko.observable();
-            target.validationMessage = ko.observable();
-            target.minimumValue = ko.observable(parseInt(parameters.minimumValue));
-            target.maximumValue = ko.observable(parseInt(parameters.maximumValue));            
-
             function validate(newValue) {
                 var expression = /[^0-9]/;
-                if (!!newValue) {
-                    if (!expression.test(newValue)) {
-                        if (parseInt(newValue) >= target.minimumValue()) {
-                            if (parseInt(newValue) > target.maximumValue()) {
-                                target.hasError(true);
-                                target.validationMessage("Input must be less than or equal to " + target.maximumValue());
-                            }
-                            else {
-                                target.hasError(false);
-                            }
-                        }
-                        else {
-                            target.hasError(true);
-                            target.validationMessage("Input must be greater than or equal to " + target.minimumValue());
-                        }
-                    }
-                    else {
-                        target.hasError(true);
-                        target.validationMessage("Input must be a whole number");
-                    }
-                }
-                else {
-                    target.hasError(false);
+                if (!target.hasError()) {
+                    target.hasError(expression.test(newValue));
+                    target.validationMessage(overrideMessage || "Input must be a positive digit.");
                 }
             }
             target.subscribe(validate);
@@ -181,16 +112,15 @@ $(function () {
         };
 
         ko.extenders.validateIsDate = function (target, overrideMessage) {
-            target.hasError = ko.observable();
-            target.validationMessage = ko.observable();
-
             function validate(newValue) {
-                if (newValue != '') {
-                    var isValidFormat = moment(newValue, 'MM/DD/YYYY', true).isValid();
-                    target.hasError(!isValidFormat);
-                    target.validationMessage(overrideMessage || "Input must be a date");
-                } else {
-                    target.hasError(newValue ? true : false);
+                if (!target.hasError()) {
+                    if (newValue != '') {
+                        var isValidFormat = moment(newValue, 'MM/DD/YYYY', true).isValid();
+                        target.hasError(!isValidFormat);
+                        target.validationMessage(overrideMessage || "Input must be a date");
+                    } else {
+                        target.hasError(newValue ? true : false);
+                    }
                 }
             }
             target.subscribe(validate);
@@ -198,13 +128,12 @@ $(function () {
         };
 
         ko.extenders.validateIsFutureDate = function (target, overrideMessage) {
-            target.hasError = ko.observable();
-            target.validationMessage = ko.observable();
-
             function validate(newValue) {
-                if (moment(newValue, 'MM/DD/YYYY', true).isValid()) {
-                    target.hasError(moment(newValue).isBefore(moment()));
-                    target.validationMessage(overrideMessage || "Input must be a future date");
+                if (!target.hasError()) {
+                    if (moment(newValue, 'MM/DD/YYYY', true).isValid()) {
+                        target.hasError(moment(newValue).isBefore(moment()));
+                        target.validationMessage(overrideMessage || "Input must be a future date");
+                    }
                 }
             }
             target.subscribe(validate);
@@ -212,14 +141,39 @@ $(function () {
         };
 
         ko.extenders.validateNonEmpty = function (target, overrideMessage) {
-            target.hasError = ko.observable();
-            target.validationMessage = ko.observable();
-
             function validate(newValue) {
-                target.hasError(newValue ? false : true);
-                target.validationMessage(overrideMessage || "Input must not be blank");
+                if (!target.hasError()) {
+                    target.hasError(newValue ? false : true);
+                    target.validationMessage(overrideMessage || "This field is required");
+                }
             }
             validate(target());
+            target.subscribe(validate);
+            return target;
+        };
+
+        ko.extenders.validateIsMin = function (target, number, overrideMessage) {
+            target.minimumValue = ko.observable(parseInt(number));
+
+            function validate(newValue) {
+                if (!target.hasError()) {
+                    target.hasError(parseInt(newValue) < target.minimumValue());
+                    target.validationMessage(overrideMessage || "Input is less than " + target.minimumValue());
+                }
+            }
+            target.subscribe(validate);
+            return target;
+        };
+
+        ko.extenders.validateIsMax = function (target, number, overrideMessage) {
+            target.maximumValue = ko.observable(parseInt(number));
+
+            function validate(newValue) {
+                if (!target.hasError()) {
+                    target.hasError(parseInt(newValue) > target.maximumValue());
+                    target.validationMessage(overrideMessage || "Input is greater than " + target.maximumValue());
+                }
+            }
             target.subscribe(validate);
             return target;
         };

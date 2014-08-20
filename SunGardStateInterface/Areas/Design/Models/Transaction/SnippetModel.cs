@@ -8,6 +8,7 @@ namespace StateInterface.Areas.Design.Models
     {
         public RecordsCenterSelectorModel RecordsCenterSelector { get; set; }
         public List<TransactionSnippetModel> TransactionSnippets { get; set; }
+
         public SnippetsParameterModel SnippetsParameter { get; set; }
         public SnippetParameterModel SnippetParameter { get; set; }
         public string GetSnippetsUrl { get; set; }
@@ -16,6 +17,7 @@ namespace StateInterface.Areas.Design.Models
         public string DeleteSnippetUrl { get; set; }
         public bool CanDesignManage { get; set; }
         public string InitialData { get; set; }
+        public string DesignHomeUrl { get; set; }
 
         public SnippetModel()
         {

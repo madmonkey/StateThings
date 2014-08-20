@@ -12,21 +12,21 @@ namespace StateInterface.Areas.Design.Models
     {
         public RecordsCenterSelectorModel RecordsCenterSelector { get; set; }
         public List<ListCatalogProjectionModel> Lists { get; set; }
+
         public string InitialData { get; set; }
         public GetListsParametersModel GetListsParameters { get; set; }
         public string GetListsUrl { get; set; }
         public string ListDetailsUrl { get; set; }
+        public string DesignHomeUrl { get; set; }
+
         public ListModel()
         {
             GetListsParameters = new GetListsParametersModel();
             Lists = new List<ListCatalogProjectionModel>();
         }
-        public ListModel(User user, IEnumerable<RecordsCenter> recordsCenters, string getListsUrl, string listDetailsUrl)
-            :this()
-        {            
-            GetListsUrl = getListsUrl;
-            ListDetailsUrl = listDetailsUrl;
-
+        public ListModel(User user, IEnumerable<RecordsCenter> recordsCenters)
+            : this()
+        {
             RecordsCenterSelector = new RecordsCenterSelectorModel(user, recordsCenters);
         }
     }

@@ -22,9 +22,9 @@ namespace StateInterface.Areas.Certify.Models
             RecordsCenter = new RecordsCenterModel(form.RecordsCenter);
             RequestFormCategories = new List<RequestFormCategoryProjectionModel>();
 
-            foreach (var item in form.RequestFormCategories)
+            foreach (var item in form.Categories)
             {
-                RequestFormCategories.Add(new RequestFormCategoryProjectionModel(form, item.Category));
+                RequestFormCategories.Add(new RequestFormCategoryProjectionModel(form, item));
             }
             Statistics = new StatisticsDetailsModel(form.GetQaStatisticsDetails());
         }

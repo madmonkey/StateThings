@@ -227,6 +227,7 @@
     <Compile Include="Areas\Design\Models\Field\FieldDetailsModel.cs" />
     <Compile Include="Areas\Design\Models\Field\FormFieldModel.cs" />
     <Compile Include="Areas\Design\Models\Field\GetFieldsParametersModel.cs" />
+    <Compile Include="Areas\Design\Models\Field\UsesField.cs" />
     <Compile Include="Areas\Design\Models\FormRequestModel.cs" />
     <Compile Include="Areas\Design\Models\Form\PostApplicationParametersModel.cs" />
     <Compile Include="Areas\Design\Models\Form\ApplicationModel.cs" />
@@ -252,6 +253,7 @@
     <Compile Include="Areas\Design\Models\List\OptionListTierModel.cs" />
     <Compile Include="Areas\Design\Models\List\OptionListModel.cs" />
     <Compile Include="Areas\Design\Models\List\OptionListItemModel.cs" />
+    <Compile Include="Areas\Design\Models\List\UsesList.cs" />
     <Compile Include="Areas\Design\Models\Transaction\SnippetModel.cs" />
     <Compile Include="Areas\Design\Models\Transaction\SnippetParameterModel.cs" />
     <Compile Include="Areas\Design\Models\Transaction\SnippetsParameterModel.cs" />
@@ -430,6 +432,7 @@
     <Content Include="Areas\Design\Views\List\_optionListItemTemplate.cshtml" />
     <Content Include="Areas\Design\Views\List\_optionListPropertiesTemplate.cshtml" />
     <Content Include="Areas\Certify\Views\Report\OpenIssues.cshtml" />
+    <Content Include="Unauthorized.html" />
     <None Include="Properties\PublishProfiles\localhost.pubxml" />
     <None Include="Properties\PublishProfiles\PSJDevTest Debug.pubxml" />
     <None Include="Properties\PublishProfiles\PSJDevTest Release.pubxml" />
@@ -523,7 +526,7 @@
     <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
@@ -532,6 +535,8 @@
     <None Include="readme.txt" />
     <Content Include="Areas\Design\Views\Layout\Index.cshtml" />
     <Content Include="Areas\Design\Views\Shared\_Controls.cshtml" />
+    <Content Include="Views\Home\NotFound.cshtml" />
+    <Content Include="Views\Home\Unauthorized.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -555,10 +560,6 @@
     <ProjectReference Include="..\StateInterface.Designer.Repository\StateInterface.Designer.Repository.csproj">
       <Project>{40657902-a97e-4d4e-aa7c-7d1e9343e9f3}</Project>
       <Name>StateInterface.Designer.Repository</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StateInterface.Service\StateInterface.Service.csproj">
-      <Project>{6685c5c1-adef-4663-a3cf-1c84c365d3b0}</Project>
-      <Name>StateInterface.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

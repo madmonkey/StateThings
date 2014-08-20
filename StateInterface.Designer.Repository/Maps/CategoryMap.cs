@@ -15,7 +15,6 @@ namespace StateInterface.Designer.Repository.Mappings
             Id(x => x.Id);
             Map(x => x.IsSystemCategory);
             Map(x => x.Name);
-            HasMany(x => x.RequestFormCategories).AsBag().Cascade.AllDeleteOrphan();
         }
     }
 }

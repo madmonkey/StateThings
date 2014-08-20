@@ -14,8 +14,9 @@ namespace StateInterface.Areas.Design.Controllers
         {
             var homeModel = new HomeModel(Url.Action("Index", "Form"));
 
-
             homeModel.InitialData = JsonConvert.SerializeObject(homeModel);
+            
+            ViewBag.Title = "Designer Home";
             return View(homeModel);
         }
     }

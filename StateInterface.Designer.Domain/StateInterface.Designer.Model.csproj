@@ -126,7 +126,6 @@
     <Compile Include="Association\Application.cs" />
     <Compile Include="Association\Category.cs" />
     <Compile Include="Association\RecordsCenter.cs" />
-    <Compile Include="Association\RequestFormCategory.cs" />
     <Compile Include="Certification\QAStatistics.cs" />
     <Compile Include="Certification\StatisticsApplication.cs" />
     <Compile Include="Certification\StatisticsCategory.cs" />
@@ -137,10 +136,12 @@
     <Compile Include="Certification\StatisticsRecordsCenter.cs" />
     <Compile Include="Certification\StatisticsRequestForm.cs" />
     <Compile Include="Comparison.cs" />
+    <Compile Include="Exceptions\ObjectNotFoundException.cs" />
+    <Compile Include="Exceptions\SecurityAccessDeniedException.cs" />
+    <Compile Include="Exceptions\ValidationException.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Certification\TestCaseCriteriaNode.cs" />
     <Compile Include="Certification\TestCase.cs" />
-    <Compile Include="Interface\IDesignerTasks.cs" />
     <Compile Include="OptionList\OptionListTier.cs" />
     <Compile Include="Helper\PropertyHelper.cs" />
     <Compile Include="Projections\ApplicationFormProjection.cs" />
@@ -187,6 +188,7 @@
     <None Include="ClassDiagram.cd" />
     <None Include="ICAKey.snk" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

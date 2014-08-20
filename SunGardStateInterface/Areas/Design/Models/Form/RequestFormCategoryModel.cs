@@ -9,9 +9,9 @@ namespace StateInterface.Areas.Design.Models
     public class RequestFormCategoryModel
     {
         public string Name { get; set; }
-        public RequestFormCategoryModel(RequestFormCategory cat)
+        public RequestFormCategoryModel(Category category)
         {
-            Name = cat.Category.Name;
+            Name = category.Name;
         }
     }
 }

@@ -26,17 +26,19 @@ namespace StateInterface.Areas.Design.Models
         }
         public TransactionSnippetFieldModel SelectedField { get; set; }
         public SnippetParameterModel SnippetForEdit { get; set; }
+        public IEnumerable<KeyValuePair<string,string>> AvailableTypes { get; set; }
+        public IEnumerable<KeyValuePair<string, string>> AvailableOptions { get; set; }
+        public IEnumerable<KeyValuePair<string, string>> AvailableNameFormats { get; set; }
+        public IEnumerable<KeyValuePair<string, string>> AvailableDateFormats { get; set; }
+
+        public string InitialData { get; set; }
+        public string DesignHomeUrl { get; set; }
+        public string TransactionsHomeUrl { get; set; }
         public string SnippetDetailsUrl { get; set; }
         public string UpdateSnippetUrl { get; set; }
         public string UpdateSnippetFieldUrl { get; set; }
         public string DeleteSnippetFieldUrl { get; set; }
         public bool CanDesignManage { get; set; }
-        public IEnumerable<KeyValuePair<string,string>> AvailableTypes { get; set; }
-        public IEnumerable<KeyValuePair<string, string>> AvailableOptions { get; set; }
-        public IEnumerable<KeyValuePair<string, string>> AvailableNameFormats { get; set; }
-
-        public IEnumerable<KeyValuePair<string, string>> AvailableDateFormats { get; set; }
-        public string InitialData { get; set; }
         
         public TransactionSnippetModel(TransactionSnippet snippet, IEnumerable<KeyValuePair<string,string>> availableTypes)
         {
@@ -53,7 +55,7 @@ namespace StateInterface.Areas.Design.Models
             IncludePrefixAndSuffix = snippet.IncludePrefixAndSuffix;
             Description = snippet.Description;
             TransactionSnippetFields = new List<TransactionSnippetFieldModel>();
-            foreach (var field in snippet.TransactionSnippetFields)
+            foreach (var field in snippet.TransactionSnippetFields.OrderBy(x => x.TagName))
             {
                 _transactionSnippetFieldModels.Add(new TransactionSnippetFieldModel(field));
             }

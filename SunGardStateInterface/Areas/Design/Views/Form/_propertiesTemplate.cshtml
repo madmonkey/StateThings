@@ -2,10 +2,10 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="padHeader" style="padding-bottom: 0">
-                <span class="leadLarger" style="font-weight: normal" data-bind="html:FormId"></span>
+                <span class="leadLarger" data-bind="html:FormId"></span>
                 <span class="leadSmaller" data-bind="html: Title"></span><span class="leadSmaller">, v</span><span class="leadSmaller" data-bind="html: Version"></span>                
                 
-                <div class="pull-right">
+                <div class="pull-right padRight">
                     <a target="_blank" title="Preview Form" class="padRight glyphicon glyphicon-eye-open" style="margin-top:14px;" data-bind="attr:{ href: PreviewFormUrl() }"></a>
                     <a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" href="@Url.Action("Help")"></a>
                 </div>

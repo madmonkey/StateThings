@@ -10,12 +10,6 @@ namespace StateInterface.Designer.Model
         public virtual int Id { get; set; }
         public virtual bool IsSystemCategory { get; set; }
         public virtual string Name { get; set; }
-        public virtual IList<RequestFormCategory> RequestFormCategories { get; set; }
-
-        public Category()
-        {
-            RequestFormCategories = new List<RequestFormCategory>();
-        }
 
         #region IDataErrorInfo Members
 

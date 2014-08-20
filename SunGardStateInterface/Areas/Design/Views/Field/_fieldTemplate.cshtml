@@ -1,8 +1,8 @@
 ﻿<script type="text/html" id="field-template">
     <div class="row">
         <div class="col-xs-12">
-            <div class="padHeader">
-                <span class="leadLarger">@ViewBag.Title</span>
+            <div class="padHeader" style="padding-bottom: 0">
+                <span class="leadLarger" data-bind="html: TagName"></span>
                 <div class="pull-right">
                     @*<a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" href="@Url.Action("Help")"></a>*@
                 </div>
@@ -110,7 +110,9 @@
             <br />
             <p class="leadSmaller bold">Forms Using This Field</p>
             <div class="leadSmaller" data-bind="foreach: FormsUsing">
-                <span class="padRight" data-bind="html: FormId"></span>
+                <a data-bind="attr: { href: FormDetailsUrl }">
+                    <span class="padRight" data-bind="html: RequestFormName"></span>
+                </a>
             </div>
         </div>
     </div>

@@ -17,8 +17,8 @@
     vm.evaluateShowNoSnippetsMessage();
 
     vm.snippetModal = ko.observable(false);
-    vm.SnippetParameter.Name = ko.observable().extend({ validateNonEmpty: '*' });
-    vm.SnippetParameter.Description = ko.observable().extend({ validateNonEmpty: '*' });
+    vm.SnippetParameter.Name = ko.observable().extend({initializeValidation: '', validateNonEmpty: '*' });
+    vm.SnippetParameter.Description = ko.observable().extend({ initializeValidation: '', validateNonEmpty: '*' });
 
     vm.isSnippetError = ko.computed(function () {
         return vm.SnippetParameter.Name.hasError() || vm.SnippetParameter.Description.hasError()

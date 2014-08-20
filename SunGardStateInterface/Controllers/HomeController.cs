@@ -1,4 +1,5 @@
-﻿using StateInterface.Designer.Model;
+﻿using Designer.Tasks;
+using StateInterface.Designer.Model;
 using SunGardStateInterface.Models;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace StateInterface.Controllers
         {
             _designerTasks = designerTasks;
         }
+        [HttpGet]
         public ActionResult Index()
         {
             return View();
@@ -26,6 +28,21 @@ namespace StateInterface.Controllers
             _designerTasks.SetRecordsCenterForUser(User.Identity.Name, model.RecordsCenterName);
 
             return Json(model);
+        }
+        [HttpGet]
+        public ActionResult Error()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult NotFound()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Unauthorized()
+        {
+            return View();
         }
     }
 }

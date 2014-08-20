@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Designer.Tasks;
+using Newtonsoft.Json;
 using StateInterface.Areas.Connect.Models;
 using StateInterface.Designer.Model;
 using System;
@@ -19,7 +20,7 @@ namespace StateInterface.Areas.Connect.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var recordsCenters = _designerTasks.GetRecordsCenters();
+            var recordsCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
 
             var specificationsModel = new SpecificationsModel(recordsCenters, Url.Action("GetForms"));
 
@@ -30,14 +31,14 @@ namespace StateInterface.Areas.Connect.Controllers
         public ActionResult GetForms(FormsRequestParametersModel formsRequest)
         {
             var categories = _designerTasks.GetCategories();
-            var recordsCenter = _designerTasks.GetRecordsCenters().FirstOrDefault(x => x.Id == formsRequest.RecordsCenterId);
-            var formProjections = _designerTasks.GetFormProjections(formsRequest.RecordsCenterId);
+            var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Id == formsRequest.RecordsCenterId);
+            var formProjections = _designerTasks.GetFormProjections(new TaskParameter<RecordsCenterId>(User.Identity.Name){Parameters = new RecordsCenterId(formsRequest.RecordsCenterId)});
 
             List<CategoryModel> categoryModels = new List<CategoryModel>();
 
             foreach (var category in categories.OrderBy(x => x.Name))
             {
-                var forms = formProjections.Where(x => x.RequestFormCategories.Any(y => y.Category.Name == category.Name));
+                var forms = formProjections.Where(x => x.Categories.Any(y => y.Name == category.Name));
 
                 if (forms.Any())
                 {
@@ -49,7 +50,7 @@ namespace StateInterface.Areas.Connect.Controllers
                 }
             }
 
-            var uncategorizedForms = formProjections.Where(x => !x.RequestFormCategories.Any());
+            var uncategorizedForms = formProjections.Where(x => !x.Categories.Any());
             if (uncategorizedForms.Any())
             {
                 categoryModels.Add(new CategoryModel(

@@ -10,7 +10,7 @@ namespace StateInterface.Areas.Design.Models
     public class RequestFormModel
     {
         public int Id { get; set; }
-        public int RecordsCenterId { get; set; }
+        public string RecordsCenterName { get; set; }
 
         public string Version { get; set; }
         public DateTime Created { get; set; }
@@ -34,6 +34,8 @@ namespace StateInterface.Areas.Design.Models
         public string PreviewFormUrl { get; set; }
         public bool CanDesignManage { get; set; }
         public string UpdateApplicationsAssociationUrl { get; set; }
+        public string DesignHomeUrl { get; set; }
+        public string FormsHomeUrl { get; set; }
 
         public RequestFormModel(RequestForm requestForm,
             string previewFormUrl, string listDetailsUrl, string fieldDetailsUrl,
@@ -50,7 +52,7 @@ namespace StateInterface.Areas.Design.Models
         public RequestFormModel(RequestForm requestForm, string previewFormUrl, string listDetailsUrl, string fieldDetailsUrl)
         {
             Id = requestForm.Id;
-            RecordsCenterId = requestForm.RecordsCenter.Id;
+            RecordsCenterName = requestForm.RecordsCenter.Name;
 
             Version = requestForm.Version;
             Created = requestForm.Created;
@@ -70,9 +72,9 @@ namespace StateInterface.Areas.Design.Models
             }
 
             Associations = new List<RequestFormCategoryModel>();
-            foreach (RequestFormCategory cat in requestForm.RequestFormCategories.OrderBy(x => x.Category.Name))
+            foreach (Category category in requestForm.Categories.OrderBy(x => x.Name))
             {
-                Associations.Add(new RequestFormCategoryModel(cat));
+                Associations.Add(new RequestFormCategoryModel(category));
             }
 
             Applications = new List<ApplicationModel>();
@@ -92,6 +94,7 @@ namespace StateInterface.Areas.Design.Models
                 Transactions.Add(transactionViewModel);
             }
 
+            //todo: move out into controller?
             PreviewFormUrl = string.Format("{0}/{1}/{2}", previewFormUrl, requestForm.RecordsCenter.Name, requestForm.FormId);
         }
     }

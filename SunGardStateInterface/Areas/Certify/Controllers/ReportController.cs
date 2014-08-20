@@ -8,6 +8,7 @@ using StateInterface.Designer.Model;
 using System.Linq;
 using System.Web.Mvc;
 using StateInterface.Designer.Model.Projections;
+using Designer.Tasks;
 
 namespace StateInterface.Areas.Certify.Controllers
 {
@@ -21,7 +22,7 @@ namespace StateInterface.Areas.Certify.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var recordsCenters = _designerTasks.GetRecordsCenters();
+            var recordsCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
             var reportModel = new ReportModel(recordsCenters);
             reportModel.GetCertificationStatusUrl = Url.Action("Status");
             reportModel.GetOpenIssuesUrl = Url.Action("OpenIssues");

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using StateInterface.Properties;
+using Designer.Tasks;
 
 
 namespace StateInterface.Areas.Design.Controllers
@@ -22,21 +23,25 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var recordCenters = _designerTasks.GetRecordsCenters();
+            var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
             var user = _designerTasks.GetUser(User.Identity.Name);
 
-            var model = new FormModel(user, recordCenters, Url.Action("GetForms"), Url.Action("Details"), Url.Action("Edit"));
+            var model = new FormModel(user, recordCenters);
+            model.GetFormsUrl = Url.Action("GetForms");
+            model.FormDetailsUrl = Url.Action("Details");
+            model.DesignHomeUrl = Url.Action("Index", "Home");
             model.RequestForms = getRequestFormModels(user.CurrentRecordsCenter.Name);
             model.RecordsCenterSelector.SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" });
 
             model.InitialData = JsonConvert.SerializeObject(model);
 
+            ViewBag.Title = "Form Design";
             return View(model);
         }
         [HttpGet]
         public ActionResult Details(string recordsCenterName, string formId)
         {
-            var recordsCenter = _designerTasks.GetRecordsCenters().FirstOrDefault(x => x.Name.Equals(recordsCenterName, StringComparison.CurrentCultureIgnoreCase));
+            var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenterName, StringComparison.CurrentCultureIgnoreCase));
 
             var requestForm = _designerTasks.GetForm(recordsCenter.Id, formId);
 
@@ -46,22 +51,12 @@ namespace StateInterface.Areas.Design.Controllers
             User user = _designerTasks.GetUser(System.Web.HttpContext.Current.User.Identity.Name);
             formModel.CanDesignManage = user.CanDesignManage;
             formModel.UpdateApplicationsAssociationUrl = Url.Action("UpdateFormApplications", new { });
-            formModel.InitialData = JsonConvert.SerializeObject(formModel);
-
-            ViewBag.Title = formModel.FormId;
-
-            return View(formModel);
-        }
-        [HttpGet]
-        public ActionResult Edit(string recordsCenterName, string formId)
-        {
-            var recordsCenter = _designerTasks.GetRecordsCenters().FirstOrDefault(x => x.Name.Equals(recordsCenterName, StringComparison.CurrentCultureIgnoreCase));
-
-            var requestForm = _designerTasks.GetForm(recordsCenter.Id, formId);
-
-            var formModel = new RequestFormModel(requestForm, Url.Action("Preview", "Layout"), Url.Action("Details", "List"), Url.Action("Details", "Field"));
+            formModel.DesignHomeUrl = Url.Action("Index", "Home");
+            formModel.FormsHomeUrl = Url.Action("Index");
 
             formModel.InitialData = JsonConvert.SerializeObject(formModel);
+
+            ViewBag.Title = string.Format("{0} - {1}", formModel.FormId, formModel.RecordsCenterName);
             return View(formModel);
         }
         [HttpPost]
@@ -76,22 +71,6 @@ namespace StateInterface.Areas.Design.Controllers
 
             return Json(requestFormModels);
         }
-        [HttpPost]
-        public ActionResult GetForm(GetFormParametersModel parameters)
-        {
-            if (parameters == null || parameters.RecordsCenterId == 0 || String.IsNullOrWhiteSpace(parameters.FormId))
-            {
-                throw new ApplicationException(Resources.ParameterInvalid);
-            }
-
-            RequestForm requestForm = null;
-
-            requestForm = _designerTasks.GetForm(parameters.RecordsCenterId, parameters.FormId);
-
-            var requestFormModel = new RequestFormModel(requestForm, Url.Action("Preview", "Layout"), Url.Action("Details", "List"), Url.Action("Details", "Field"));
-
-            return Json(requestFormModel);
-        }        
         [HttpGet]
         public ActionResult Help()
         {
@@ -100,7 +79,7 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpPost]
         public ActionResult UpdateFormApplications(PostApplicationParametersModel parameters)
         {
-            //to do - unauthorized :: (elmah)
+            //todo: unauthorized :: (elmah)
             if (_designerTasks.GetUser(System.Web.HttpContext.Current.User.Identity.Name).CanDesignManage)
             {
                 if (parameters != null)
@@ -128,8 +107,8 @@ namespace StateInterface.Areas.Design.Controllers
         }
         private List<RequestFormCatalogProjectionModel> getRequestFormModels(string recordsCenterName)
         {
-            var recordsCenter = _designerTasks.GetRecordsCenters().FirstOrDefault(x => x.Name.Equals(recordsCenterName));
-            var requestForms = _designerTasks.GetFormProjections(recordsCenter.Id);
+            var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenterName));
+            var requestForms = _designerTasks.GetFormProjections(new TaskParameter<RecordsCenterId>(User.Identity.Name){Parameters = new RecordsCenterId(recordsCenter.Id)});
 
             List<RequestFormCatalogProjectionModel> requestFormModels = new List<RequestFormCatalogProjectionModel>();
             foreach (var requestForm in requestForms)

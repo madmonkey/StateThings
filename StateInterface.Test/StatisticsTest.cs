@@ -7,8 +7,6 @@ using Designer.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StateInterface.Designer.Model;
 using StateInterface.Designer.Repository;
-using StateInterface.Model.Interface;
-using StateInterface.Repository;
 using StateInterface.Designer.Model.Projections;
 
 namespace StateInterface.Test

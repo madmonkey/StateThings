@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Designer.Tasks;
+using Newtonsoft.Json;
 using StateInterface.Areas.Design.Models;
 using StateInterface.Designer.Model;
 using StateInterface.Properties;
@@ -24,12 +25,13 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var recordCenters = _designerTasks.GetRecordsCenters();
+            var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
             User user = _designerTasks.GetUser(User.Identity.Name);
 
             var model = new SnippetModel(user, recordCenters);
             model.TransactionSnippets = getSnippetModels(user.CurrentRecordsCenter.Name);
 
+            model.DesignHomeUrl = Url.Action("Index", "Home");
             model.GetSnippetsUrl = Url.Action("GetSnippets");
             model.SnippetDetailsUrl = Url.Action("Details");
             model.CreateSnippetUrl = Url.Action("CreateSnippet");
@@ -39,6 +41,7 @@ namespace StateInterface.Areas.Design.Controllers
 
             model.InitialData = JsonConvert.SerializeObject(model);
 
+            ViewBag.Title = "Transaction Design";
             return View(model);
         }
         [HttpPost]
@@ -85,10 +88,14 @@ namespace StateInterface.Areas.Design.Controllers
                     {
                         RecordsCenterName = recordsCenter.Name
                     };
+                    transactionSnippet.DesignHomeUrl = Url.Action("Index", "Home");
+                    transactionSnippet.TransactionsHomeUrl = Url.Action("Index");
+
                     User user = _designerTasks.GetUser(System.Web.HttpContext.Current.User.Identity.Name);
                     setProperties(transactionSnippet, recordsCenter.Name, user);
                     transactionSnippet.InitialData = JsonConvert.SerializeObject(transactionSnippet);
-                    ViewBag.Title = transactionSnippet.TokenName;
+
+                    ViewBag.Title = string.Format("{0} - {1}", transactionSnippet.TokenName, transactionSnippet.RecordsCenterName);
                     return View(transactionSnippet);
                 }
                 throw new StateInterfaceParameterValidationException(Resources.SnippetNotFound);

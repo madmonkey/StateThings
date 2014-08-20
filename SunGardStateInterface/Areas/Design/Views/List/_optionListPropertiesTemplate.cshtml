@@ -2,33 +2,33 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="padHeader" style="padding-bottom: 0">
-                <span class="leadLarger" style="font-weight: normal" data-bind="html:ListName"></span>
+                <span class="leadLarger" data-bind="html:ListName"></span>
             </div>
-            <br />
             <div class="leadSmaller">
                 <span>Tiers:</span>
                 <span data-bind="foreach: OptionListTiers">
                     <span data-bind="html: Name"></span>
-                </span>                
-            </div>
-            <div class="leadSmaller">
-                <span>Form Fields Using This List:</span>
-                <span data-bind="foreach: FormFieldsUsing">
-                    <span data-bind="html: RequestFormId"></span>                    
-                    <span>(</span>
-                    <span data-bind="html: FieldTagName"></span>
-                    <span>)</span>
                 </span>
             </div>
             <div class="leadSmaller">
-                <span>Created:</span>
-                <span data-bind="html: Created"></span>
+                <div>Form Fields Using This List:</div>
+                <div class="padLeft itemUsingItem" data-bind="foreach: FormFieldsUsing">
+                    <a target="_blank" data-bind="attr: { href: FormDetailsUrl }">
+                        <span data-bind="html: RequestFormName"></span>
+                    </a>
+                    <span>(<span data-bind="html: FormFieldName"></span>)</span>
+                    <span data-bind="if: $index() != $parent.FormFieldsUsing.length - 1">,</span>
+                </div>
+                <div class="leadSmaller">
+                    <span>Created:</span>
+                    <span data-bind="html: Created"></span>
+                </div>
+                <div class="leadSmaller">
+                    <span>Updated:</span>
+                    <span data-bind="html: Updated"></span>
+                </div>
+                <br />
             </div>
-            <div class="leadSmaller">
-                <span>Updated:</span>
-                <span data-bind="html: Updated"></span>
-            </div>
-            <br />
         </div>
     </div>
 </script>

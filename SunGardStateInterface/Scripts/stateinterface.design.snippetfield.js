@@ -5,37 +5,21 @@
     vm.snippetFieldModal = ko.observable();
     vm.snippetPropertiesModal = ko.observable();
     vm.confirmDeleteModal = ko.observable();
-    vm.SelectedField.TagName.extend({ validateNonEmpty: 'This field is required' });
-    vm.SnippetForEdit.Name.extend({ validateNonEmpty: '*' });
-    vm.SnippetForEdit.Description.extend({ validateNonEmpty: '*' });
-    vm.SelectedField.Length.extend({ validateIsWholeNumberInRange: { minimumValue: 1, maximumValue: vm.MaxIntegerValue } });
-    vm.SelectedField.TrimInputToLength.extend({ validateIsWholeNumberInRange: { minimumValue: 1, maximumValue: vm.MaxIntegerValue } });
-    vm.SelectedField.Frequency.extend({ validateIsWholeNumberInRange: { minimumValue: 1, maximumValue: vm.MaxIntegerValue } });
-    vm.SelectedField.PadCharacterDec.extend({ validateIsWholeNumberInRange: { minimumValue: 1, maximumValue: 255 } });
+    vm.SelectedField.TagName.extend({ initializeValidation: '', validateNonEmpty: ''});
+    vm.SnippetForEdit.Name.extend({ initializeValidation: '', validateNonEmpty: '*' });
+    vm.SnippetForEdit.Description.extend({ initializeValidation: '', validateNonEmpty: '*' });
+    vm.SelectedField.Length.extend({ initializeValidation: '', validateIsPostiveInteger: '', validateIsMin: 0, validateIsMax: vm.MaxIntegerValue });
+    vm.SelectedField.TrimInputToLength.extend({ initializeValidation: '', validateIsPostiveInteger: '', validateIsMin: 0, validateIsMax: vm.MaxIntegerValue });
+    vm.SelectedField.Frequency.extend({ initializeValidation: '', validateIsPostiveInteger: '', validateIsMin: 0, validateIsMax: vm.MaxIntegerValue });
+    vm.SelectedField.PadCharacterDec.extend({ initializeValidation: '', validateIsPostiveInteger: '', validateIsMin: 0, validateIsMax: 255 });
 
     vm.isSnippetFieldError = ko.computed(function () {
-        return vm.SelectedField.TagName.hasError();
+        return vm.SelectedField.TagName.hasError() || vm.SelectedField.Length.hasError() ||
+            vm.SelectedField.TrimInputToLength.hasError() || vm.SelectedField.Frequency.hasError() || vm.SelectedField.PadCharacterDec.hasError();
     });
 
     vm.isSnippetError = ko.computed(function () {
         return vm.SnippetForEdit.Name.hasError() || vm.SnippetForEdit.Description.hasError();
-    });
-
-    vm.indexId = ko.observable();
-    vm.checkForDuplication = function () {
-        for (var i = 0; i < vm.TransactionSnippetFields().length ; i++) {
-            var name = vm.TransactionSnippetFields()[i].TagName();
-            if (vm.TransactionSnippetFields()[i].TagName() === vm.SelectedField.TagName()) {
-                if (vm.TransactionSnippetFields()[i].Id != vm.indexId()) {
-                    vm.SelectedField.TagName.hasError(true);
-                    vm.SelectedField.TagName.validationMessage('Name already exists')
-                }
-            }
-        }
-    }
-
-    var duplicateSubscription = vm.SelectedField.TagName.subscribe(function (newValue) {
-        vm.checkForDuplication();
     });
 
     vm.isList = ko.observable(false);
@@ -194,31 +178,21 @@
                 vm.isPad(true);                
                 break;
             }
-            default: {
+            default: { // set to Text
                 vm.isList(false);
                 vm.isTransform(false);
-                vm.isUpper(false);                
-                vm.isCarriageReturn(false);                
-                vm.isLength(false);
-                vm.isFrequency(false);
-                vm.isSeparator(false);
-                vm.isDefaultValue(false);
-                vm.isTrimInput(false);                
-                vm.isPad(false);                
+                vm.isUpper(true);
+                vm.isCarriageReturn(true);
+                vm.isLength(true);
+                vm.isFrequency(true);
+                vm.isSeparator(true);
+                vm.isDefaultValue(true);
+                vm.isTrimInput(true);
+                vm.isPad(true);
                 break;
             }
         }
     })
-
-    vm.fieldNameWarning = ko.observable(false);
-    var warningSubscription = vm.SelectedField.TagName.subscribe(function (newValue) {
-        vm.fieldNameWarning(true);
-    });
-
-    vm.snippetNameWarning = ko.observable(false);
-    vm.SnippetForEdit.Name.subscribe(function (newValue) {
-        vm.snippetNameWarning(true);
-    });
 
     vm.finalizeSelectedField = function () {
         switch (vm.SelectedField.Field()) {
@@ -284,16 +258,8 @@
                 vm.SelectedField.TrimInputToLength(null);
                 break;
             }
-            default: {
+            default: { // default to Text
                 vm.SelectedField.TransformFormat('');
-                vm.SelectedField.MakeUpperCase(null);                
-                vm.SelectedField.AcceptCarriageReturns(null);                
-                vm.SelectedField.Length(null);                
-                vm.SelectedField.Frequency(null);                
-                vm.SelectedField.Separator('');                
-                vm.SelectedField.DefaultValue('');                
-                vm.SelectedField.TrimInputToLength(null);                
-                vm.SelectedField.PadCharacterDec(null);
                 break;
             }
         }
@@ -317,6 +283,12 @@
         vm.SelectedField.Frequency(item.Frequency());
         vm.SelectedField.Separator(item.Separator());
         vm.SelectedField.AcceptCarriageReturns(item.AcceptCarriageReturns());
+        if (vm.SelectedField.TrimInputToLength() == null) {
+            vm.SelectedField.TrimInputToLength('');
+        }
+        if (vm.SelectedField.PadCharacterDec() == null) {
+            vm.SelectedField.PadCharacterDec('');
+        }
     }
 
     vm.copyNewToSelectedField = function () {
@@ -329,15 +301,23 @@
         vm.SelectedField.Suffix('');
         vm.SelectedField.ToolTip('');
         vm.SelectedField.MakeUpperCase(true);
-        vm.SelectedField.Length(null);
-        vm.SelectedField.PadCharacterDec(null);
-        vm.SelectedField.TrimInputToLength(null);
+        vm.SelectedField.Length('');
+        vm.SelectedField.PadCharacterDec('');
+        vm.SelectedField.TrimInputToLength('');
         vm.SelectedField.DefaultValue('');
         vm.SelectedField.TransformFormat('');
         vm.SelectedField.Field('Text');
-        vm.SelectedField.Frequency(null);
+        vm.SelectedField.Frequency('');
         vm.SelectedField.Separator('');
         vm.SelectedField.AcceptCarriageReturns(false);
+        vm.isUpper(true);
+        vm.isCarriageReturn(true);
+        vm.isLength(true);
+        vm.isFrequency(true);
+        vm.isSeparator(true);
+        vm.isDefaultValue(true);
+        vm.isTrimInput(true);
+        vm.isPad(true);
     }
 
     vm.copyToSnippetForEdit = function (item) {
@@ -354,6 +334,33 @@
     vm.setSelectedOption = function () {
         vm.SelectedField.TransformFormat(vm.transform());
     }    
+
+    vm.indexId = ko.observable();
+    vm.checkForDuplication = function () {
+        for (var i = 0; i < vm.TransactionSnippetFields().length ; i++) {
+            var name = vm.TransactionSnippetFields()[i].TagName();
+            if (vm.TransactionSnippetFields()[i].TagName() === vm.SelectedField.TagName()) {
+                if (vm.TransactionSnippetFields()[i].Id != vm.indexId()) {
+                    vm.SelectedField.TagName.hasError(true);
+                    vm.SelectedField.TagName.validationMessage('Name already exists')
+                }
+            }
+        }
+    }
+
+    var duplicateSubscription = vm.SelectedField.TagName.subscribe(function (newValue) {
+        vm.checkForDuplication();
+    });
+
+    vm.fieldNameWarning = ko.observable(false);
+    var warningSubscription = vm.SelectedField.TagName.subscribe(function (newValue) {
+        vm.fieldNameWarning(true);
+    });
+
+    vm.snippetNameWarning = ko.observable(false);
+    vm.SnippetForEdit.Name.subscribe(function (newValue) {
+        vm.snippetNameWarning(true);
+    });
 
     vm.editField = function (item) {
         vm.indexId(item.Id);

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Designer.Tasks;
+using Newtonsoft.Json;
 using StateInterface.Areas.Design.Models;
 using StateInterface.Designer.Model;
 using System;
@@ -19,17 +20,16 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            ViewBag.Title = "Field Design";
-
-            var recordCenters = _designerTasks.GetRecordsCenters();
+            var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
             var user = _designerTasks.GetUser(User.Identity.Name);
-
             var model = new FieldCatalogModel(user, recordCenters, Url.Action("GetFields"), Url.Action("Details"));
             model.RecordsCenterSelector.SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" });
             model.Fields = getFieldModels(user.CurrentRecordsCenter.Name);
+            model.DesignHomeUrl = Url.Action("Index", "Home");
 
             model.InitialData = JsonConvert.SerializeObject(model);
 
+            ViewBag.Title = "Field Design";
             return View(model);
         }
         [HttpGet]
@@ -38,11 +38,13 @@ namespace StateInterface.Areas.Design.Controllers
             //todo: add validation (consider user vs. system) - recordcenter and tagname exist, msg if not
             var field = _designerTasks.GetField(recordsCenterName, tagName);
             var formsUsing = _designerTasks.GetFormProjectionsUsingField(field);
-            var model = new FieldDetailsModel(field, formsUsing);
-
-            ViewBag.Title = field.TagName + " - " + field.RecordsCenter.Name;
+            var model = new FieldDetailsModel(field, formsUsing, Url.Action("Details", "Form"));
+            model.DesignHomeUrl = Url.Action("Index", "Home");
+            model.FieldsHomeUrl = Url.Action("Index");
 
             model.InitialData = JsonConvert.SerializeObject(model);
+
+            ViewBag.Title = string.Format("{0} - {1}", field.TagName, field.RecordsCenter.Name);
             return View(model);
         }
         [HttpPost]

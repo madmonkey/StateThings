@@ -66,10 +66,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StateInterface.Model\StateInterface.Model.csproj">
-      <Project>{00703f5f-0f81-4373-ab3d-53219f0d7d16}</Project>
-      <Name>StateInterface.Model</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StateInterface.Repository\StateInterface.Repository.csproj">
       <Project>{ecda16ef-3405-424d-b52f-a804a12e3883}</Project>
       <Name>StateInterface.Repository</Name>

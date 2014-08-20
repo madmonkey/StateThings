@@ -1,6 +1,17 @@
 ﻿@model StateInterface.Areas.Design.Models.OptionListModel
 <div class="row">
     <div class="col-xs-12">
+        @* This is so that the navigation lines up when the recordsCenterSelector is not part of the page *@
+        <div class="recordsCenterSelectorPlaceHolder"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <ol class="breadcrumb">
+            <li><a data-bind="attr: { href: DesignHomeUrl }">Design</a></li>
+            <li><a data-bind="attr: { href: ListsHomeUrl }">Lists</a></li>
+            <li class="active"><span data-bind="html: ListName"></span></li>
+        </ol>
         <div data-bind="template: { name: 'optionListProperties-template' }"></div>
         <div class="leadSmaller">
             <div data-bind="foreach: OptionListItems">

@@ -16,6 +16,6 @@ namespace StateInterface.Designer.Model.Projections
         public virtual string Title { get; set; }
         public virtual string Description { get; set; }
         public virtual RecordsCenter RecordsCenter { get; set; }
-        public virtual IList<RequestFormCategory> RequestFormCategories { get; set; }
+        public virtual IList<Category> Categories { get; set; }
     }
 }

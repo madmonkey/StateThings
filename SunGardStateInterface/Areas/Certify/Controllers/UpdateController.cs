@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Designer.Tasks;
+using Newtonsoft.Json;
 using StateInterface.Areas.Certify.Models;
 using StateInterface.Areas.Design;
 using StateInterface.Designer.Model;
@@ -21,7 +22,7 @@ namespace StateInterface.Areas.Certify.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var recordsCenters = _designerTasks.GetRecordsCenters();
+            var recordsCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
             var categories = _designerTasks.GetCategories();
             var user = _designerTasks.GetUser(User.Identity.Name);
 
@@ -41,7 +42,7 @@ namespace StateInterface.Areas.Certify.Controllers
         [HttpGet]
         public ActionResult UpdateForm(string recordsCenter, string formId)
         {
-            var rc = _designerTasks.GetRecordsCenters().FirstOrDefault(x => x.Name.Equals(recordsCenter, StringComparison.CurrentCultureIgnoreCase));
+            var rc = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenter, StringComparison.CurrentCultureIgnoreCase));
 
             var requestForm = _designerTasks.GetForm(rc.Id, formId);
 

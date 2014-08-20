@@ -23,7 +23,9 @@ $(function () {
         OptionListTiers: initialData.OptionListTiers,
         OptionListItems: initialData.OptionListItems,
         CanDesignManage: initialData.CanDesignManage,
-        FormFieldsUsing: initialData.FormFieldsUsing
+        FormFieldsUsing: initialData.FormFieldsUsing,
+        DesignHomeUrl: initialData.DesignHomeUrl,
+        ListsHomeUrl: initialData.ListsHomeUrl
     };
 
     ko.applyBindings(vm);

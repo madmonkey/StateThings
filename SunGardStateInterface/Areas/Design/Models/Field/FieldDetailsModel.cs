@@ -9,13 +9,11 @@ namespace StateInterface.Areas.Design.Models
 {
     public class FieldDetailsModel
     {
-        public string InitialData { get; set; }
-        
         public int Id { get; set; }
+        public string RecordsCenterName { get; set; }
         public string TagName { get; set; }
         public string Description { get; set; }
         public string ToolTip { get; set; }
-
         public bool AcceptReturn { get; set; }
         public string DefaultValue { get; set; }
         public string Type { get; set; }
@@ -24,15 +22,16 @@ namespace StateInterface.Areas.Design.Models
         public int Length { get; set; }
         public bool MakeUppercase { get; set; }
         public string Prefix { get; set; }
-        public string RecordsCenterName { get; set; }
         public string Separator { get; set; }
         public string Suffix { get; set; }
         public string TransformFormat { get; set; }
+        public List<UsesField> FormsUsing { get; set; }
 
-        public IEnumerable<RequestFormProjection> FormsUsing { get; set; }
+        public string InitialData { get; set; }
+        public string DesignHomeUrl { get; set; }
+        public string FieldsHomeUrl { get; set; }
 
-
-        public FieldDetailsModel(Field field, IEnumerable<RequestFormProjection> formsUsing)
+        public FieldDetailsModel(Field field, IEnumerable<RequestFormProjection> formsUsing, string formDetailsUrl)
         {
             Id = field.Id;
             TagName = field.TagName;
@@ -53,7 +52,11 @@ namespace StateInterface.Areas.Design.Models
             AcceptReturn = field.AcceptReturn;
             MakeUppercase = field.MakeUpperCase;
 
-            FormsUsing = formsUsing;
+            FormsUsing = new List<UsesField>();
+            foreach (var uses in formsUsing)
+            {
+                FormsUsing.Add(new UsesField(uses, string.Format("{0}/{1}", formDetailsUrl, RecordsCenterName)));
+            }
 
             //todo: Add makeuppercase?
         }

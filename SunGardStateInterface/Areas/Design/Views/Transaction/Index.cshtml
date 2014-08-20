@@ -1,7 +1,4 @@
 ﻿@model StateInterface.Areas.Design.Models.SnippetModel
-@{
-    ViewBag.Title = "Transaction Design";
-}
 <div class="row">
     <div class="col-xs-12">
         <div class="pull-right padRight leadSmaller">
@@ -9,18 +6,20 @@
         </div>
     </div>
 </div>
-<div class="padLeft padRight">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="h2">Transactions Design<a href="#" data-bind="visible: CanDesignManage, click: addSnippet" class="glyphicon glyphicon-plus-sign padLeft" title="Add Transaction"></a></div>
-            <div class="loading" style="margin-left: 350px; margin-top: -40px;" data-bind="visible: snippetsAreLoading"></div>
-        </div>
+<div class="row">
+    <div class="col-xs-12">
+        <ol class="breadcrumb">
+            <li><a data-bind="attr: { href: DesignHomeUrl }">Design</a></li>
+            <li class="active">Transactions</li>
+        </ol>
+        <div class="h2 padLeft">Transactions Design<a href="#" data-bind="visible: CanDesignManage, click: addSnippet" class="glyphicon glyphicon-plus-sign padLeft" title="Add Transaction"></a></div>
+        <div class="loading" style="margin-left: 350px; margin-top: -40px;" data-bind="visible: snippetsAreLoading"></div>
     </div>
-    <div data-bind="template: { name: 'noSnippetFound-template' }"></div>
-    <div class="row">
-        <div class="col-xs-12">
-            <div data-bind="template: { name: 'snippetList-template' }"></div>
-        </div>
+</div>
+<div data-bind="template: { name: 'noSnippetFound-template' }"></div>
+<div class="row">
+    <div class="col-xs-12">
+        <div data-bind="template: { name: 'snippetList-template' }"></div>
     </div>
 </div>
 <script type="text/html" id="noSnippetFound-template">

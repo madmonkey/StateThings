@@ -1,15 +1,13 @@
 ﻿<script type="text/html" id="snippetList-template">
     <div class="row">
         <div class="col-xs-12">
-            <div class="row">                
+            <br />
+            <div class="padLeft" data-bind="foreach: TransactionSnippets">
+                <a data-bind="attr: { href: SnippetDetailsUrl } ">
+                    <span class="formLink" data-bind="html: TokenName, attr: { Title: Description } "></span>
+                    <span class="leadSmaller" data-bind="html: Description"></span>
+                </a>
                 <br />
-                <div class="col-xs-12" data-bind="foreach: TransactionSnippets">
-                    <a target="_blank" data-bind="attr: { href: SnippetDetailsUrl } ">
-                        <span class="formLink" data-bind="html: TokenName, attr: { Title: Description } "></span>
-                        <span class="leadSmaller" data-bind="html: Description"></span>
-                    </a>
-                    <br />
-                </div>
             </div>
         </div>
     </div>

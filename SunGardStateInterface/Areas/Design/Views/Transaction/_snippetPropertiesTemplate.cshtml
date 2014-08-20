@@ -1,9 +1,12 @@
 ﻿<script type="text/html" id="snippetProperties-template">
     <div class="row">
         <div class="col-xs-12">
-            <div>
-                <span class="leadLarger" data-bind="html:TokenName"></span>    
-                <a href="#" data-bind="visible: CanDesignManage, click: editSnippet" class="glyphicon glyphicon-edit padLeft" title="Edit Transaction Properties"></a>                         
+            <div class="padHeader" style="padding-bottom: 0">
+                <span class="leadLarger" data-bind="html:TokenName"></span>
+                <a href="#" data-bind="visible: CanDesignManage, click: editSnippet" class="glyphicon glyphicon-edit padLeft" title="Edit Transaction Properties"></a>
+                <div class="pull-right padRight">
+                    <a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" href="@Url.Action("Help")"></a>
+                </div>
             </div>
             <div><span class="leadSmaller" data-bind="html: Description"></span></div>
             <br />
