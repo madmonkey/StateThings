@@ -23,8 +23,8 @@ namespace StateInterface.Areas.Certify.Controllers
         public ActionResult Index()
         {
             var recordsCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
-            var categories = _designerTasks.GetCategories();
-            var user = _designerTasks.GetUser(User.Identity.Name);
+            var categories = _designerTasks.GetCategories(new TaskParameter(User.Identity.Name));
+            var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
 
             CertifyUpdateModel model = new CertifyUpdateModel(user, recordsCenters, categories);
             model.RecordsCenterSelector.SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" });
@@ -92,7 +92,7 @@ namespace StateInterface.Areas.Certify.Controllers
 
             List<CertifyApplicationModel> certifyApplicationModels = new List<CertifyApplicationModel>();
 
-            var applications = _designerTasks.GetApplications();
+            var applications = _designerTasks.GetApplications(new TaskParameter(User.Identity.Name));
             var requestForms = _designerTasks.GetForms(model.RecordsCenterName, model.CategoryId);
 
             foreach (var requestForm in requestForms)

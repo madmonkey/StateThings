@@ -13,12 +13,13 @@ namespace Designer.Tasks
         RecordsCenter GetRecordsCenterByName(TaskParameter<RecordsCenterName> taskParameter);
         IEnumerable<RecordsCenter> GetRecordsCenters(TaskParameter taskParameter);
         RecordsCenter GetRecordsCenterById(TaskParameter<RecordsCenterId> taskParameter);
-        void SetRecordsCenterForUser(string userName, string recordsCenterName);
+        void SetRecordsCenterForUser(TaskParameter<RecordsCenterName> taskParameter);
         IEnumerable<Role> GetRoles(TaskParameter taskParameter);
-        User GetUser(string userName);
-        IEnumerable<Category> GetCategories();
-        IEnumerable<Application> GetApplications();
-        IEnumerable<RequestForm> GetForms(int recordsCenterId);
+        User GetUser(TaskParameter<UserByName> taskParameter);
+        User GetUser(TaskParameter taskParameter);
+        IEnumerable<Category> GetCategories(TaskParameter taskParameter);
+        IEnumerable<Application> GetApplications(TaskParameter taskParameter);
+        IEnumerable<RequestForm> GetForms(TaskParameter<RecordsCenterId> taskParameter);
         IEnumerable<RequestForm> GetForms(int recordsCenterId, int CategoryId);
         IEnumerable<RequestForm> GetForms(string recordsCenterName, int categoryId);
         IEnumerable<RequestForm> GetFormsByApplication(int recordsCenterId, int applicationId);
@@ -26,19 +27,19 @@ namespace Designer.Tasks
         TestCase UpdateTestCase(int criteriaId, string testCaseId, DateTime occurred, string note, string user, bool hasPassed);
         TestCase ResetTestCase(int criteriaId, string testCaseId, DateTime occurred, string note, string user);
         RequestForm GetForm(int recordsCenterId, string formId);
-        IEnumerable<Field> GetFieldCatalogItems(string recordsCenterName);
+        IEnumerable<Field> GetFieldCatalogItems(TaskParameter<RecordsCenterName> taskParameter);
         Field GetField(string recordsCenterName, string tagName);
         OptionList GetList(int recordsCenterId, string listName);
         IEnumerable<FormFieldProjection> GetFormFieldProjectionsUsingOptionList(OptionList list);
         IEnumerable<RequestFormProjection> GetFormProjectionsUsingField(Field field);
-        IEnumerable<RequestFormDetailProjection> GetRecordsCenterAcceptanceStatus(int recordsCenterId);
+        IEnumerable<RequestFormDetailProjection> GetRecordsCenterAcceptanceStatus(TaskParameter<RecordsCenterId> taskParameter);
         ApplicationFormProjection GetFormApplicationAssociations(int recordsCenterId, string formId);
         ApplicationFormProjection UpdateFormApplicationAssociations(ApplicationFormProjection applicationFormProjection);
         RequestForm UpdateRequestForm(RequestForm requestForm);
         StatisticsRecordsCenter GetStatisticsForRecordsCenter(TaskParameter<RecordsCenterName> taskParameter);
         IEnumerable<TestCase> GetOpenIssues(TaskParameter<RecordsCenterName> taskParameter);
         IEnumerable<ListProjection> GetListProjections(TaskParameter<RecordsCenterId> taskParameter);
-        IEnumerable<TransactionSnippet> GetTransactionSnippets(int recordsCenterId);
+        IEnumerable<TransactionSnippet> GetTransactionSnippets(TaskParameter<RecordsCenterId> taskParameter);
         TransactionSnippet GetTransactionSnippet(int recordsCenterId, string tokenName);
         TransactionSnippet CreateTransactionSnippet(RecordsCenter recordsCenter, string name, string description);
         TransactionSnippet UpdateTransactionSnippet(TransactionSnippet transactionsnippet);
@@ -50,21 +51,38 @@ namespace Designer.Tasks
         TransactionSnippet GetTransactionSnippet(int snippetId);
     }
 
-    public class RecordsCenterId
+    public class RecordsCenterId : ById
     {
-        public RecordsCenterId(int id)
+        public RecordsCenterId(int id) : base(id) { }
+    }
+
+    public class RecordsCenterName : ByKey
+    {
+        public RecordsCenterName(string name):base(name) { }
+        public string Name { get { return this.Key; } }
+    }
+
+    public class UserByName : ByKey
+    {
+        public UserByName(string name) : base(name) { }
+        public string UserName { get { return this.Key; } }
+    }
+    
+    public abstract class ById
+    {
+        public ById(int id)
         {
             this.Id = id;
         }
         public int Id { get; private set; }
     }
-    public class RecordsCenterName
+
+    public abstract class ByKey
     {
-        public RecordsCenterName(string name)
+        public ByKey(string key)
         {
-            this.Name = name;
+            this.Key = key;
         }
-        public string Name { get; private set; }
+        public string Key { get; private set; }
     }
-    
 }

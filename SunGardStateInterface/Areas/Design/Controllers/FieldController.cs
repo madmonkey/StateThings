@@ -22,7 +22,7 @@ namespace StateInterface.Areas.Design.Controllers
         public ActionResult Index()
         {
             var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
-            var user = _designerTasks.GetUser(User.Identity.Name);
+            var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
             var model = new FieldCatalogModel(user, recordCenters);
             model.RecordsCenterSelector.SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" });
             model.Fields = getFieldModels(user.CurrentRecordsCenter.Name);
@@ -66,7 +66,7 @@ namespace StateInterface.Areas.Design.Controllers
         }
         private List<FieldCatalogItemModel> getFieldModels(string recordsCenterName)
         {
-            var fields = _designerTasks.GetFieldCatalogItems(recordsCenterName);
+            var fields = _designerTasks.GetFieldCatalogItems(new TaskParameter<RecordsCenterName>(User.Identity.Name, new RecordsCenterName(recordsCenterName)));
 
             List<FieldCatalogItemModel> fieldCatalogItemModels = new List<FieldCatalogItemModel>();
             foreach (var field in fields)

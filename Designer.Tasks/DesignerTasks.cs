@@ -25,9 +25,9 @@ namespace Designer.Tasks
             }
             throw new SecurityAccessDeniedException();
         }
-        public User GetUser(string userName)
+        public User GetUser(TaskParameter<UserByName> taskParameter)
         {
-            var user = _repository.GetAll<User>().FirstOrDefault(x => x.LoginName == userName);
+            var user = _repository.GetAll<User>().FirstOrDefault(x => x.LoginName == taskParameter.Parameters.UserName);
 
             //TODO: Consider refactoring how we associate records center to a user for the first time.
             if (user != null)
@@ -61,13 +61,13 @@ namespace Designer.Tasks
         {
             return _repository.GetRecordsCenterByName(taskParameter.Parameters.Name);
         }
-        public IEnumerable<Category> GetCategories()
+        public IEnumerable<Category> GetCategories(TaskParameter taskParameter)
         {
             return _repository.GetAll<Category>();
         }
-        public IEnumerable<RequestForm> GetForms(int recordsCenterId)
+        public IEnumerable<RequestForm> GetForms(TaskParameter<RecordsCenterId> taskParameter)
         {
-            return _repository.GetAll<RequestForm>().Where(x => x.RecordsCenter.Id == recordsCenterId).OrderBy(x => x.FormId);
+            return _repository.GetAll<RequestForm>().Where(x => x.RecordsCenter.Id == taskParameter.Parameters.Id).OrderBy(x => x.FormId);
         }
         public IEnumerable<RequestForm> GetForms(int recordsCenterId, int categoryId)
         {
@@ -140,10 +140,10 @@ namespace Designer.Tasks
         {
             return _repository.GetForm(formId, _repository.GetById<RecordsCenter>(recordsCenterId));
         }
-        public IEnumerable<Field> GetFieldCatalogItems(string recordsCenterName)
+        public IEnumerable<Field> GetFieldCatalogItems(TaskParameter<RecordsCenterName> taskParameter)
         {
             return _repository.GetAll<Field>()
-                .Where(x => x.RecordsCenter.Name == recordsCenterName)
+                .Where(x => x.RecordsCenter.Name == taskParameter.Parameters.Name)
                 .OrderBy(x => x.TagName);
         }
         public Field GetField(string recordsCenterName, string tagName)
@@ -163,9 +163,9 @@ namespace Designer.Tasks
         {
             return _repository.GetFormFieldProjectionsUsingOptionList(list);
         }
-        public IEnumerable<RequestFormDetailProjection> GetRecordsCenterAcceptanceStatus(int recordsCenterId)
+        public IEnumerable<RequestFormDetailProjection> GetRecordsCenterAcceptanceStatus(TaskParameter<RecordsCenterId> taskParameter)
         {
-            return _repository.GetRecordsCenterAcceptanceStatus(_repository.GetById<RecordsCenter>(recordsCenterId));
+            return _repository.GetRecordsCenterAcceptanceStatus(_repository.GetById<RecordsCenter>(taskParameter.Parameters.Id));
         }
         public IEnumerable<RequestFormProjection> GetFormProjections(TaskParameter<RecordsCenterId> taskParameter)
         {
@@ -176,7 +176,7 @@ namespace Designer.Tasks
             return _repository.GetAll<RequestForm>().Where(requestForm => requestForm.RecordsCenter.Id == recordsCenterId
                 && requestForm.Applications.Any(y => y.Id == applicationId));
         }
-        public IEnumerable<Application> GetApplications()
+        public IEnumerable<Application> GetApplications(TaskParameter taskParameter)
         {
             return _repository.GetAll<Application>();
         }
@@ -200,8 +200,8 @@ namespace Designer.Tasks
             RecordsCenter recordsCenter = GetRecordsCenterByName(taskParameter);
             StatisticsRecordsCenter statisticsRecordsCenter = new StatisticsRecordsCenter(recordsCenter);
 
-            var applications = GetApplications().OrderBy(x => x.Name);
-            var forms = GetForms(recordsCenter.Id).OrderBy(x => x.FormId);
+            var applications = GetApplications(taskParameter).OrderBy(x => x.Name);
+            var forms = GetForms(new TaskParameter<RecordsCenterId>(taskParameter.CurrentUser, new RecordsCenterId(recordsCenter.Id))).OrderBy(x => x.FormId);
 
             string unassociatedString = "Unassociated";
             string uncategorizedString = "Uncategorized";
@@ -311,9 +311,9 @@ namespace Designer.Tasks
         {
             return _repository.GetListProjectionsForRecordsCenter(GetRecordsCenters(taskParameter).FirstOrDefault(x => x.Id == taskParameter.Parameters.Id));
         }
-        public IEnumerable<TransactionSnippet> GetTransactionSnippets(int recordsCenterId)
+        public IEnumerable<TransactionSnippet> GetTransactionSnippets(TaskParameter<RecordsCenterId> taskParameter)
         {
-            return _repository.GetAll<TransactionSnippet>().Where(x => x.RecordsCenter.Id == recordsCenterId).OrderBy(x => x.TokenName);
+            return _repository.GetAll<TransactionSnippet>().Where(x => x.RecordsCenter.Id == taskParameter.Parameters.Id).OrderBy(x => x.TokenName);
         }
         public TransactionSnippet GetTransactionSnippet(int recordsCenterId, string tokenName)
         {
@@ -381,12 +381,18 @@ namespace Designer.Tasks
             return snippet;
         }
 
-        public void SetRecordsCenterForUser(string userName, string recordsCenterName)
+        public void SetRecordsCenterForUser(TaskParameter<RecordsCenterName> taskParameter)
         {
-            var user = _repository.GetUser(userName);
-            var recordsCenter = _repository.GetRecordsCenterByName(recordsCenterName);
+            var user = _repository.GetUser(taskParameter.CurrentUser);
+            var recordsCenter = _repository.GetRecordsCenterByName(taskParameter.Parameters.Name);
             user.CurrentRecordsCenter = recordsCenter;
             _repository.Save(user);
+        }
+
+
+        public User GetUser(TaskParameter taskParameter)
+        {
+            return _repository.GetAll<User>().FirstOrDefault(x => x.LoginName == taskParameter.CurrentUser);
         }
     }
 }

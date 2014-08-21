@@ -25,7 +25,8 @@ namespace StateInterface.Controllers
         [HttpPost]
         public ActionResult SetRecordsCenter(RecordsCenterParametersModel model)
         {
-            _designerTasks.SetRecordsCenterForUser(User.Identity.Name, model.RecordsCenterName);
+            //User.Identity.Name, model.RecordsCenterName
+            _designerTasks.SetRecordsCenterForUser(new TaskParameter<RecordsCenterName>(User.Identity.Name, new RecordsCenterName(model.RecordsCenterName)));
 
             return Json(model);
         }

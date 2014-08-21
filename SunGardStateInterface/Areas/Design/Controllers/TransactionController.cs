@@ -27,7 +27,7 @@ namespace StateInterface.Areas.Design.Controllers
         public ActionResult Index()
         {
             var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
-            User user = _designerTasks.GetUser(User.Identity.Name);
+            User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
 
             var model = new SnippetModel(user, recordCenters);
             model.TransactionSnippets = getSnippetModels(user.CurrentRecordsCenter.Name);
@@ -62,7 +62,7 @@ namespace StateInterface.Areas.Design.Controllers
         private List<TransactionSnippetModel> getSnippetModels(string recordsCenterName)
         {
             var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
-            var snippets = _designerTasks.GetTransactionSnippets(recordsCenter.Id);
+            var snippets = _designerTasks.GetTransactionSnippets(new TaskParameter<RecordsCenterId>(User.Identity.Name, new RecordsCenterId(recordsCenter.Id)));
             var transactionSnippets = new List<TransactionSnippetModel>();
             foreach (var snippet in snippets)
             {
@@ -92,7 +92,7 @@ namespace StateInterface.Areas.Design.Controllers
                     transactionSnippet.DesignHomeUrl = Url.Action("Index", "Home");
                     transactionSnippet.TransactionsHomeUrl = Url.Action("Index");
 
-                    User user = _designerTasks.GetUser(System.Web.HttpContext.Current.User.Identity.Name);
+                    User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
                     setProperties(transactionSnippet, recordsCenter.Name, user);
                     transactionSnippet.InitialData = JsonConvert.SerializeObject(transactionSnippet);
 
@@ -126,7 +126,7 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpPost]
         public ActionResult DeleteSnippet(int snippetId)
         {
-            var user = _designerTasks.GetUser(System.Web.HttpContext.Current.User.Identity.Name);
+            var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
             if (user.CanDesignManage)
             {
                 if (snippetId <= 0)
@@ -143,7 +143,7 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpPost]
         public ActionResult DeleteSnippetField(TransactionSnippetFieldModel snippetFieldParameter)
         {
-            User user = _designerTasks.GetUser(System.Web.HttpContext.Current.User.Identity.Name);
+            User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
             if (user.CanDesignManage)
             {
                 if (snippetFieldParameter == null)
@@ -160,7 +160,7 @@ namespace StateInterface.Areas.Design.Controllers
         }
         private ActionResult CreateOrUpdateSnippetField(TransactionSnippetFieldModel snippetFieldParameter)
         {
-            User user = _designerTasks.GetUser(System.Web.HttpContext.Current.User.Identity.Name);
+            User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
             if (user.CanDesignManage)
             {
                 if (snippetFieldParameter == null)
@@ -189,7 +189,7 @@ namespace StateInterface.Areas.Design.Controllers
         }
         private ActionResult CreateOrUpdateSnippet(SnippetParameterModel snippetParameter, bool updateExisting = true)
         {
-            User user = _designerTasks.GetUser(System.Web.HttpContext.Current.User.Identity.Name);
+            User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
             if (user.CanDesignManage)
             {
                 if (snippetParameter == null)

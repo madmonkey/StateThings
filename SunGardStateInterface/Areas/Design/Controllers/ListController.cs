@@ -21,7 +21,7 @@ namespace StateInterface.Areas.Design.Controllers
         public ActionResult Index()
         {
             var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
-            var user = _designerTasks.GetUser(User.Identity.Name);
+            var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
 
             var model = new ListModel(user, recordCenters);
             model.GetListsUrl = Url.Action("GetLists");
@@ -39,7 +39,7 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpGet]
         public ActionResult Details(string recordsCenterName, string listName)
         {
-            User user = _designerTasks.GetUser(System.Web.HttpContext.Current.User.Identity.Name);
+            User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
 
             var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenterName, StringComparison.CurrentCultureIgnoreCase));
 

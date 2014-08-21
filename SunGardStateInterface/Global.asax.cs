@@ -28,7 +28,7 @@ namespace StateInterface
             {
                 var designerTasks = DependencyResolver.Current.GetService<IDesignerTasks>();
 
-                User user = designerTasks.GetUser(HttpContext.Current.User.Identity.Name);
+                User user = designerTasks.GetUser(new TaskParameter(User.Identity.Name));
 
                 if (user != null)
                 {

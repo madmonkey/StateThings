@@ -18,7 +18,7 @@ namespace StateInterface.Test
         public void GetStuff()
         {
             IDesignerTasks repository = new DesignerTasks(new DesignerRepository());
-            var stuff = repository.GetRecordsCenterAcceptanceStatus(8);
+            var stuff = repository.GetRecordsCenterAcceptanceStatus(new TaskParameter<RecordsCenterId>("lkm\\Thomas.Monico",new RecordsCenterId(8)));
 
             Console.WriteLine(stuff.Count());
             //IStateInterfaceRepository theOtherRepository = new StateInterfaceRepository();
@@ -33,7 +33,7 @@ namespace StateInterface.Test
            IDesignerTasks repository = new DesignerTasks(new DesignerRepository());
            //var test = repository.GetFormsByApplication(1);
            //Console.WriteLine(test.Count());
-           var test2 = repository.GetApplications();
+           //var test2 = repository.GetApplications();
             
         }
         [TestMethod]

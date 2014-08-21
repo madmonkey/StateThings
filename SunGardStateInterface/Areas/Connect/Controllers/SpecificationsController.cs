@@ -30,7 +30,7 @@ namespace StateInterface.Areas.Connect.Controllers
         [HttpPost]
         public ActionResult GetForms(FormsRequestParametersModel formsRequest)
         {
-            var categories = _designerTasks.GetCategories();
+            var categories = _designerTasks.GetCategories(new TaskParameter(User.Identity.Name));
             var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Id == formsRequest.RecordsCenterId);
             var formProjections = _designerTasks.GetFormProjections(new TaskParameter<RecordsCenterId>(User.Identity.Name){Parameters = new RecordsCenterId(formsRequest.RecordsCenterId)});
 

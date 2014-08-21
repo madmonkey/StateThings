@@ -24,7 +24,7 @@ namespace StateInterface.Areas.Design.Controllers
         public ActionResult Index()
         {
             var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
-            var user = _designerTasks.GetUser(User.Identity.Name);
+            var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
 
             var model = new FormModel(user, recordCenters);
             model.GetFormsUrl = Url.Action("GetForms");
@@ -45,10 +45,10 @@ namespace StateInterface.Areas.Design.Controllers
 
             var requestForm = _designerTasks.GetForm(recordsCenter.Id, formId);
 
-            var availableApplications = _designerTasks.GetApplications();
+            var availableApplications = _designerTasks.GetApplications(new TaskParameter(User.Identity.Name));
             var formModel = new RequestFormModel(requestForm, Url.Action("Details", "List"), Url.Action("Details", "Field"), availableApplications);
 
-            User user = _designerTasks.GetUser(System.Web.HttpContext.Current.User.Identity.Name);
+            User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
             formModel.CanDesignManage = user.CanDesignManage;
             formModel.UpdateApplicationsAssociationUrl = Url.Action("UpdateFormApplications", new { });
             formModel.DesignHomeUrl = Url.Action("Index", "Home");
@@ -82,7 +82,7 @@ namespace StateInterface.Areas.Design.Controllers
         public ActionResult UpdateFormApplications(PostApplicationParametersModel parameters)
         {
             //todo: unauthorized :: (elmah)
-            if (_designerTasks.GetUser(System.Web.HttpContext.Current.User.Identity.Name).CanDesignManage)
+            if (_designerTasks.GetUser(new TaskParameter(User.Identity.Name)).CanDesignManage)
             {
                 if (parameters != null)
                 {
@@ -95,10 +95,10 @@ namespace StateInterface.Areas.Design.Controllers
                         {
                             if (application.IsSelected)
                             {
-                                requestForm.Applications.Add(_designerTasks.GetApplications().Where(x => x.Id == application.Id).FirstOrDefault());
+                                requestForm.Applications.Add(_designerTasks.GetApplications(new TaskParameter(User.Identity.Name)).Where(x => x.Id == application.Id).FirstOrDefault());
                             }
                         }
-                        return Json(new PostApplicationParametersModel(_designerTasks.UpdateRequestForm(requestForm), _designerTasks.GetApplications()));
+                        return Json(new PostApplicationParametersModel(_designerTasks.UpdateRequestForm(requestForm), _designerTasks.GetApplications(new TaskParameter(User.Identity.Name))));
                     }
                     throw new ApplicationException(Resources.ApplicationAssociationNotFound);
                 }
