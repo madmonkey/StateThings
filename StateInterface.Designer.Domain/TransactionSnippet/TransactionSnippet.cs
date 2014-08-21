@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StateInterface.Designer.Model
 {
-    public class TransactionSnippet
+    public class TransactionSnippet : IValidate
     {
         public virtual int Id { get; set; }
         public virtual RecordsCenter RecordsCenter { get; set; }
@@ -19,6 +19,11 @@ namespace StateInterface.Designer.Model
         public TransactionSnippet()
         {
             TransactionSnippetFields = new List<TransactionSnippetField>();
+        }
+
+        public virtual void IsValid()
+        {
+            
         }
     }
 }

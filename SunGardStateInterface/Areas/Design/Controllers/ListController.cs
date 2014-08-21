@@ -1,34 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using StateInterface.Designer.Model;
 using Newtonsoft.Json;
 using StateInterface.Areas.Design.Models;
 using Designer.Tasks;
 using StateInterface.Properties;
+using StateInterface.Designer.Model;
+using StateInterface.Controllers;
 
 namespace StateInterface.Areas.Design.Controllers
 {
-    public class ListController : Controller
+    [Authorize]
+    public class ListController : StateConnectContollerBase
     {
-        private IDesignerTasks _designerTasks;
         public ListController(IDesignerTasks designerTasks)
+            : base(designerTasks)
         {
-            _designerTasks = designerTasks;
         }
         public ActionResult Index()
         {
             var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
             var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
 
-            var model = new ListModel(user, recordCenters);
-            model.GetListsUrl = Url.Action("GetLists");
-            model.ListDetailsUrl = Url.Action("Details");
-            model.Lists = getListModels(user.CurrentRecordsCenter.Name);
-            model.RecordsCenterSelector.SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" });
-            model.DesignHomeUrl = Url.Action("Index", "Home");
+            var model = new ListModel(user, recordCenters)
+                {
+                    GetListsUrl = Url.Action("GetLists"),
+                    ListDetailsUrl = Url.Action("Details"),
+                    Lists = getListModels(user.CurrentRecordsCenter.Name),
+                    RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) },
+                    DesignHomeUrl = Url.Action("Index", "Home")
+                };
 
             model.InitialData = JsonConvert.SerializeObject(model);
 
@@ -39,7 +41,7 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpGet]
         public ActionResult Details(string recordsCenterName, string listName)
         {
-            User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
+            var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
 
             var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenterName, StringComparison.CurrentCultureIgnoreCase));
 
@@ -49,7 +51,6 @@ namespace StateInterface.Areas.Design.Controllers
             listModel.DesignHomeUrl = Url.Action("Index", "Home");
             listModel.ListsHomeUrl = Url.Action("Index");
 
-            listModel.CanDesignManage = user.CanDesignManage;
             listModel.InitialData = JsonConvert.SerializeObject(listModel);
 
             ViewBag.Title = string.Format("{0} - {1}", listModel.ListName, listModel.RecordsCenterName);
@@ -57,14 +58,14 @@ namespace StateInterface.Areas.Design.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetLists(GetListsParametersModel parameters)
+        public ActionResult GetLists(ListsRequestModel request)
         {
-            if (parameters == null || string.IsNullOrWhiteSpace(parameters.RecordsCenterName))
+            if (request == null || string.IsNullOrWhiteSpace(request.RecordsCenterName))
             {
                 throw new ApplicationException(Resources.ParameterInvalid);
             }
 
-            List<ListCatalogProjectionModel> listModels = getListModels(parameters.RecordsCenterName);
+            var listModels = getListModels(request.RecordsCenterName);
 
             return Json(listModels);
         }
@@ -72,14 +73,12 @@ namespace StateInterface.Areas.Design.Controllers
         private List<ListCatalogProjectionModel> getListModels(string recordsCenterName)
         {
             var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenterName));
-            var lists = _designerTasks.GetListProjections(new TaskParameter<RecordsCenterId>(User.Identity.Name) { Parameters = new RecordsCenterId(recordsCenter.Id) });
-
-            List<ListCatalogProjectionModel> listModels = new List<ListCatalogProjectionModel>();
-            foreach (var list in lists)
+            if (recordsCenter != null)
             {
-                listModels.Add(new ListCatalogProjectionModel(list, Url.Action("Details") + "/" + recordsCenter.Name));
+                var lists = _designerTasks.GetListProjections(new TaskParameter<RecordsCenterId>(User.Identity.Name) { Parameters = new RecordsCenterId(recordsCenter.Id) });
+                return lists.Select(list => new ListCatalogProjectionModel(list, Url.Action("Details") + "/" + recordsCenter.Name)).ToList();
             }
-            return listModels;
+            throw new StateInterfaceParameterValidationException(Resources.RecordsCenterNotFound);
         }
     }
 }

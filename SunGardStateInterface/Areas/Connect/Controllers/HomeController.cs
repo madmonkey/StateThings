@@ -1,6 +1,7 @@
 ﻿using Designer.Tasks;
 using Newtonsoft.Json;
 using StateInterface.Areas.Connect.Models;
+using StateInterface.Controllers;
 using StateInterface.Designer.Model;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,12 @@ using System.Web.Mvc;
 
 namespace StateInterface.Areas.Connect.Controllers
 {
-    public class HomeController : Controller
+    [Authorize]
+    public class HomeController : StateConnectContollerBase
     {
-        private IDesignerTasks _designerTasks;
         public HomeController(IDesignerTasks designerTasks)
+            : base(designerTasks)
         {
-            _designerTasks = designerTasks;
         }
         [HttpGet]
         public ActionResult Index()

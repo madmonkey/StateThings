@@ -14,14 +14,14 @@ namespace StateInterface.Areas.Design.Models
         public List<ListCatalogProjectionModel> Lists { get; set; }
 
         public string InitialData { get; set; }
-        public GetListsParametersModel GetListsParameters { get; set; }
+        public ListsRequestModel ListsRequest { get; set; }
         public string GetListsUrl { get; set; }
         public string ListDetailsUrl { get; set; }
         public string DesignHomeUrl { get; set; }
 
         public ListModel()
         {
-            GetListsParameters = new GetListsParametersModel();
+            ListsRequest = new ListsRequestModel();
             Lists = new List<ListCatalogProjectionModel>();
         }
         public ListModel(User user, IEnumerable<RecordsCenter> recordsCenters)

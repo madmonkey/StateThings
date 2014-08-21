@@ -2,7 +2,7 @@
 
 namespace StateInterface.Designer.Model
 {
-    public class TransactionSnippetField
+    public class TransactionSnippetField : IValidate
     {
         public virtual int Id { get; set; }
         public virtual string TagName{ get; set; }

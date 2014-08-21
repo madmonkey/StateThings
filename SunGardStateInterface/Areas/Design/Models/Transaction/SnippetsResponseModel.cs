@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace StateInterface.Areas.Design.Models
 {
-    public class SnippetModel
+    public class SnippetsResponseModel
     {
         public RecordsCenterSelectorModel RecordsCenterSelector { get; set; }
         public List<TransactionSnippetModel> TransactionSnippets { get; set; }
 
-        public SnippetsParameterModel SnippetsParameter { get; set; }
-        public SnippetParameterModel SnippetParameter { get; set; }
+        public SnippetsRequestModel SnippetsRequest { get; set; }
+        public SnippetRequestModel SnippetRequest { get; set; }
         public string GetSnippetsUrl { get; set; }
         public string SnippetDetailsUrl { get; set; }
         public string CreateSnippetUrl { get; set; }
@@ -19,13 +19,13 @@ namespace StateInterface.Areas.Design.Models
         public string InitialData { get; set; }
         public string DesignHomeUrl { get; set; }
 
-        public SnippetModel()
+        public SnippetsResponseModel()
         {
             TransactionSnippets = new List<TransactionSnippetModel>();
-            SnippetsParameter = new SnippetsParameterModel();
-            SnippetParameter = new SnippetParameterModel();
+            SnippetsRequest = new SnippetsRequestModel();
+            SnippetRequest = new SnippetRequestModel();
         }
-        public SnippetModel(User user, IEnumerable<RecordsCenter> recordsCenters)
+        public SnippetsResponseModel(User user, IEnumerable<RecordsCenter> recordsCenters)
             : this()
         {
             RecordsCenterSelector = new RecordsCenterSelectorModel(user, recordsCenters);

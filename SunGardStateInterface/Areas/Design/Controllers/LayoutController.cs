@@ -1,25 +1,25 @@
 ﻿// ReSharper disable once CheckNamespace
 using Designer.Tasks;
 using StateInterface.Areas.Design.Models;
+using StateInterface.Controllers;
 using System.Linq;
 using System.Web.Mvc;
 
 namespace StateInterface.Areas.Design.Controllers
 {
-    public class LayoutController : Controller
+    [Authorize]
+    public class LayoutController : StateConnectContollerBase
     {
-        private readonly IDesignerTasks _designerTasks;
-
         public LayoutController(IDesignerTasks designerTasks)
+            : base(designerTasks)
         {
-            this._designerTasks = designerTasks;
         }
 
         public ActionResult Index()
         {
             return View();
         }
-        
+
         [HttpGet]
         public ActionResult Preview(string recordsCenterName, string formId)
         {

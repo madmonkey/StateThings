@@ -1,34 +1,35 @@
-﻿using Designer.Tasks;
+﻿using System.Linq;
+using Designer.Tasks;
 using Newtonsoft.Json;
 using StateInterface.Areas.Design.Models;
-using StateInterface.Designer.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using StateInterface.Properties;
+using StateInterface.Designer.Model;
+using StateInterface.Controllers;
 
 namespace StateInterface.Areas.Design.Controllers
 {
-    public class FieldController : Controller
+    [Authorize]
+    public class FieldController : StateConnectContollerBase
     {
-        private IDesignerTasks _designerTasks;
         public FieldController(IDesignerTasks designerTasks)
+            : base(designerTasks)
         {
-            _designerTasks = designerTasks;
         }
         [HttpGet]
         public ActionResult Index()
         {
             var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
             var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
-            var model = new FieldCatalogModel(user, recordCenters);
-            model.RecordsCenterSelector.SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" });
-            model.Fields = getFieldModels(user.CurrentRecordsCenter.Name);
-            model.GetFieldsUrl = Url.Action("GetFields");
-            model.FieldDetailsUrl = Url.Action("Details");
-            model.DesignHomeUrl = Url.Action("Index", "Home");
+            var model = new FieldCatalogModel(user, recordCenters)
+                {
+                    RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) },
+                    Fields = getFieldModels(user.CurrentRecordsCenter.Name),
+                    GetFieldsUrl = Url.Action("GetFields"),
+                    FieldDetailsUrl = Url.Action("Details"),
+                    DesignHomeUrl = Url.Action("Index", "Home")
+                };
 
             model.InitialData = JsonConvert.SerializeObject(model);
 
@@ -51,29 +52,23 @@ namespace StateInterface.Areas.Design.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult GetFields(GetFieldsParametersModel parameters)
+        public ActionResult GetFields(FieldsRequestModel request)
         {
-            if (parameters == null)
+            if (request == null)
             {
                 throw new StateInterfaceParameterValidationException(Resources.ParentIdInvalid);
             }
 
-            parameters.Validate();
+            request.Validate();
 
-            List<FieldCatalogItemModel> fieldCatalogItemModels = getFieldModels(parameters.RecordsCenterName);
+            List<FieldCatalogItemModel> fieldCatalogItemModels = getFieldModels(request.RecordsCenterName);
 
             return Json(fieldCatalogItemModels);
         }
         private List<FieldCatalogItemModel> getFieldModels(string recordsCenterName)
         {
             var fields = _designerTasks.GetFieldCatalogItems(new TaskParameter<RecordsCenterName>(User.Identity.Name, new RecordsCenterName(recordsCenterName)));
-
-            List<FieldCatalogItemModel> fieldCatalogItemModels = new List<FieldCatalogItemModel>();
-            foreach (var field in fields)
-            {
-                fieldCatalogItemModels.Add(new FieldCatalogItemModel(field, Url.Action("Details") + "/" + recordsCenterName));
-            }
-            return fieldCatalogItemModels;
+            return fields.Select(field => new FieldCatalogItemModel(field, Url.Action("Details") + "/" + recordsCenterName)).ToList();
         }
     }
 }

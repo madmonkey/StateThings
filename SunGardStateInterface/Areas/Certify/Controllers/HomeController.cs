@@ -1,15 +1,16 @@
 ﻿using Designer.Tasks;
+using StateInterface.Controllers;
 using StateInterface.Designer.Model;
 using System.Web.Mvc;
 
 namespace StateInterface.Areas.Certify.Controllers
 {
-    public class HomeController : Controller
+    [Authorize]
+    public class HomeController : StateConnectContollerBase
     {
-        private IDesignerTasks _designerTasks;
         public HomeController(IDesignerTasks designerTasks)
+            : base(designerTasks)
         {
-            _designerTasks = designerTasks;
         }
         [HttpGet]
         public ActionResult Index()

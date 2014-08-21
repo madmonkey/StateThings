@@ -30,6 +30,11 @@ namespace StateInterface.Designer.Model
             }
         }
     }
+
+    public interface IValidate
+    {
+        void IsValid();
+    }
 }
 
 

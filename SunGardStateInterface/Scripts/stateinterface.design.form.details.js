@@ -15,7 +15,7 @@ $(function () {
 
     vm.saveApplications = function () {
         var param = {
-            RecordsCenterId: vm.RecordsCenterId,
+            RecordsCenterName: vm.RecordsCenterName,
             FormId: vm.FormId,
             Applications: vm.ApplicationsForEdit
         };

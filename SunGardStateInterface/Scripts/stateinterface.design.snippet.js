@@ -17,22 +17,22 @@
     vm.evaluateShowNoSnippetsMessage();
 
     vm.snippetModal = ko.observable(false);
-    vm.SnippetParameter.Name = ko.observable().extend({initializeValidation: '', validateNonEmpty: '*' });
-    vm.SnippetParameter.Description = ko.observable().extend({ initializeValidation: '', validateNonEmpty: '*' });
+    vm.SnippetRequest.Name = ko.observable().extend({initializeValidation: '', validateNonEmpty: '*' });
+    vm.SnippetRequest.Description = ko.observable().extend({ initializeValidation: '', validateNonEmpty: '*' });
 
     vm.isSnippetError = ko.computed(function () {
-        return vm.SnippetParameter.Name.hasError() || vm.SnippetParameter.Description.hasError()
+        return vm.SnippetRequest.Name.hasError() || vm.SnippetRequest.Description.hasError();
     });
 
-    vm.initializeSnippet = function () {
-        vm.SnippetParameter.Name('');
-        vm.SnippetParameter.Description('');
-    }
+    vm.initializeSnippet = function() {
+        vm.SnippetRequest.Name('');
+        vm.SnippetRequest.Description('');
+    };
 
-    vm.addSnippet = function () {
+    vm.addSnippet = function() {
         vm.initializeSnippet();
         vm.snippetModal(vm);
-    }
+    };
 
     vm.RecordsCenterSelector.SelectedRecordsCenterName.subscribe(function (newValue) {
         vm.getSnippets(newValue);
@@ -41,8 +41,8 @@
     vm.getSnippets = function (recordsCenterName) {
         vm.snippetsAreLoading(true);
 
-        vm.SnippetsParameter.RecordsCenterName(recordsCenterName);
-        var param = ko.toJSON(vm.SnippetsParameter);
+        vm.SnippetsRequest.RecordsCenterName(recordsCenterName);
+        var param = ko.toJSON(vm.SnippetsRequest);
 
         services.postToServer(param, function (data) {
             ko.mapping.fromJS(data, {}, vm.TransactionSnippets);
@@ -54,13 +54,13 @@
         }, vm.GetSnippetsUrl());
     };
 
-    vm.createSnippet = function () {
+    vm.createSnippet = function() {
         var newTab = window.open('', '_blank');
-        vm.SnippetParameter.RecordsCenterName(vm.RecordsCenterSelector.SelectedRecordsCenterName());
-        services.postToServer(ko.toJSON(vm.SnippetParameter), function (data) {
+        vm.SnippetRequest.RecordsCenterName(vm.RecordsCenterSelector.SelectedRecordsCenterName());
+        services.postToServer(ko.toJSON(vm.SnippetRequest), function(data) {
             newTab.location = data.SnippetDetailsUrl;
-        }, vm.CreateSnippetUrl()); 
-    }
+        }, vm.CreateSnippetUrl());
+    };
 
     ko.applyBindings(vm);
 });

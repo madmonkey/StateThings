@@ -10,65 +10,59 @@ using StateInterface.Designer;
 
 namespace Designer.Tasks
 {
+    //TODO: Consider where-when-how to apply the Nacho-Cheese exception
     public class DesignerTasks : IDesignerTasks
     {
         private readonly IDesignerRepository _repository;
+
         public DesignerTasks(IDesignerRepository repository)
         {
             _repository = repository;
         }
+
         public IEnumerable<Role> GetRoles()
         {
             return _repository.GetAll<Role>();
         }
-        //public User GetUser(TaskParameter<UserByName> taskParameter)
-        //{
-        //    var user = _repository.GetAll<User>().FirstOrDefault(x => x.LoginName == taskParameter.Parameters.UserName);
-
-        //    //TODO: Consider refactoring how we associate records center to a user for the first time.
-        //    if (user != null)
-        //    {
-        //        if (user.CurrentRecordsCenter == null)
-        //        {
-        //            user.CurrentRecordsCenter = _repository.GetAll<RecordsCenter>().OrderBy(x => x.Name).First();
-        //            _repository.Save(user);
-        //        }
-        //    }
-        //    return user;
-        //}
+        
         public IEnumerable<RecordsCenter> GetRecordsCenters(TaskParameter taskParameter)
         {
-            if (!string.IsNullOrWhiteSpace(taskParameter.CurrentUser))
-            {
-                var user = _repository.GetUser(taskParameter.CurrentUser);
-                if(user != null)
-                {
-                    return _repository.GetAll<RecordsCenter>().OrderBy(x => x.Name);
-                }
-                throw new SecurityAccessDeniedException();
-            }
-            throw new SecurityAccessDeniedException();
+            var currentUser = validateUserContext(taskParameter);
+            return _repository.GetAll<RecordsCenter>().OrderBy(x => x.Name);
         }
        
         public RecordsCenter GetRecordsCenterByName(TaskParameter<RecordsCenterName> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
+            validateModel<RecordsCenterName>(taskParameter);
             return _repository.GetRecordsCenterByName(taskParameter.Parameters.Name);
+            
         }
+
         public IEnumerable<Category> GetCategories(TaskParameter taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
             return _repository.GetAll<Category>();
         }
+
         public IEnumerable<RequestForm> GetForms(TaskParameter<RecordsCenterId> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
+            validateModel<RecordsCenterId>(taskParameter);
             return _repository.GetAll<RequestForm>().Where(x => x.RecordsCenter.Id == taskParameter.Parameters.Id).OrderBy(x => x.FormId);
         }
         
         public IEnumerable<RequestForm> GetForms(TaskParameter<FormsCategoryByRecordsCenterName> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
+            validateModel<FormsCategoryByRecordsCenterName>(taskParameter);
             return _repository.GetAll<RequestForm>().Where(x => x.RecordsCenter.Name.Equals(taskParameter.Parameters.Name) && x.Categories.Any(y => y.Id == taskParameter.Parameters.CategoryId)).OrderBy(x => x.FormId);
         }
+
         public TestCase UpdateTestCase(TaskParameter<CriteriaTestCasePassFail> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
+            validateModel<CriteriaTestCasePassFail>(taskParameter);
             var criteria = _repository.GetById<Criteria>(taskParameter.Parameters.Id);
             var qaActionTypes = _repository.GetAll<QAActionType>();
 
@@ -104,21 +98,24 @@ namespace Designer.Tasks
 
             return criteria.Transaction.RequestForm.TestCases.LastOrDefault(x => x.TestCaseId.Equals(taskParameter.Parameters.TestCaseId));
         }
+
         public TestCase ResetTestCase(TaskParameter<CriteriaTestCase> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
+            validateModel<CriteriaTestCase>(taskParameter);
             var criteria = _repository.GetById<Criteria>(taskParameter.Parameters.Id);
             var qaActionTypes = _repository.GetAll<QAActionType>();
 
             var qaAction = new QAAction()
-        {
-            Criteria = criteria,
-            Note = taskParameter.Parameters.Note,
-            OccurredAt = taskParameter.Parameters.Occurred,
-            ByUser = taskParameter.CurrentUser,
-            HasPassed = null,
-            TestCaseId = taskParameter.Parameters.TestCaseId,
-            QAActionType = qaActionTypes.FirstOrDefault(x => x.ActionName.Equals(QAActionType.Reset))
-        };
+            {
+                Criteria = criteria,
+                Note = taskParameter.Parameters.Note,
+                OccurredAt = taskParameter.Parameters.Occurred,
+                ByUser = taskParameter.CurrentUser,
+                HasPassed = null,
+                TestCaseId = taskParameter.Parameters.TestCaseId,
+                QAActionType = qaActionTypes.FirstOrDefault(x => x.ActionName.Equals(QAActionType.Reset))
+            };
 
             criteria.QAActions.Add(qaAction);
             _repository.Save(criteria);
@@ -126,56 +123,80 @@ namespace Designer.Tasks
             criteria.Transaction.RequestForm.GenerateTestCases();
             return criteria.Transaction.RequestForm.TestCases.LastOrDefault(x => x.TestCaseId.Equals(taskParameter.Parameters.TestCaseId));
         }
+
         public RequestForm GetForm(TaskParameter<FormById> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
+            validateModel<FormById>(taskParameter);
             return _repository.GetForm(taskParameter.Parameters.FormId, _repository.GetById<RecordsCenter>(taskParameter.Parameters.Id));
         }
+
         public IEnumerable<Field> GetFieldCatalogItems(TaskParameter<RecordsCenterName> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
+            validateModel<RecordsCenterName>(taskParameter);
             return _repository.GetAll<Field>()
                 .Where(x => x.RecordsCenter.Name == taskParameter.Parameters.Name)
                 .OrderBy(x => x.TagName);
         }
+
         public Field GetField(TaskParameter<FieldByTag> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
+            validateModel<FieldByTag>(taskParameter);
             return _repository.GetAll<Field>()
                 .SingleOrDefault(x => x.RecordsCenter.Name == taskParameter.Parameters.Name && x.TagName == taskParameter.Parameters.TagName);
         }
-        public IEnumerable<RequestFormProjection> GetFormProjectionsUsingField(TaskParameter<Field> taskParameters)
+
+        public IEnumerable<RequestFormProjection> GetFormProjectionsUsingField(TaskParameter<Field> taskParameter)
         {
-            return _repository.GetFormProjectionsUsingField(taskParameters.Parameters);
+            var currentUser = validateUserContext(taskParameter);
+            validateModel<Field>(taskParameter);
+            return _repository.GetFormProjectionsUsingField(taskParameter.Parameters);
         }
+
         public OptionList GetList(TaskParameter<ListByName> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
+            validateModel<ListByName>(taskParameter);
             return _repository.GetList(taskParameter.Parameters.ListName, _repository.GetById<RecordsCenter>(taskParameter.Parameters.Id));
         }
+
         public IEnumerable<FormFieldProjection> GetFormFieldProjectionsUsingOptionList(TaskParameter<OptionList> taskParameters)
         {
+            var currentUser = validateUserContext(taskParameters);
             return _repository.GetFormFieldProjectionsUsingOptionList(taskParameters.Parameters);
         }
+
         public IEnumerable<RequestFormDetailProjection> GetRecordsCenterAcceptanceStatus(TaskParameter<RecordsCenterId> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
             return _repository.GetRecordsCenterAcceptanceStatus(_repository.GetById<RecordsCenter>(taskParameter.Parameters.Id));
         }
+
         public IEnumerable<RequestFormProjection> GetFormProjections(TaskParameter<RecordsCenterId> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
             return _repository.GetFormProjectionsForRecordsCenter(GetRecordsCenters(taskParameter).FirstOrDefault(x => x.Id == taskParameter.Parameters.Id));
         }
         
         public IEnumerable<Application> GetApplications(TaskParameter taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
             return _repository.GetAll<Application>();
         }
-
-
+        
         public RequestForm UpdateRequestForm(TaskParameter<RequestForm> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
             _repository.Save(taskParameter.Parameters);
             return _repository.GetById<RequestForm>(taskParameter.Parameters.Id);
 
         }
+
         public StatisticsRecordsCenter GetStatisticsForRecordsCenter(TaskParameter<RecordsCenterName> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
             RecordsCenter recordsCenter = GetRecordsCenterByName(taskParameter);
             StatisticsRecordsCenter statisticsRecordsCenter = new StatisticsRecordsCenter(recordsCenter);
 
@@ -275,8 +296,10 @@ namespace Designer.Tasks
 
             return statisticsRecordsCenter;
         }
+
         public IEnumerable<TestCase> GetOpenIssues(TaskParameter<RecordsCenterName> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
             List<TestCase> failedTestCases = new List<TestCase>();
             var recordsCenter = GetRecordsCenterByName(taskParameter);
 
@@ -288,28 +311,25 @@ namespace Designer.Tasks
 
         public IEnumerable<ListProjection> GetListProjections(TaskParameter<RecordsCenterId> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
             return _repository.GetListProjectionsForRecordsCenter(GetRecordsCenters(taskParameter).FirstOrDefault(x => x.Id == taskParameter.Parameters.Id));
         }
+
         public IEnumerable<TransactionSnippet> GetTransactionSnippets(TaskParameter<RecordsCenterId> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
             return _repository.GetAll<TransactionSnippet>().Where(x => x.RecordsCenter.Id == taskParameter.Parameters.Id).OrderBy(x => x.TokenName);
         }
+
         public TransactionSnippet GetTransactionSnippet(TaskParameter<SnippetFieldByToken> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
             return _repository.GetAll<TransactionSnippet>().FirstOrDefault(x => x.RecordsCenter.Id == taskParameter.Parameters.Id && x.TokenName == taskParameter.Parameters.TokenName);
-        }
-        public IEnumerable<TransactionSnippetField> GetTransactionSnippetFields(RecordsCenter recordCenter, string tokenName)
-        {
-            var transaction = _repository.GetAll<TransactionSnippet>().FirstOrDefault(x => x.TokenName == tokenName);
-            if (transaction != null)
-            {
-                return transaction.TransactionSnippetFields.ToArray().OrderBy(x => x.TagName);
-            }
-            return null;
         }
         
         public TransactionSnippet UpdateTransactionSnippet(TaskParameter<TransactionSnippet> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
             taskParameter.Parameters.Updated = DateTime.UtcNow;
             _repository.Save<TransactionSnippet>(taskParameter.Parameters);
             return taskParameter.Parameters;
@@ -317,6 +337,7 @@ namespace Designer.Tasks
 
         public TransactionSnippet UpdateTransactionSnippetField(TaskParameter<SnippetFieldDetail> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
             var snippet = _repository.GetById<TransactionSnippet>(taskParameter.Parameters.Id);
             if (snippet != null)
             {
@@ -332,6 +353,7 @@ namespace Designer.Tasks
 
         public TransactionSnippet DeleteTransactionSnippet(TaskParameter<Snippet> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
             var snippet = GetTransactionSnippet(taskParameter);
             _repository.Remove<TransactionSnippet>(snippet);
             return snippet;
@@ -339,10 +361,13 @@ namespace Designer.Tasks
         
         public TransactionSnippet GetTransactionSnippet(TaskParameter<Snippet> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
             return _repository.GetById<TransactionSnippet>(taskParameter.Parameters.Id);
         }
+
         public TransactionSnippet DeleteTransactionSnippetField(TaskParameter<SnippetField> taskParameter)
         {
+            var currentUser = validateUserContext(taskParameter);
             var transactionSnippetField = _repository.GetById<TransactionSnippetField>(taskParameter.Parameters.FieldId);
             _repository.Remove(transactionSnippetField);
             var snippet = _repository.GetById<TransactionSnippet>(taskParameter.Parameters.Id);
@@ -353,16 +378,56 @@ namespace Designer.Tasks
 
         public void SetRecordsCenterForUser(TaskParameter<RecordsCenterName> taskParameter)
         {
-            var user = _repository.GetUser(taskParameter.CurrentUser);
+            var currentUser = validateUserContext(taskParameter);
             var recordsCenter = _repository.GetRecordsCenterByName(taskParameter.Parameters.Name);
-            user.CurrentRecordsCenter = recordsCenter;
-            _repository.Save(user);
+            currentUser.CurrentRecordsCenter = recordsCenter;
+            _repository.Save(currentUser);
         }
-
-
+        
         public User GetUser(TaskParameter taskParameter)
         {
-            return _repository.GetAll<User>().FirstOrDefault(x => x.LoginName == taskParameter.CurrentUser);
+            var user = _repository.GetAll<User>().FirstOrDefault(x => x.LoginName == taskParameter.CurrentUser);
+            //TODO: Consider refactoring how we associate records center to a user for the first time.
+            if (user != null)
+            {
+                if (user.CurrentRecordsCenter == null)
+                {
+                    user.CurrentRecordsCenter = _repository.GetAll<RecordsCenter>().OrderBy(x => x.Name).First();
+                    _repository.Save(user);
+                }
+            }
+            return user;
+        }
+
+        private User validateUserContext(TaskParameter taskParameter)
+        {
+            if (!string.IsNullOrWhiteSpace(taskParameter.CurrentUser))
+            {
+                var user = _repository.GetUser(taskParameter.CurrentUser);
+                if(user != null)
+                {
+                    return user;
+                }
+                throw new SecurityAccessDeniedException();
+            }
+            throw new SecurityAccessDeniedException();
+        }
+
+        private void validateModel<T>(TaskParameter<T> taskParameter) where T : class
+        {
+            IValidate canTestModel = taskParameter as IValidate;
+            if(canTestModel !=null)
+            {
+                try
+                {
+                    canTestModel.IsValid();
+                }
+                catch (Exception)
+                {
+                    throw new ValidationException();
+                }
+                
+            }
         }
     }
 }

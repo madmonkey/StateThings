@@ -10,12 +10,11 @@ using System.Web.Mvc;
 namespace StateInterface.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class HomeController : StateConnectContollerBase
     {
-        private IDesignerTasks _designerTasks;
         public HomeController(IDesignerTasks designerTasks)
+            : base(designerTasks)
         {
-            _designerTasks = designerTasks;
         }
         [HttpGet]
         public ActionResult Index()

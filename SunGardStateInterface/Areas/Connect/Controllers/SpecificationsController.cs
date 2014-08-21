@@ -1,6 +1,7 @@
 ﻿using Designer.Tasks;
 using Newtonsoft.Json;
 using StateInterface.Areas.Connect.Models;
+using StateInterface.Controllers;
 using StateInterface.Designer.Model;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,12 @@ using System.Web.Mvc;
 
 namespace StateInterface.Areas.Connect.Controllers
 {
-    public class SpecificationsController : Controller
+    [Authorize]
+    public class SpecificationsController : StateConnectContollerBase
     {
-        private IDesignerTasks _designerTasks;
         public SpecificationsController(IDesignerTasks designerTasks)
+            : base(designerTasks)
         {
-            _designerTasks = designerTasks;
         }
         [HttpGet]
         public ActionResult Index()
@@ -32,7 +33,7 @@ namespace StateInterface.Areas.Connect.Controllers
         {
             var categories = _designerTasks.GetCategories(new TaskParameter(User.Identity.Name));
             var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Id == formsRequest.RecordsCenterId);
-            var formProjections = _designerTasks.GetFormProjections(new TaskParameter<RecordsCenterId>(User.Identity.Name){Parameters = new RecordsCenterId(formsRequest.RecordsCenterId)});
+            var formProjections = _designerTasks.GetFormProjections(new TaskParameter<RecordsCenterId>(User.Identity.Name) { Parameters = new RecordsCenterId(formsRequest.RecordsCenterId) });
 
             List<CategoryModel> categoryModels = new List<CategoryModel>();
 

@@ -1,5 +1,5 @@
 ﻿@* TransactionSnippet Index Page *@
-@model StateInterface.Areas.Design.Models.SnippetModel
+@model StateInterface.Areas.Design.Models.SnippetsResponseModel
 <div class="row">
     <div class="col-xs-12">
         <div class="pull-right padRight leadSmaller">
@@ -35,13 +35,13 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Name</label>
-                        <input autofocus class="fieldInputMedium" type="text" maxlength="50" data-bind="value: SnippetParameter.Name, css: {error: SnippetParameter.Name.hasError}, valueUpdate:'afterkeydown'">
-                        <span data-bind="visible: SnippetParameter.Name.hasError, text: SnippetParameter.Name.validationMessage" class="errorMessage"></span>
+                        <input autofocus class="fieldInputMedium" type="text" maxlength="50" data-bind="value: SnippetRequest.Name, css: {error: SnippetRequest.Name.hasError}, valueUpdate:'afterkeydown'">
+                        <span data-bind="visible: SnippetRequest.Name.hasError, text: SnippetRequest.Name.validationMessage" class="errorMessage"></span>
                     </div>
                     <div class="form-group">
                         <label>Description</label>
-                        <textarea class="fieldInputMedium" rows="3" maxlength="100" data-bind="value: SnippetParameter.Description, css: {error: SnippetParameter.Description.hasError}, valueUpdate:'afterkeydown'"></textarea>
-                        <span data-bind="visible: SnippetParameter.Description.hasError, text: SnippetParameter.Description.validationMessage" class="errorMessage"></span>
+                        <textarea class="fieldInputMedium" rows="3" maxlength="100" data-bind="value: SnippetRequest.Description, css: {error: SnippetRequest.Description.hasError}, valueUpdate:'afterkeydown'"></textarea>
+                        <span data-bind="visible: SnippetRequest.Description.hasError, text: SnippetRequest.Description.validationMessage" class="errorMessage"></span>
                     </div>
                 </div>
                 <div class="modal-footer">

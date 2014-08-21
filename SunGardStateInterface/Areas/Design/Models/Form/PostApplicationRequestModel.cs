@@ -6,20 +6,20 @@ using System.Web;
 
 namespace StateInterface.Areas.Design.Models
 {
-    public class PostApplicationParametersModel
+    public class PostApplicationRequestModel
     {
-        public int RecordsCenterId { get; set; }
+        public string RecordsCenterName { get; set; }
         public string FormId { get; set; }
         public List<ApplicationModel> Applications { get; set; }
 
-        public PostApplicationParametersModel()
+        public PostApplicationRequestModel()
         {
             Applications = new List<ApplicationModel>();
         }
-        public PostApplicationParametersModel (RequestForm applicationFormProjection, IEnumerable<Application> availableApplications)
+        public PostApplicationRequestModel (RequestForm applicationFormProjection, IEnumerable<Application> availableApplications)
 	    {
             Applications = new List<ApplicationModel>();
-            this.RecordsCenterId = applicationFormProjection.RecordsCenter.Id;
+            this.RecordsCenterName = applicationFormProjection.RecordsCenter.Name;
             this.FormId = applicationFormProjection.FormId;
             foreach (var application in availableApplications)
 	        {
@@ -36,7 +36,7 @@ namespace StateInterface.Areas.Design.Models
                 throw new StateInterfaceParameterValidationException("Invalid FormId");
             }
 
-            if (RecordsCenterId == 0)
+            if (string.IsNullOrEmpty(RecordsCenterName))
             {
                 throw new StateInterfaceParameterValidationException("Invalid RecordCenter");
             }

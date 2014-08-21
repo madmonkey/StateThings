@@ -132,7 +132,6 @@ namespace Designer.Tasks
         }
         public string TestCaseId { get; private set; }
         public DateTime Occurred { get; private set; }
-
         public string Note { get; private set; }
     }
 
@@ -145,6 +144,7 @@ namespace Designer.Tasks
         }
         public bool HasPassed { get; private set; }
     }
+    
     public abstract class ById
     {
         public ById(int id)

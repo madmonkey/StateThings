@@ -10,14 +10,14 @@ namespace StateInterface.Areas.Design.Models
         public List<RequestFormCatalogProjectionModel> RequestForms { get; set; }
 
         public string InitialData { get; set; }
-        public GetFormsParametersModel GetFormsParameters { get; set; }
+        public FormsRequestModel FormsRequest { get; set; }
         public string GetFormsUrl { get; set; }
         public string FormDetailsUrl { get; set; }
         public string DesignHomeUrl { get; set; }
 
         public FormModel()
         {
-            GetFormsParameters = new GetFormsParametersModel();
+            FormsRequest = new FormsRequestModel();
             RequestForms = new List<RequestFormCatalogProjectionModel>();
         }
         public FormModel(User user, IEnumerable<RecordsCenter> recordsCenters)
