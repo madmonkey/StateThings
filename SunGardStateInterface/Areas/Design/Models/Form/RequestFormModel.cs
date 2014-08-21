@@ -38,9 +38,9 @@ namespace StateInterface.Areas.Design.Models
         public string FormsHomeUrl { get; set; }
 
         public RequestFormModel(RequestForm requestForm,
-            string previewFormUrl, string listDetailsUrl, string fieldDetailsUrl,
+            string listDetailsUrl, string fieldDetailsUrl,
             IEnumerable<Application> availableApplications)
-            : this(requestForm, previewFormUrl, listDetailsUrl, fieldDetailsUrl)
+            : this(requestForm, listDetailsUrl, fieldDetailsUrl)
         {
             var selectedApplications = this.Applications.ToList();
             this.Applications = new List<ApplicationModel>();
@@ -49,7 +49,7 @@ namespace StateInterface.Areas.Design.Models
                 this.Applications.Add(new ApplicationModel(application) { IsSelected = selectedApplications.Any(x => x.Id == application.Id) });
             }
         }
-        public RequestFormModel(RequestForm requestForm, string previewFormUrl, string listDetailsUrl, string fieldDetailsUrl)
+        public RequestFormModel(RequestForm requestForm, string listDetailsUrl, string fieldDetailsUrl)
         {
             Id = requestForm.Id;
             RecordsCenterName = requestForm.RecordsCenter.Name;
@@ -93,9 +93,6 @@ namespace StateInterface.Areas.Design.Models
 
                 Transactions.Add(transactionViewModel);
             }
-
-            //todo: move out into controller?
-            PreviewFormUrl = string.Format("{0}/{1}/{2}", previewFormUrl, requestForm.RecordsCenter.Name, requestForm.FormId);
         }
     }
 }

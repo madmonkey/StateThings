@@ -46,13 +46,14 @@ namespace StateInterface.Areas.Design.Controllers
             var requestForm = _designerTasks.GetForm(recordsCenter.Id, formId);
 
             var availableApplications = _designerTasks.GetApplications();
-            var formModel = new RequestFormModel(requestForm, Url.Action("Preview", "Layout"), Url.Action("Details", "List"), Url.Action("Details", "Field"), availableApplications);
+            var formModel = new RequestFormModel(requestForm, Url.Action("Details", "List"), Url.Action("Details", "Field"), availableApplications);
 
             User user = _designerTasks.GetUser(System.Web.HttpContext.Current.User.Identity.Name);
             formModel.CanDesignManage = user.CanDesignManage;
             formModel.UpdateApplicationsAssociationUrl = Url.Action("UpdateFormApplications", new { });
             formModel.DesignHomeUrl = Url.Action("Index", "Home");
             formModel.FormsHomeUrl = Url.Action("Index");
+            formModel.PreviewFormUrl = string.Format("{0}/{1}/{2}", Url.Action("Preview", "Layout"), requestForm.RecordsCenter.Name, requestForm.FormId);
 
             formModel.InitialData = JsonConvert.SerializeObject(formModel);
 
@@ -74,6 +75,7 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpGet]
         public ActionResult Help()
         {
+            ViewBag.Title = "Form Help";
             return View();
         }
         [HttpPost]

@@ -31,12 +31,14 @@ namespace StateInterface.Areas.Certify.Controllers
             model.GetFormsUrl = Url.Action("GetForms");
 
             model.InitialData = JsonConvert.SerializeObject(model);
+            ViewBag.Title = "Certification Update";
 
             return View(model);
         }
         [HttpGet]
         public ActionResult Help()
         {
+            ViewBag.Title = "Certification Help";
             return View();
         }
         [HttpGet]
@@ -64,7 +66,7 @@ namespace StateInterface.Areas.Certify.Controllers
             {
                 if (model == null)
                 {
-                    throw new StateInterfaceParameterValidationException("Model is null.");
+                    throw new StateInterfaceParameterValidationException(Resources.ParameterNull);
                 }
 
                 var requestForm = _designerTasks.GetForm(model.RecordsCenterId, model.FormId);
@@ -117,7 +119,7 @@ namespace StateInterface.Areas.Certify.Controllers
             {
                 if (model == null)
                 {
-                    throw new StateInterfaceParameterValidationException("Model is null.");
+                    throw new StateInterfaceParameterValidationException(Resources.ParameterNull);
                 }
 
                 model.Validate();
@@ -146,7 +148,7 @@ namespace StateInterface.Areas.Certify.Controllers
             {
                 if (model == null)
                 {
-                    throw new StateInterfaceParameterValidationException("Model is null.");
+                    throw new StateInterfaceParameterValidationException(Resources.ParameterNull);
                 }
 
                 model.Validate();

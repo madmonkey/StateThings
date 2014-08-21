@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using StateInterface.Properties;
 
 namespace StateInterface.Areas.Design.Controllers
 {
@@ -22,9 +23,11 @@ namespace StateInterface.Areas.Design.Controllers
         {
             var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
             var user = _designerTasks.GetUser(User.Identity.Name);
-            var model = new FieldCatalogModel(user, recordCenters, Url.Action("GetFields"), Url.Action("Details"));
+            var model = new FieldCatalogModel(user, recordCenters);
             model.RecordsCenterSelector.SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" });
             model.Fields = getFieldModels(user.CurrentRecordsCenter.Name);
+            model.GetFieldsUrl = Url.Action("GetFields");
+            model.FieldDetailsUrl = Url.Action("Details");
             model.DesignHomeUrl = Url.Action("Index", "Home");
 
             model.InitialData = JsonConvert.SerializeObject(model);
@@ -52,7 +55,7 @@ namespace StateInterface.Areas.Design.Controllers
         {
             if (parameters == null)
             {
-                throw new StateInterfaceParameterValidationException("Invalid parameters in GetFields");
+                throw new StateInterfaceParameterValidationException(Resources.ParentIdInvalid);
             }
 
             parameters.Validate();

@@ -1,4 +1,5 @@
-﻿@model StateInterface.Areas.Design.Models.FieldCatalogModel
+﻿@* Field Index Page *@
+@model StateInterface.Areas.Design.Models.FieldCatalogModel
 <div class="row">
     <div class="col-xs-12">
         <div class="pull-right padRight leadSmaller">
@@ -34,7 +35,49 @@
     var initialData = @Html.Raw(Model.InitialData)
 </script>
 
-@Html.Partial("_fieldsCatalogTemplate")
+<script type="text/html" id="fieldsCatalog-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <br />
+                <div class="padLeft">
+                    <div class="col-xs-6" data-bind="foreach: Fields.slice(0, fieldsSplit())">
+                        <div data-bind="template: { name: 'fieldsCatalogItem-template' }"></div>
+                    </div>
+                    <div class="col-xs-6" data-bind="foreach: Fields.slice(fieldsSplit(), Fields().length)">
+                        <div data-bind="template: { name: 'fieldsCatalogItem-template' }"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="fieldsCatalog-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <br />
+                <div class="padLeft">
+                    <div class="col-xs-6" data-bind="foreach: Fields.slice(0, fieldsSplit())">
+                        <div data-bind="template: { name: 'fieldsCatalogItem-template' }"></div>
+                    </div>
+                    <div class="col-xs-6" data-bind="foreach: Fields.slice(fieldsSplit(), Fields().length)">
+                        <div data-bind="template: { name: 'fieldsCatalogItem-template' }"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="fieldsCatalogItem-template">
+    <a data-bind="attr: { href: DetailsUrl, id: TagName } ">
+        <span class="formLink" data-bind="html: TagName"></span>
+    </a>
+    <span class="leadSmaller" data-bind="html: ToolTip"></span>
+    <br />
+</script>
 
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_design_field")

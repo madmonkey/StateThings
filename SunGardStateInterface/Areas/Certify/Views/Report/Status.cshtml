@@ -1,7 +1,4 @@
 ﻿@model StateInterface.Areas.Certify.Models.StatisticsRecordsCenterModel
-@{
-    ViewBag.Title = @Model.RecordsCenter.Name + " Certification Status";
-}
 
 <div class="row">
     <div class="col-xs-11">
@@ -35,14 +32,151 @@
         <div data-bind="template: { name: 'statisticsStatusApplication-template' }"></div>
     </div>
 </div>
+
+<script type="text/html" id="statisticsAnalytics-template">
+    <div class="row">
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Verified</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: CountCurrentVerifyPassed"></span>
+        </div>
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Certified</span>
+        </div>
+
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: CountCurrentCertifyPassed"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Unverified</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: CountUnVerifiedTestCases"></span>
+        </div>
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Uncertified</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: CountUnCertifiedTestCases"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Average test cases verified per day</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: AverageVerified"></span>
+        </div>
+
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Average test cases certified per day</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: AverageCertified"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Projected verification completion date</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: VerificationCompletionDate"></span>
+        </div>
+
+        <div class="col-xs-4">
+            <span class="leadSmaller pull-right">Projected certification completion date</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="leadSmaller pull-left" data-bind="text: CertificationCompletionDate"></span>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="statisticsProjection-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="lead">Velocity Calculator</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="padLeft">Project velocity through </span>
+            <span class="padLeft"><input type="radio" name="verifyCertify" value="false" data-bind="checked: $root.isCertification" /> Verification</span>
+            <span class="padLeft"><input type="radio" name="verifyCertify" value="true" data-bind="checked: $root.isCertification" /> Certification</span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-xs-5">
+            <span class="padLeft">If I want to be complete by</span>
+            <input style="width:100px;" type="text" id="datepicker" placeholder="mm/dd/yyyy" data-bind="value: $root.estimatedDate, css: {error: $root.estimatedDate.hasError}, valueUpdate:'afterkeydown'" />
+            <a href="#" title="Calculate Average" data-bind="click: $root.calculateAverage, css: { linkDisabled: $root.estimatedDate.hasError}" class="glyphicon glyphicon-play-circle padHeaderSmall"></a>
+        </div>
+        <div class="col-xs-7">
+            <span data-bind="visible: $root.average() != null && $root.estimatedDate.hasError() === false">
+                You'll need to complete <span class="lead" data-bind="text: $root.average"></span> test cases/day
+            </span>
+            <span data-bind="visible: $root.estimatedDate.hasError, text: $root.estimatedDate.validationMessage" class="errorMessage"></span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-xs-5">
+            <span class="padLeft">If I average </span>
+            <input style="width:80px;" type="text" data-bind="value: $root.estimatedAverage, css: {error: $root.estimatedAverage.hasError}, valueUpdate:'afterkeydown'" />
+            <span> test cases per day</span>
+            <a href="#" title="Calculate Date" data-bind="click: $root.calculateDate, css: { linkDisabled: $root.estimatedAverage.hasError}" class="glyphicon glyphicon-play-circle padHeaderSmall"></a>
+        </div>
+        <div class="col-xs-7">
+            <span data-bind="visible: $root.date() != null && $root.estimatedAverage.hasError() === false">You'll be complete on <span class="lead" data-bind="text: $root.date"></span></span>
+            <span data-bind="visible: $root.estimatedAverage.hasError, text: $root.estimatedAverage.validationMessage" class="errorMessage"></span>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="statisticsStatusApplication-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div>
+                <ul class="nav nav-tabs" role="tablist" data-bind="foreach: Applications">
+                    <li data-bind="css: { active: $index() == 0 }"><a class="leadSmaller bold" data-bind="attr:{ href: '#' + Name()}, html: Name" role="tab" data-toggle="tab"></a></li>
+                </ul>
+            </div>
+            <div class="tab-content" data-bind="foreach: Applications">
+                <div class="tab-pane" data-bind="attr:{ id: Name()}, css: { active: $index() == 0 }">
+                    <br />
+                    <span class="lead">Test progress for <span data-bind="html: Name"></span></span>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <span class="medium-header">
+                                <span data-bind="html: Statistics.TotalTestCases"></span>
+                                <span>test cases,</span>
+                                <span data-bind="html: Statistics.PercentVerified"></span>
+                                <span>verified,</span>
+                                <span data-bind="html: Statistics.PercentCertified"></span>
+                                <span>certified</span>
+                            </span>
+                        </div>
+                    </div>
+                    <br />
+                    <div data-bind="template: { name: 'statisticsStatusCategory-template' }"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
 <script type="text/javascript">
     var initialData = @Html.Raw(Model.InitialData)
 </script>
 @Html.Partial("_statisticsHeaderTemplate")
-@Html.Partial("_statisticsAnalyticsTemplate")
-@Html.Partial("_statisticsStatusApplicationTemplate")
+@*@Html.Partial("_statisticsStatusApplicationTemplate")*@
 @Html.Partial("_statisticsStatusCategoryTemplate")
-@Html.Partial("_statisticsProjectionTemplate")
+
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_certify_statistics")
 }

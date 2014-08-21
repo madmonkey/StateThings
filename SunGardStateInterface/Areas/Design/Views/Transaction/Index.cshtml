@@ -1,4 +1,5 @@
-﻿@model StateInterface.Areas.Design.Models.SnippetModel
+﻿@* TransactionSnippet Index Page *@
+@model StateInterface.Areas.Design.Models.SnippetModel
 <div class="row">
     <div class="col-xs-12">
         <div class="pull-right padRight leadSmaller">
@@ -22,6 +23,36 @@
         <div data-bind="template: { name: 'snippetList-template' }"></div>
     </div>
 </div>
+
+<div class="modal fade" data-bind="bootstrapShowModal: snippetModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+                <h3>New Transaction<span class="lead"></span></h3>
+            </div>
+            <form role="form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input autofocus class="fieldInputMedium" type="text" maxlength="50" data-bind="value: SnippetParameter.Name, css: {error: SnippetParameter.Name.hasError}, valueUpdate:'afterkeydown'">
+                        <span data-bind="visible: SnippetParameter.Name.hasError, text: SnippetParameter.Name.validationMessage" class="errorMessage"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="fieldInputMedium" rows="3" maxlength="100" data-bind="value: SnippetParameter.Description, css: {error: SnippetParameter.Description.hasError}, valueUpdate:'afterkeydown'"></textarea>
+                        <span data-bind="visible: SnippetParameter.Description.hasError, text: SnippetParameter.Description.validationMessage" class="errorMessage"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" data-dismiss="modal" class="btn btn-primary" data-bind="click: createSnippet, css: {linkDisabled: isSnippetError}">Save</a>
+                    <a class="btn btn-default" data-dismiss="modal">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script type="text/html" id="noSnippetFound-template">
     <div class="row" data-bind="visible: showNoSnippetFound()">
         <div class="col-xs-12">
@@ -32,13 +63,24 @@
     </div>
 </script>
 
+<script type="text/html" id="snippetList-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <br />
+            <div class="padLeft" data-bind="foreach: TransactionSnippets">
+                <a data-bind="attr: { href: SnippetDetailsUrl } ">
+                    <span class="formLink" data-bind="html: TokenName, attr: { Title: Description } "></span>
+                </a>
+                <span class="leadSmaller" data-bind="html: Description"></span>
+                <br />
+            </div>
+        </div>
+    </div>
+</script>
+
 <script type="text/javascript">
     var initialData = @Html.Raw(Model.InitialData)
 </script>
-
-@Html.Partial("_snippetListTemplate")
-@Html.Partial("_snippetModal")
-
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_design_snippet")
 }

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web.Mvc;
 using StateInterface.Designer.Model.Projections;
 using Designer.Tasks;
+using StateInterface.Properties;
 
 namespace StateInterface.Areas.Certify.Controllers
 {
@@ -28,11 +29,13 @@ namespace StateInterface.Areas.Certify.Controllers
             reportModel.GetOpenIssuesUrl = Url.Action("OpenIssues");
 
             reportModel.InitialData = JsonConvert.SerializeObject(reportModel);
+            ViewBag.Title = "Certification";
             return View(reportModel);
         }
         [HttpGet]
         public ActionResult Help()
         {
+            ViewBag.Title = "Report Help";
             return View();
         }
         [HttpGet]
@@ -40,21 +43,22 @@ namespace StateInterface.Areas.Certify.Controllers
         {
             if (String.IsNullOrEmpty(recordsCenterName))
             {
-                throw new StateInterfaceParameterValidationException("RecordsCenterName was not passed in");
+                throw new StateInterfaceParameterValidationException(Resources.RecordsCenterInvalid);
             }
 
-            var recordsCenter = _designerTasks.GetRecordsCenterByName(recordsCenterName);
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
 
             if (recordsCenter == null)
             {
-                throw new StateInterfaceParameterValidationException(string.Format("RecordsCenter is null. The records center {0} does not exist.", recordsCenterName));
+                throw new StateInterfaceParameterValidationException(string.Format(Resources.RecordsCenterNotFound));
             }
 
-            var statisticsRecordsCenter = _designerTasks.GetStatisticsForRecordsCenter(recordsCenter.Name);
+            var statisticsRecordsCenter = _designerTasks.GetStatisticsForRecordsCenter(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenter.Name) });
             var statistics = new StatisticsRecordsCenterModel(statisticsRecordsCenter);
 
             statistics.GetAverageUrl = Url.Action("GetAverage", new { });
             statistics.InitialData = JsonConvert.SerializeObject(statistics);
+            ViewBag.Title = string.Format("{0} Certification Status", recordsCenter.Name);
             return View(statistics);
         }
         [HttpGet]
@@ -62,20 +66,21 @@ namespace StateInterface.Areas.Certify.Controllers
         {
             if (String.IsNullOrEmpty(recordsCenterName))
             {
-                throw new StateInterfaceParameterValidationException("RecordsCenterName was not passed in");
+                throw new StateInterfaceParameterValidationException(Resources.RecordsCenterInvalid);
             }
 
-            var recordsCenter = _designerTasks.GetRecordsCenterByName(recordsCenterName);
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
 
             if (recordsCenter == null)
             {
-                throw new StateInterfaceParameterValidationException(string.Format("RecordsCenter is null. The records center {0} does not exist.", recordsCenterName));
+                throw new StateInterfaceParameterValidationException(Resources.RecordsCenterNotFound);
             }
 
-            var statisticsRecordsCenter = _designerTasks.GetStatisticsForRecordsCenter(recordsCenter.Name);
+            var statisticsRecordsCenter = _designerTasks.GetStatisticsForRecordsCenter(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenter.Name) });
             var statistics = new StatisticsRecordsCenterModel(statisticsRecordsCenter);
 
             statistics.InitialData = JsonConvert.SerializeObject(statistics);
+            ViewBag.Title = string.Format("{0} Certification Report", recordsCenter.Name);
             return View(statistics);
         }
         [HttpGet]
@@ -83,20 +88,21 @@ namespace StateInterface.Areas.Certify.Controllers
         {
             if (String.IsNullOrEmpty(recordsCenterName))
             {
-                throw new StateInterfaceParameterValidationException("RecordsCenterName was not passed in");
+                throw new StateInterfaceParameterValidationException(Resources.RecordsCenterInvalid);
             }
 
-            var recordsCenter = _designerTasks.GetRecordsCenterByName(recordsCenterName);
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
 
             if (recordsCenter == null)
             {
-                throw new StateInterfaceParameterValidationException(string.Format("RecordsCenter is null. The records center {0} does not exist.", recordsCenterName));
+                throw new StateInterfaceParameterValidationException(Resources.RecordsCenterNotFound);
             }
 
-            var openIssues = _designerTasks.GetOpenIssues(recordsCenterName);
+            var openIssues = _designerTasks.GetOpenIssues(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
             var openIssuesModel = new OpenIssuesModel(recordsCenter, openIssues, Url.Action("Details", "Form", new { area = "Design" }) , Url.Action("UpdateForm", "Update"));
 
             openIssuesModel.InitialData = JsonConvert.SerializeObject(openIssuesModel);
+            ViewBag.Title = "Open Issues";
             return View(openIssuesModel);
         }
         [HttpPost]
@@ -104,7 +110,7 @@ namespace StateInterface.Areas.Certify.Controllers
         {
             if (model == null)
             {
-                throw new StateInterfaceParameterValidationException("Model is null.");
+                throw new StateInterfaceParameterValidationException(Resources.ParameterNull);
             }
 
             model.Validate();

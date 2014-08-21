@@ -7,6 +7,7 @@ using StateInterface.Designer.Model;
 using Newtonsoft.Json;
 using StateInterface.Areas.Design.Models;
 using Designer.Tasks;
+using StateInterface.Properties;
 
 namespace StateInterface.Areas.Design.Controllers
 {
@@ -60,7 +61,7 @@ namespace StateInterface.Areas.Design.Controllers
         {
             if (parameters == null || string.IsNullOrWhiteSpace(parameters.RecordsCenterName))
             {
-                throw new ApplicationException("Invalid parameters in GetLists");
+                throw new ApplicationException(Resources.ParameterInvalid);
             }
 
             List<ListCatalogProjectionModel> listModels = getListModels(parameters.RecordsCenterName);

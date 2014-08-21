@@ -10,11 +10,11 @@ namespace Designer.Tasks
 {
     public interface IDesignerTasks
     {
-        RecordsCenter GetRecordsCenterByName(string recordsCenterName);
+        RecordsCenter GetRecordsCenterByName(TaskParameter<RecordsCenterName> taskParameter);
         IEnumerable<RecordsCenter> GetRecordsCenters(TaskParameter taskParameter);
-        RecordsCenter GetRecordsCenterById(int id);
+        RecordsCenter GetRecordsCenterById(TaskParameter<RecordsCenterId> taskParameter);
         void SetRecordsCenterForUser(string userName, string recordsCenterName);
-        IEnumerable<Role> GetRoles();
+        IEnumerable<Role> GetRoles(TaskParameter taskParameter);
         User GetUser(string userName);
         IEnumerable<Category> GetCategories();
         IEnumerable<Application> GetApplications();
@@ -35,8 +35,8 @@ namespace Designer.Tasks
         ApplicationFormProjection GetFormApplicationAssociations(int recordsCenterId, string formId);
         ApplicationFormProjection UpdateFormApplicationAssociations(ApplicationFormProjection applicationFormProjection);
         RequestForm UpdateRequestForm(RequestForm requestForm);
-        StatisticsRecordsCenter GetStatisticsForRecordsCenter(string recordsCenterName);
-        IEnumerable<TestCase> GetOpenIssues(string recordsCenterName);
+        StatisticsRecordsCenter GetStatisticsForRecordsCenter(TaskParameter<RecordsCenterName> taskParameter);
+        IEnumerable<TestCase> GetOpenIssues(TaskParameter<RecordsCenterName> taskParameter);
         IEnumerable<ListProjection> GetListProjections(TaskParameter<RecordsCenterId> taskParameter);
         IEnumerable<TransactionSnippet> GetTransactionSnippets(int recordsCenterId);
         TransactionSnippet GetTransactionSnippet(int recordsCenterId, string tokenName);
@@ -56,7 +56,15 @@ namespace Designer.Tasks
         {
             this.Id = id;
         }
-        public int Id { get; set; }
+        public int Id { get; private set; }
+    }
+    public class RecordsCenterName
+    {
+        public RecordsCenterName(string name)
+        {
+            this.Name = name;
+        }
+        public string Name { get; private set; }
     }
     
 }

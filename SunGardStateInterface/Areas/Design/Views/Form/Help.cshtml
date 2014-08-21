@@ -1,5 +1,64 @@
-﻿@model StateInterface.Areas.Design.Models.RequestFormModel
-@{
-    ViewBag.Title = "Form Help";
-}
-@Html.Partial("_formHelp")
+﻿@* RequestForm Help Page *@
+<div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="pull-left"><h2 class="padLeft">State Interface Form Help</h2></div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="lead bold padLeft">
+                General
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="padLeft">
+                A form contains fields and transactions. A field can be added to multiple transactions, so only some of the fields on the form may be associated with a given transaction.
+            </p>
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="lead bold padLeft">
+                Fields
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="padLeft">
+                Fields contain properties used for validation and display on the form.
+            </p>
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="lead bold padLeft">
+                Transactions
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="padLeft">
+                Transactions consist of field nodes and text nodes. Field nodes are shown in blue while text nodes are shown in green.
+            </p>
+            <p class="padLeft">
+                <span class=" fieldNode" style="white-space:nowrap;"><span class="leadSmaller">Field</span></span>
+                <span class=" textNode" style="white-space:nowrap;"><span class="leadSmaller">Text</span></span>
+            </p>
+            <p class="padLeft">
+                Transactions contain criteria, which are used to determine whether the transaction is submitted to the state.
+            </p>
+        </div>
+    </div>
+</div>

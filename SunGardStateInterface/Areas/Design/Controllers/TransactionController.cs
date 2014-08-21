@@ -20,6 +20,7 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpGet]
         public ActionResult Help()
         {
+            ViewBag.Title = "Transaction Snippet Help";
             return View();
         }
         [HttpGet]
@@ -60,13 +61,13 @@ namespace StateInterface.Areas.Design.Controllers
 
         private List<TransactionSnippetModel> getSnippetModels(string recordsCenterName)
         {
-            var recordsCenter = _designerTasks.GetRecordsCenterByName(recordsCenterName);
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
             var snippets = _designerTasks.GetTransactionSnippets(recordsCenter.Id);
             var transactionSnippets = new List<TransactionSnippetModel>();
             foreach (var snippet in snippets)
             {
                 var snippetModel = new TransactionSnippetModel(snippet, TransactionSnippetFieldTypeHelper.TypeValues());
-                snippetModel.SnippetDetailsUrl = String.Concat(Url.Action("Details"), "/", recordsCenter.Name, "/", snippetModel.TokenName);
+                snippetModel.SnippetDetailsUrl = string.Format("{0}/{1}/{2}", Url.Action("Details"), recordsCenter.Name, snippetModel.TokenName);//String.Concat(Url.Action("Details"), "/", recordsCenter.Name, "/", snippetModel.TokenName);
                 transactionSnippets.Add(snippetModel);
             }
             return transactionSnippets;
@@ -78,7 +79,7 @@ namespace StateInterface.Areas.Design.Controllers
             {
                 throw new StateInterfaceParameterValidationException(Resources.ParameterEmpty);
             }
-            var recordsCenter = _designerTasks.GetRecordsCenterByName(recordsCenterName);
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
             if (recordsCenter != null)
             {
                 var snippet = _designerTasks.GetTransactionSnippet(recordsCenter.Id, tokenName);
@@ -207,7 +208,7 @@ namespace StateInterface.Areas.Design.Controllers
                     snippet = new TransactionSnippet()
                         {
                             Id = snippetParameter.Id,
-                            RecordsCenter = _designerTasks.GetRecordsCenterByName(snippetParameter.RecordsCenterName),
+                            RecordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(snippetParameter.RecordsCenterName) }),
                             Created = DateTime.UtcNow
                         };
                 }

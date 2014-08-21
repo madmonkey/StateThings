@@ -1,4 +1,5 @@
-﻿@model StateInterface.Areas.Design.Models.ListModel
+﻿@* List Index Page *@
+@model StateInterface.Areas.Design.Models.ListModel
 <div class="row">
     <div class="col-xs-12">
         <div class="pull-right padRight leadSmaller">
@@ -32,12 +33,31 @@
     </div>
 </script>
 
+<script type="text/html" id="optionListsList-template">
+    <br />
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-6" data-bind="foreach: Lists.slice(0, listsSplit())">
+                    <a class="padLeft" data-bind="attr: { href: ListDetailsUrl } ">
+                        <span class="listLink" data-bind="html: ListName"></span>
+                    </a>
+                    <br />
+                </div>
+                <div class="col-xs-6" data-bind="foreach: Lists.slice(listsSplit())">
+                    <a class="padLeft" data-bind="attr: { href: ListDetailsUrl } ">
+                        <span class="listLink" data-bind="html: ListName"></span>
+                    </a>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
 <script type="text/javascript">
     var initialData = @Html.Raw(Model.InitialData)
 </script>
-
-@Html.Partial("_optionListsListTemplate")
-
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_design_list")
 }

@@ -1,6 +1,5 @@
 ﻿@model StateInterface.Areas.Certify.Models.StatisticsRecordsCenterModel
 @{
-    ViewBag.Title = @Model.RecordsCenter.Name + " Certification Report";
     Layout = "../Shared/_ReportLayout.cshtml";
 }
 <div class="row">
@@ -24,11 +23,38 @@
 
     </div>
 </div>
+
+<script type="text/html" id="statisticsPrint-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div data-bind="foreach: Applications">
+
+                <br />
+                <div>
+                    <span class="application" data-bind="html: Name"></span>
+                    <span class="medium-header">
+                        <span>-</span>
+                        <span data-bind="html: Statistics.TotalTestCases"></span>
+                        <span>test cases,</span>
+                        <span data-bind="html: Statistics.PercentVerified"></span>
+                        <span>verified,</span>
+                        <span data-bind="html: Statistics.PercentCertified"></span>
+                        <span>certified</span>
+                    </span>
+                </div>
+                <br />
+                <div class="padLeft">
+                    <div data-bind="template: { name: 'statisticsStatusCategory-template' }"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
 <script type="text/javascript">
     var initialData = @Html.Raw(Model.InitialData)
 </script>
 @Html.Partial("_statisticsHeaderTemplate")
-@Html.Partial("_statisticsPrintTemplate")
 @Html.Partial("_statisticsStatusCategoryTemplate")
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_certify_statistics")

@@ -1,4 +1,5 @@
-﻿@model StateInterface.Areas.Design.Models.OptionListModel
+﻿@* List Details Page *@
+@model StateInterface.Areas.Design.Models.OptionListModel
 <div class="row">
     <div class="col-xs-12">
         @* This is so that the navigation lines up when the recordsCenterSelector is not part of the page *@
@@ -12,8 +13,8 @@
             <li><a data-bind="attr: { href: ListsHomeUrl }">Lists</a></li>
             <li class="active"><span data-bind="html: ListName"></span></li>
         </ol>
-        <div data-bind="template: { name: 'optionListProperties-template' }"></div>
-        <div class="leadSmaller">
+        <div class="padLeft">
+            <div data-bind="template: { name: 'optionListProperties-template' }"></div>
             <div data-bind="foreach: OptionListItems">
                 <div data-bind="template: { name: 'optionListItem-template' }"></div>
                 <div data-bind="if: (OptionListItems.length > 0)">
@@ -24,12 +25,58 @@
     </div>
 </div>
 
+<script type="text/html" id="optionListProperties-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="padHeader" style="padding-bottom: 0">
+                <span class="leadLarger" data-bind="html:ListName"></span>
+            </div>
+            <div class="leadSmaller">
+                <span>Tiers:</span>
+                <span data-bind="foreach: OptionListTiers">
+                    <span data-bind="html: Name"></span>
+                </span>
+            </div>
+            <div class="leadSmaller">
+                <div>Form Fields Using This List:</div>
+                <div class="padLeft itemUsingItem" data-bind="foreach: FormFieldsUsing">
+                    <a target="_blank" data-bind="attr: { href: FormDetailsUrl }">
+                        <span data-bind="html: RequestFormName"></span>
+                    </a>
+                    <span>(<span data-bind="html: FormFieldName"></span>)</span>
+                    <span data-bind="if: $index() != $parent.FormFieldsUsing.length - 1">,</span>
+                </div>
+                <div class="leadSmaller">
+                    <span>Created:</span>
+                    <span data-bind="html: Created"></span>
+                </div>
+                <div class="leadSmaller">
+                    <span>Updated:</span>
+                    <span data-bind="html: Updated"></span>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="optionListItem-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="leadSmaller" style="font-weight: bold" data-bind="html: Code"></span>
+            <span class="leadSmaller" data-bind="html: Description"></span>
+            <br />
+            <div class="col-xs-12" data-bind="foreach: OptionListItems">
+                <div data-bind="template: { name: 'optionListItem-template' }"></div>
+            </div>
+        </div>
+    </div>
+</script>
+
 <script type="text/javascript">
     var initialData = @Html.Raw(Model.InitialData)
 </script>
 
-@Html.Partial("_optionListPropertiesTemplate")
-@Html.Partial("_optionListItemTemplate")
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_design_list_details")
 }

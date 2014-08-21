@@ -17,9 +17,13 @@ namespace Designer.Tasks
         {
             _repository = repository;
         }
-        public IEnumerable<Role> GetRoles()
+        public IEnumerable<Role> GetRoles(TaskParameter taskParameter)
         {
-            return _repository.GetAll<Role>();
+            if (!string.IsNullOrWhiteSpace(taskParameter.CurrentUser))
+            {
+                return _repository.GetAll<Role>();
+            }
+            throw new SecurityAccessDeniedException();
         }
         public User GetUser(string userName)
         {
@@ -49,13 +53,13 @@ namespace Designer.Tasks
             }
             throw new SecurityAccessDeniedException();
         }
-        public RecordsCenter GetRecordsCenterById(int id)
+        public RecordsCenter GetRecordsCenterById(TaskParameter<RecordsCenterId> taskParameter)
         {
-            return _repository.GetById<RecordsCenter>(id);
+            return _repository.GetById<RecordsCenter>(taskParameter.Parameters.Id);
         }
-        public RecordsCenter GetRecordsCenterByName(string recordsCenterName)
+        public RecordsCenter GetRecordsCenterByName(TaskParameter<RecordsCenterName> taskParameter)
         {
-            return _repository.GetRecordsCenterByName(recordsCenterName);
+            return _repository.GetRecordsCenterByName(taskParameter.Parameters.Name);
         }
         public IEnumerable<Category> GetCategories()
         {
@@ -191,9 +195,9 @@ namespace Designer.Tasks
             return _repository.GetById<RequestForm>(requestForm.Id);
 
         }
-        public StatisticsRecordsCenter GetStatisticsForRecordsCenter(string recordsCenterName)
+        public StatisticsRecordsCenter GetStatisticsForRecordsCenter(TaskParameter<RecordsCenterName> taskParameter)
         {
-            RecordsCenter recordsCenter = GetRecordsCenterByName(recordsCenterName);
+            RecordsCenter recordsCenter = GetRecordsCenterByName(taskParameter);
             StatisticsRecordsCenter statisticsRecordsCenter = new StatisticsRecordsCenter(recordsCenter);
 
             var applications = GetApplications().OrderBy(x => x.Name);
@@ -292,10 +296,10 @@ namespace Designer.Tasks
 
             return statisticsRecordsCenter;
         }
-        public IEnumerable<TestCase> GetOpenIssues(string recordsCenterName)
+        public IEnumerable<TestCase> GetOpenIssues(TaskParameter<RecordsCenterName> taskParameter)
         {
             List<TestCase> failedTestCases = new List<TestCase>();
-            var recordsCenter = GetRecordsCenterByName(recordsCenterName);
+            var recordsCenter = GetRecordsCenterByName(taskParameter);
 
             //TODO: Determine how to use GetFailedTestCases(application) method
             failedTestCases.AddRange(recordsCenter.GetFailedTestCases());

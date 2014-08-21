@@ -209,8 +209,9 @@ a:link {
 }
 
 .fieldTable {
-    margin-left: 15px; 
-    margin-right:10px
+    /*margin-left: 15px; 
+    margin-right: 10px;*/
+    width: 100%;
 }
 
 .padSelect {
