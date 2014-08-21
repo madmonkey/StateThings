@@ -90,3 +90,5 @@ C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStat
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\obj\Debug\StateInterface.pdb
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\obj\Debug\StateInterface.Properties.Resources.resources
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\obj\Debug\SunGardStateInterface.Web.csproj.GenerateResource.Cache
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\Elmah.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\SunGardStateInterface\bin\Elmah.Mvc.dll

@@ -12,16 +12,162 @@
         <div data-bind="template: { name: 'certifyUpdateRequestForm-template', data: RequestForm }"></div>
     </div>
 </div>
+
+<script type="text/html" id="certifyUpdateRequestForm-template">
+    <div class="padLeft padRight">
+        <div class="padLeft borderLight">
+            <span class="lead bold" data-bind="html: FormId"></span><span class="lead padLeft" data-bind="html: Title"></span>
+            <span class="pull-right padRight">
+                <a target="_blank" title="Form Details" class="padLeft padRight glyphicon glyphicon-file" style="margin-top:14px;" data-bind="attr:{ href: FormDetailsUrl}"></a>
+                <a href="#" title="Toggle Test History" class="glyphicon glyphicon-tasks" style="margin-top:14px;" data-bind="click: $root.toggleTestHistory"></a>
+            </span>
+            <br />
+            <div class="row">
+                <div class="col-xs-4">
+                    <span>Unit Tested</span>
+                </div>
+                <div class="col-xs-4">
+                    <span>Verified</span>
+                </div>
+                <div class="col-xs-4">
+                    <span>Certified</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" data-bind="style: { width: QAStatus.PercentUnitTested }">
+                            <span style="color:black;"><span data-bind="html: QAStatus.PercentUnitTested"></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" data-bind="style: { width: QAStatus.PercentVerified }">
+                            <span style="color:black;"><span data-bind="html: QAStatus.PercentVerified"></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="padRight">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" data-bind="style: { width: QAStatus.PercentCertified }">
+                                <span style="color:black;"><span data-bind="html: QAStatus.PercentCertified"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div>
+            <ul class="nav nav-tabs" role="tablist" data-bind="foreach: Applications" id="appTab">
+                <li data-bind="css: { active: $index() == 0 }"><a class="leadSmaller bold" data-bind="attr:{ href: '#' + ApplicationName()}, html: ApplicationName" role="tab" data-toggle="tab"></a></li>
+            </ul>
+        </div>
+        <div class="tab-content" data-bind="foreach: Applications">
+            <div class="tab-pane" data-bind="attr:{ id: ApplicationName()}, css: { active: $index() == 0 }">
+                <div data-bind="template: { name: 'certifyCriteria-template', foreach: Criteria }"></div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="certifyCriteria-template">
+    <div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="padLeft">
+                    <div>
+                        <span class="lead bold padLeft" data-bind="html: Name"></span>
+                        <a href="#" title="Toggle Test History" class="pull-right padRight glyphicon glyphicon-tasks" style="margin-top:14px;" data-bind="click: $root.toggleTestHistory"></a>
+                    </div>
+                </p>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div data-bind="template: { name: 'testCase-template', foreach: TestCases }"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="testCase-template">
+    <div class="row">
+        <div class="col-xs-11 col-xs-offset-1">
+            <div data-bind="attr: { id: $parents[1].ApplicationName() + 'tc_' + $root.parseName($parents[0].Name()) + TestCaseId() }">
+                <div class="padHeaderSmall borderLight">
+                    <b>
+                        <span class="padLeft lead-2">
+                            <span>Test Case</span>&nbsp;
+                            <span data-bind="text: TestCaseId"></span>&nbsp;-&nbsp;
+                            <span data-bind="text: CurrentStage"></span>&nbsp;
+                            <span data-bind="if: HasPassed() === true">Passed</span>
+                            <span data-bind="if: HasPassed() === false">Failed</span>
+                            <span data-bind="if: HasPassed() === null">Pending</span>
+                        </span>
+                    </b>
+                    <span data-bind="visible: $root.showPassFailCommands" class="pull-right padRight leadSmaller">
+                        <a href="#" title="Test Passed" class="padLeft padRight glyphicon glyphicon-thumbs-up" data-bind="visible: ShowPassCommand, click: $root.queryPassTestCase"></a>
+                        <a href="#" title="Test Failed" class="padRight glyphicon glyphicon-thumbs-down" data-bind="click: $root.queryFailTestCase"></a>
+                        <a href="#" title="Reset Testing" class="glyphicon glyphicon-fast-backward" data-bind="visible: ShowResetCommand, click: $root.queryResetTestCase"></a>
+                    </span>
+                </div>
+                <div class="padLeft">
+                    <span class="padHeaderSmall requiredField" data-bind="html: RequiredFields"></span>
+                    <span class="padHeaderSmall" data-bind="html: OptionalFields"></span>
+                </div>
+            </div>
+            <div>
+                <div data-bind="template: { name: 'testCaseHistoryTemplate-template'}"></div>
+            </div>
+        </div>
+    </div>
+    <br />
+</script>
+
+<div class="modal fade" data-bind="bootstrapShowModal: queryUpdateTestCaseModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+                <h3>Update Test Case <span data-bind="html: SelectedTestCase.TestCaseId"></span></h3>
+            </div>
+            <form role="form">
+                <div class="modal-body">
+                    <div data-bind="if: SelectedTestCase.HasPassed() === null">
+                        <span class="stateInterfaceLead"><b><span></span>Reset Test Case</b></span>
+                    </div>
+                    <div data-bind="if: SelectedTestCase.HasPassed() === true" style="color:green">
+                        <span class="stateInterfaceLead"><b><span data-bind="html: SelectedTestCase.CurrentStage"></span> Passed!</b></span>
+                        <img class="pull-right" height="65" src="@Url.Content("~/Images/thumbsup.png")" />
+                    </div>
+                    <div data-bind="if: SelectedTestCase.HasPassed() === false" style="color:red">
+                        <span class="stateInterfaceLead"><b><span data-bind="html: SelectedTestCase.CurrentStage"></span> Failed!</b></span>
+                        <img class="pull-right" height="65" src="@Url.Content("~/Images/thumbsdown.png")" />
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label>Note</label>
+                        <textarea class="form-control" rows="5" data-bind="value: SelectedTestCase.Note" placeholder="Note"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" data-dismiss="modal" class="btn btn-primary" data-bind="click: $root.updateTestCase">Save</a>
+                    <a class="btn btn-default" data-dismiss="modal">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     var initialData = @Html.Raw(Model.InitialData)
 </script>
-@Html.Partial("_certifyUpdateRequestFormTemplate")
-@Html.Partial("_certifyCriteriaTemplate")
+@Html.Partial("_testCaseHistoryTemplate")
 @Html.Partial("_requiredFieldTemplate")
 @Html.Partial("_optionalFieldTemplate")
-@Html.Partial("_testCaseTemplate")
-@Html.Partial("_queryUpdateTestCaseModal")
-@Html.Partial("_testCaseHistoryTemplate")
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_certify_updateform")
 }

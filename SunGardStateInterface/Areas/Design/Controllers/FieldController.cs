@@ -39,8 +39,8 @@ namespace StateInterface.Areas.Design.Controllers
         public ActionResult Details(string recordsCenterName, string tagName)
         {
             //todo: add validation (consider user vs. system) - recordcenter and tagname exist, msg if not
-            var field = _designerTasks.GetField(recordsCenterName, tagName);
-            var formsUsing = _designerTasks.GetFormProjectionsUsingField(field);
+            var field = _designerTasks.GetField(new TaskParameter<FieldByTag>(User.Identity.Name, new FieldByTag(recordsCenterName, tagName)));//recordsCenterName, tagName
+            var formsUsing = _designerTasks.GetFormProjectionsUsingField(new TaskParameter<Field>(User.Identity.Name, field));
             var model = new FieldDetailsModel(field, formsUsing, Url.Action("Details", "Form"));
             model.DesignHomeUrl = Url.Action("Index", "Home");
             model.FieldsHomeUrl = Url.Action("Index");

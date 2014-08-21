@@ -12,43 +12,34 @@ namespace Designer.Tasks
     {
         RecordsCenter GetRecordsCenterByName(TaskParameter<RecordsCenterName> taskParameter);
         IEnumerable<RecordsCenter> GetRecordsCenters(TaskParameter taskParameter);
-        RecordsCenter GetRecordsCenterById(TaskParameter<RecordsCenterId> taskParameter);
         void SetRecordsCenterForUser(TaskParameter<RecordsCenterName> taskParameter);
         IEnumerable<Role> GetRoles(TaskParameter taskParameter);
-        User GetUser(TaskParameter<UserByName> taskParameter);
         User GetUser(TaskParameter taskParameter);
         IEnumerable<Category> GetCategories(TaskParameter taskParameter);
         IEnumerable<Application> GetApplications(TaskParameter taskParameter);
         IEnumerable<RequestForm> GetForms(TaskParameter<RecordsCenterId> taskParameter);
-        IEnumerable<RequestForm> GetForms(int recordsCenterId, int CategoryId);
-        IEnumerable<RequestForm> GetForms(string recordsCenterName, int categoryId);
-        IEnumerable<RequestForm> GetFormsByApplication(int recordsCenterId, int applicationId);
+        IEnumerable<RequestForm> GetForms(TaskParameter<FormsCategoryByRecordsCenterName> taskParameter);
         IEnumerable<RequestFormProjection> GetFormProjections(TaskParameter<RecordsCenterId> taskParameter);
         TestCase UpdateTestCase(int criteriaId, string testCaseId, DateTime occurred, string note, string user, bool hasPassed);
         TestCase ResetTestCase(int criteriaId, string testCaseId, DateTime occurred, string note, string user);
-        RequestForm GetForm(int recordsCenterId, string formId);
+        RequestForm GetForm(TaskParameter<FormById> taskParameter);
         IEnumerable<Field> GetFieldCatalogItems(TaskParameter<RecordsCenterName> taskParameter);
-        Field GetField(string recordsCenterName, string tagName);
-        OptionList GetList(int recordsCenterId, string listName);
-        IEnumerable<FormFieldProjection> GetFormFieldProjectionsUsingOptionList(OptionList list);
-        IEnumerable<RequestFormProjection> GetFormProjectionsUsingField(Field field);
+        Field GetField(TaskParameter<FieldByTag> taskParameter);
+        OptionList GetList(TaskParameter<ListByName> taskParameter);
+        IEnumerable<FormFieldProjection> GetFormFieldProjectionsUsingOptionList(TaskParameter<OptionList> taskParameters);
+        IEnumerable<RequestFormProjection> GetFormProjectionsUsingField(TaskParameter<Field> taskParameters);
         IEnumerable<RequestFormDetailProjection> GetRecordsCenterAcceptanceStatus(TaskParameter<RecordsCenterId> taskParameter);
-        ApplicationFormProjection GetFormApplicationAssociations(int recordsCenterId, string formId);
-        ApplicationFormProjection UpdateFormApplicationAssociations(ApplicationFormProjection applicationFormProjection);
-        RequestForm UpdateRequestForm(RequestForm requestForm);
+        RequestForm UpdateRequestForm(TaskParameter<RequestForm> taskParameter);
         StatisticsRecordsCenter GetStatisticsForRecordsCenter(TaskParameter<RecordsCenterName> taskParameter);
         IEnumerable<TestCase> GetOpenIssues(TaskParameter<RecordsCenterName> taskParameter);
         IEnumerable<ListProjection> GetListProjections(TaskParameter<RecordsCenterId> taskParameter);
         IEnumerable<TransactionSnippet> GetTransactionSnippets(TaskParameter<RecordsCenterId> taskParameter);
-        TransactionSnippet GetTransactionSnippet(int recordsCenterId, string tokenName);
-        TransactionSnippet CreateTransactionSnippet(RecordsCenter recordsCenter, string name, string description);
-        TransactionSnippet UpdateTransactionSnippet(TransactionSnippet transactionsnippet);
-        TransactionSnippet CreateTransactionSnippetField(int parentSnippetId, string tagName, int length);
-        TransactionSnippet UpdateTransactionSnippetField(int parentSnippetId, TransactionSnippetField transactionSnippetField);
-        TransactionSnippet DeleteTransactionSnippet(int snippetId);
-        TransactionSnippet DeleteTransactionSnippetField(int parentSnippetId, TransactionSnippetField transactionSnippetField);
-        TransactionSnippet DeleteTransactionSnippetField(int parentSnippetId, int transactionSnippetFieldId);
-        TransactionSnippet GetTransactionSnippet(int snippetId);
+        TransactionSnippet GetTransactionSnippet(TaskParameter<SnippetFieldByToken> taskParameter);
+        TransactionSnippet UpdateTransactionSnippet(TaskParameter<TransactionSnippet> taskParameter);
+        TransactionSnippet UpdateTransactionSnippetField(TaskParameter<SnippetFieldDetail> taskParameter);
+        TransactionSnippet DeleteTransactionSnippet(TaskParameter<Snippet> taskParameter);
+        TransactionSnippet DeleteTransactionSnippetField(TaskParameter<SnippetField> taskParameter);
+        TransactionSnippet GetTransactionSnippet(TaskParameter<Snippet> taskParameter);
     }
 
     public class RecordsCenterId : ById
@@ -62,10 +53,73 @@ namespace Designer.Tasks
         public string Name { get { return this.Key; } }
     }
 
-    public class UserByName : ByKey
+    public class FormsCategoryByRecordsCenterName : RecordsCenterName
     {
-        public UserByName(string name) : base(name) { }
-        public string UserName { get { return this.Key; } }
+        public FormsCategoryByRecordsCenterName(string recordsCenterName, int categoryId) : base(recordsCenterName)
+        {
+            this.CategoryId = categoryId;
+        }
+        public int CategoryId { get; private set; }
+    }
+
+    public class Snippet : ById
+    {
+        public Snippet(int id) : base(id) { }
+    }
+    
+    public class SnippetField : ById
+    {
+        public SnippetField(int parentId, int fieldId):base(parentId)
+        {
+            this.FieldId = fieldId;
+        }
+        public int FieldId { get; private set; }
+    }
+
+    public class SnippetFieldDetail : ById
+    {
+        public SnippetFieldDetail(int parentSnippet, TransactionSnippetField field)
+            : base(parentSnippet)
+        {
+            this.SnippetField = field;
+        }
+        public TransactionSnippetField SnippetField { get; private set; }
+    }
+
+    public class SnippetFieldByToken : RecordsCenterId
+    {
+        public SnippetFieldByToken(int recordsCenterId, string tokenName): base(recordsCenterId)
+        {
+            this.TokenName = tokenName;
+        }
+        public string TokenName { get; private set; }
+    }
+
+    public class ListByName: RecordsCenterId
+    {
+        public ListByName(int recordsCenterId, string listName): base(recordsCenterId)
+        {
+            this.ListName = listName;
+        }
+        public string ListName { get; private set; }
+    }
+
+    public class FieldByTag : RecordsCenterName
+    {
+        public FieldByTag(string recordsCenterName, string tagName):base(recordsCenterName)
+        {
+            this.TagName = tagName;
+        }
+        public string TagName { get; private set; }
+    }
+
+    public class FormById : RecordsCenterId
+    {
+        public FormById(int recordsCenterId, string formId) : base(recordsCenterId)
+        {
+            this.FormId = formId;
+        }
+        public string FormId { get; private set; }
     }
     
     public abstract class ById

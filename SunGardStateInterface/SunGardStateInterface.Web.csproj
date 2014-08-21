@@ -62,6 +62,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2.1\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah.Mvc">
+      <HintPath>..\packages\Elmah.MVC.2.1.1\lib\net40\Elmah.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
@@ -330,24 +336,20 @@
     <Content Include="Areas\Design\Views\Home\Index.cshtml" />
     <Content Include="Areas\Certify\Views\Home\Index.cshtml" />
     <Content Include="Areas\Design\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Certify\Views\Update\_requiredFieldTemplate.cshtml" />
-    <Content Include="Areas\Certify\Views\Update\_testCaseTemplate.cshtml" />
-    <Content Include="Areas\Certify\Views\Update\_optionalFieldTemplate.cshtml" />
+    <Content Include="Areas\Certify\Views\Shared\_requiredFieldTemplate.cshtml" />
+    <Content Include="Areas\Certify\Views\Shared\_optionalFieldTemplate.cshtml" />
     <Content Include="Areas\Design\Views\Shared\_DesignerLayout.cshtml" />
     <Content Include="Content\layout.designer.css" />
-    <Content Include="Areas\Certify\Views\Update\_queryUpdateTestCaseModal.cshtml" />
     <Content Include="Areas\Design\Views\Layout\Preview.cshtml" />
     <Content Include="Areas\Certify\Views\Update\Help.cshtml" />
-    <Content Include="Areas\Certify\Views\Update\_testCaseHistoryTemplate.cshtml" />
+    <Content Include="Areas\Certify\Views\Shared\_testCaseHistoryTemplate.cshtml" />
     <Content Include="Areas\Certify\Views\Update\Index.cshtml" />
     <Content Include="Areas\Certify\Views\Report\Status.cshtml" />
     <Content Include="Areas\Design\Views\Form\Index.cshtml" />
     <Content Include="Areas\Certify\Views\Update\UpdateForm.cshtml" />
-    <Content Include="Areas\Certify\Views\Update\_certifyRequestFormsTemplate.cshtml" />
-    <Content Include="Areas\Certify\Views\Update\_certifyCriteriaSansFieldsTemplate.cshtml" />
     <Content Include="Areas\Design\Views\Form\Help.cshtml" />
     <Content Include="Areas\Design\Views\Form\Details.cshtml" />
-    <Content Include="Areas\Certify\Views\Report\_statisticsHeaderTemplate.cshtml" />
+    <Content Include="Areas\Certify\Views\Shared\_statisticsHeaderTemplate.cshtml" />
     <Content Include="Areas\Design\Views\Field\Index.cshtml" />
     <Content Include="Areas\Connect\Views\web.config" />
     <Content Include="Areas\Connect\Views\Home\Index.cshtml" />
@@ -370,11 +372,7 @@
     <Content Include="Areas\Design\Views\List\Index.cshtml" />
     <Content Include="Areas\Design\Views\Transaction\Details.cshtml" />
     <Content Include="Areas\Design\Views\Transaction\Help.cshtml" />
-    <Content Include="Areas\Certify\Views\Update\_certifyApplicationsTemplate.cshtml" />
-    <Content Include="Areas\Certify\Views\Update\_certifyUpdateRequestFormTemplate.cshtml" />
-    <Content Include="Areas\Certify\Views\Report\_statisticsStatusCategoryTemplate.cshtml" />
-    <Content Include="Areas\Certify\Views\Update\_testCaseSansFieldsTemplate.cshtml" />
-    <Content Include="Areas\Certify\Views\Update\_certifyCriteriaTemplate.cshtml" />
+    <Content Include="Areas\Certify\Views\Shared\_statisticsStatusCategoryTemplate.cshtml" />
     <Content Include="Areas\Design\Views\List\Details.cshtml" />
     <Content Include="Areas\Certify\Views\Report\OpenIssues.cshtml" />
     <Content Include="Scripts\jquery-ui-1.11.1.js" />

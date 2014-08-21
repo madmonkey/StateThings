@@ -29,7 +29,7 @@ namespace StateInterface.Areas.Design.Controllers
 
             if (recordsCenter != null)
             {
-                var requestForm = _designerTasks.GetForm(recordsCenter.Id, formId);
+                var requestForm = _designerTasks.GetForm(new TaskParameter<FormById>(User.Identity.Name, new FormById(recordsCenter.Id, formId)));//recordsCenter.Id, formId
 
                 return View(new ControlsModel(requestForm).Controls);
             }

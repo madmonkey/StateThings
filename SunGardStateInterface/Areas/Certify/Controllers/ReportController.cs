@@ -58,7 +58,7 @@ namespace StateInterface.Areas.Certify.Controllers
 
             statistics.GetAverageUrl = Url.Action("GetAverage", new { });
             statistics.InitialData = JsonConvert.SerializeObject(statistics);
-            ViewBag.Title = string.Format("{0} Certification Status", recordsCenter.Name);
+            ViewBag.Title = string.Format("Certification Status - {0}", recordsCenter.Name);
             return View(statistics);
         }
         [HttpGet]
@@ -80,7 +80,7 @@ namespace StateInterface.Areas.Certify.Controllers
             var statistics = new StatisticsRecordsCenterModel(statisticsRecordsCenter);
 
             statistics.InitialData = JsonConvert.SerializeObject(statistics);
-            ViewBag.Title = string.Format("{0} Certification Report", recordsCenter.Name);
+            ViewBag.Title = string.Format("Certification Report - {0}", recordsCenter.Name);
             return View(statistics);
         }
         [HttpGet]
@@ -102,7 +102,7 @@ namespace StateInterface.Areas.Certify.Controllers
             var openIssuesModel = new OpenIssuesModel(recordsCenter, openIssues, Url.Action("Details", "Form", new { area = "Design" }) , Url.Action("UpdateForm", "Update"));
 
             openIssuesModel.InitialData = JsonConvert.SerializeObject(openIssuesModel);
-            ViewBag.Title = "Open Issues";
+            ViewBag.Title = string.Format("Open Issues - {0}", recordsCenter.Name);
             return View(openIssuesModel);
         }
         [HttpPost]

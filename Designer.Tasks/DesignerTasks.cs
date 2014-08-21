@@ -25,21 +25,21 @@ namespace Designer.Tasks
             }
             throw new SecurityAccessDeniedException();
         }
-        public User GetUser(TaskParameter<UserByName> taskParameter)
-        {
-            var user = _repository.GetAll<User>().FirstOrDefault(x => x.LoginName == taskParameter.Parameters.UserName);
+        //public User GetUser(TaskParameter<UserByName> taskParameter)
+        //{
+        //    var user = _repository.GetAll<User>().FirstOrDefault(x => x.LoginName == taskParameter.Parameters.UserName);
 
-            //TODO: Consider refactoring how we associate records center to a user for the first time.
-            if (user != null)
-            {
-                if (user.CurrentRecordsCenter == null)
-                {
-                    user.CurrentRecordsCenter = _repository.GetAll<RecordsCenter>().OrderBy(x => x.Name).First();
-                    _repository.Save(user);
-                }
-            }
-            return user;
-        }
+        //    //TODO: Consider refactoring how we associate records center to a user for the first time.
+        //    if (user != null)
+        //    {
+        //        if (user.CurrentRecordsCenter == null)
+        //        {
+        //            user.CurrentRecordsCenter = _repository.GetAll<RecordsCenter>().OrderBy(x => x.Name).First();
+        //            _repository.Save(user);
+        //        }
+        //    }
+        //    return user;
+        //}
         public IEnumerable<RecordsCenter> GetRecordsCenters(TaskParameter taskParameter)
         {
             if (!string.IsNullOrWhiteSpace(taskParameter.CurrentUser))
@@ -53,10 +53,7 @@ namespace Designer.Tasks
             }
             throw new SecurityAccessDeniedException();
         }
-        public RecordsCenter GetRecordsCenterById(TaskParameter<RecordsCenterId> taskParameter)
-        {
-            return _repository.GetById<RecordsCenter>(taskParameter.Parameters.Id);
-        }
+       
         public RecordsCenter GetRecordsCenterByName(TaskParameter<RecordsCenterName> taskParameter)
         {
             return _repository.GetRecordsCenterByName(taskParameter.Parameters.Name);
@@ -69,13 +66,10 @@ namespace Designer.Tasks
         {
             return _repository.GetAll<RequestForm>().Where(x => x.RecordsCenter.Id == taskParameter.Parameters.Id).OrderBy(x => x.FormId);
         }
-        public IEnumerable<RequestForm> GetForms(int recordsCenterId, int categoryId)
+        
+        public IEnumerable<RequestForm> GetForms(TaskParameter<FormsCategoryByRecordsCenterName> taskParameter)
         {
-            return _repository.GetAll<RequestForm>().Where(x => x.RecordsCenter.Id == recordsCenterId && x.Categories.Any(y => y.Id == categoryId)).OrderBy(x => x.FormId);
-        }
-        public IEnumerable<RequestForm> GetForms(string recordsCenterName, int categoryId)
-        {
-            return _repository.GetAll<RequestForm>().Where(x => x.RecordsCenter.Name.Equals(recordsCenterName) && x.Categories.Any(y => y.Id == categoryId)).OrderBy(x => x.FormId);
+            return _repository.GetAll<RequestForm>().Where(x => x.RecordsCenter.Name.Equals(taskParameter.Parameters.Name) && x.Categories.Any(y => y.Id == taskParameter.Parameters.CategoryId)).OrderBy(x => x.FormId);
         }
         public TestCase UpdateTestCase(int criteriaId, string testCaseId, DateTime occurred, string note, string user, bool hasPassed)
         {
@@ -136,9 +130,9 @@ namespace Designer.Tasks
             criteria.Transaction.RequestForm.GenerateTestCases();
             return criteria.Transaction.RequestForm.TestCases.LastOrDefault(x => x.TestCaseId.Equals(testCaseId));
         }
-        public RequestForm GetForm(int recordsCenterId, string formId)
+        public RequestForm GetForm(TaskParameter<FormById> taskParameter)
         {
-            return _repository.GetForm(formId, _repository.GetById<RecordsCenter>(recordsCenterId));
+            return _repository.GetForm(taskParameter.Parameters.FormId, _repository.GetById<RecordsCenter>(taskParameter.Parameters.Id));
         }
         public IEnumerable<Field> GetFieldCatalogItems(TaskParameter<RecordsCenterName> taskParameter)
         {
@@ -146,22 +140,22 @@ namespace Designer.Tasks
                 .Where(x => x.RecordsCenter.Name == taskParameter.Parameters.Name)
                 .OrderBy(x => x.TagName);
         }
-        public Field GetField(string recordsCenterName, string tagName)
+        public Field GetField(TaskParameter<FieldByTag> taskParameter)
         {
             return _repository.GetAll<Field>()
-                .SingleOrDefault(x => x.RecordsCenter.Name == recordsCenterName && x.TagName == tagName);
+                .SingleOrDefault(x => x.RecordsCenter.Name == taskParameter.Parameters.Name && x.TagName == taskParameter.Parameters.TagName);
         }
-        public IEnumerable<RequestFormProjection> GetFormProjectionsUsingField(Field field)
+        public IEnumerable<RequestFormProjection> GetFormProjectionsUsingField(TaskParameter<Field> taskParameters)
         {
-            return _repository.GetFormProjectionsUsingField(field);
+            return _repository.GetFormProjectionsUsingField(taskParameters.Parameters);
         }
-        public OptionList GetList(int recordsCenterId, string listName)
+        public OptionList GetList(TaskParameter<ListByName> taskParameter)
         {
-            return _repository.GetList(listName, _repository.GetById<RecordsCenter>(recordsCenterId));
+            return _repository.GetList(taskParameter.Parameters.ListName, _repository.GetById<RecordsCenter>(taskParameter.Parameters.Id));
         }
-        public IEnumerable<FormFieldProjection> GetFormFieldProjectionsUsingOptionList(OptionList list)
+        public IEnumerable<FormFieldProjection> GetFormFieldProjectionsUsingOptionList(TaskParameter<OptionList> taskParameters)
         {
-            return _repository.GetFormFieldProjectionsUsingOptionList(list);
+            return _repository.GetFormFieldProjectionsUsingOptionList(taskParameters.Parameters);
         }
         public IEnumerable<RequestFormDetailProjection> GetRecordsCenterAcceptanceStatus(TaskParameter<RecordsCenterId> taskParameter)
         {
@@ -171,28 +165,17 @@ namespace Designer.Tasks
         {
             return _repository.GetFormProjectionsForRecordsCenter(GetRecordsCenters(taskParameter).FirstOrDefault(x => x.Id == taskParameter.Parameters.Id));
         }
-        public IEnumerable<RequestForm> GetFormsByApplication(int recordsCenterId, int applicationId)
-        {
-            return _repository.GetAll<RequestForm>().Where(requestForm => requestForm.RecordsCenter.Id == recordsCenterId
-                && requestForm.Applications.Any(y => y.Id == applicationId));
-        }
+        
         public IEnumerable<Application> GetApplications(TaskParameter taskParameter)
         {
             return _repository.GetAll<Application>();
         }
-        public ApplicationFormProjection GetFormApplicationAssociations(int recordsCenterId, string formId)
+
+
+        public RequestForm UpdateRequestForm(TaskParameter<RequestForm> taskParameter)
         {
-            return _repository.GetFormApplicationAssociations(_repository.GetById<RecordsCenter>(recordsCenterId), formId);
-        }
-        public ApplicationFormProjection UpdateFormApplicationAssociations(ApplicationFormProjection applicationFormProjection)
-        {
-            _repository.Save<ApplicationFormProjection>(applicationFormProjection);
-            return _repository.GetById<ApplicationFormProjection>(applicationFormProjection.Id);
-        }
-        public RequestForm UpdateRequestForm(RequestForm requestForm)
-        {
-            _repository.Save(requestForm);
-            return _repository.GetById<RequestForm>(requestForm.Id);
+            _repository.Save(taskParameter.Parameters);
+            return _repository.GetById<RequestForm>(taskParameter.Parameters.Id);
 
         }
         public StatisticsRecordsCenter GetStatisticsForRecordsCenter(TaskParameter<RecordsCenterName> taskParameter)
@@ -315,9 +298,9 @@ namespace Designer.Tasks
         {
             return _repository.GetAll<TransactionSnippet>().Where(x => x.RecordsCenter.Id == taskParameter.Parameters.Id).OrderBy(x => x.TokenName);
         }
-        public TransactionSnippet GetTransactionSnippet(int recordsCenterId, string tokenName)
+        public TransactionSnippet GetTransactionSnippet(TaskParameter<SnippetFieldByToken> taskParameter)
         {
-            return _repository.GetAll<TransactionSnippet>().FirstOrDefault(x => x.RecordsCenter.Id == recordsCenterId && x.TokenName == tokenName);
+            return _repository.GetAll<TransactionSnippet>().FirstOrDefault(x => x.RecordsCenter.Id == taskParameter.Parameters.Id && x.TokenName == taskParameter.Parameters.TokenName);
         }
         public IEnumerable<TransactionSnippetField> GetTransactionSnippetFields(RecordsCenter recordCenter, string tokenName)
         {
@@ -328,54 +311,45 @@ namespace Designer.Tasks
             }
             return null;
         }
-        public TransactionSnippet CreateTransactionSnippet(RecordsCenter recordsCenter, string name, string description)
+        
+        public TransactionSnippet UpdateTransactionSnippet(TaskParameter<TransactionSnippet> taskParameter)
         {
-            return UpdateTransactionSnippet(new TransactionSnippet() { RecordsCenter = recordsCenter, TokenName = name, Description = description });
+            taskParameter.Parameters.Updated = DateTime.UtcNow;
+            _repository.Save<TransactionSnippet>(taskParameter.Parameters);
+            return taskParameter.Parameters;
         }
-        public TransactionSnippet UpdateTransactionSnippet(TransactionSnippet transactionsnippet)
+
+        public TransactionSnippet UpdateTransactionSnippetField(TaskParameter<SnippetFieldDetail> taskParameter)
         {
-            transactionsnippet.Updated = DateTime.UtcNow;
-            _repository.Save<TransactionSnippet>(transactionsnippet);
-            return transactionsnippet;
-        }
-        public TransactionSnippet CreateTransactionSnippetField(int parentSnippetId, string tagName, int length)
-        {
-            return UpdateTransactionSnippetField(parentSnippetId, new TransactionSnippetField() { TagName = tagName, Length = length });
-        }
-        public TransactionSnippet UpdateTransactionSnippetField(int parentSnippetId, TransactionSnippetField transactionSnippetField)
-        {
-            var snippet = _repository.GetById<TransactionSnippet>(parentSnippetId);
+            var snippet = _repository.GetById<TransactionSnippet>(taskParameter.Parameters.Id);
             if (snippet != null)
             {
-                transactionSnippetField.IsValid();
-                if (transactionSnippetField.Id == 0 && snippet.TransactionSnippetFields.Any(x => string.Compare(x.TagName, transactionSnippetField.TagName, StringComparison.InvariantCultureIgnoreCase) == 0))
+                taskParameter.Parameters.SnippetField.IsValid();
+                if (taskParameter.Parameters.SnippetField.Id == 0 && snippet.TransactionSnippetFields.Any(x => string.Compare(x.TagName, taskParameter.Parameters.SnippetField.TagName, StringComparison.InvariantCultureIgnoreCase) == 0))
                 {
                     throw new ArgumentException("Key already exists"); //Key already exists
                 }
-                return _repository.UpdateTransactionSnippetField(parentSnippetId, transactionSnippetField);
+                return _repository.UpdateTransactionSnippetField(snippet.Id, taskParameter.Parameters.SnippetField);
             }
             throw new KeyNotFoundException();
         }
 
-        public TransactionSnippet DeleteTransactionSnippet(int snippetId)
+        public TransactionSnippet DeleteTransactionSnippet(TaskParameter<Snippet> taskParameter)
         {
-            var snippet = GetTransactionSnippet(snippetId);
+            var snippet = GetTransactionSnippet(taskParameter);
             _repository.Remove<TransactionSnippet>(snippet);
             return snippet;
         }
-        public TransactionSnippet DeleteTransactionSnippetField(int parentSnippetId, TransactionSnippetField transactionSnippetField)
+        
+        public TransactionSnippet GetTransactionSnippet(TaskParameter<Snippet> taskParameter)
         {
-            return DeleteTransactionSnippetField(parentSnippetId, transactionSnippetField.Id);
+            return _repository.GetById<TransactionSnippet>(taskParameter.Parameters.Id);
         }
-        public TransactionSnippet GetTransactionSnippet(int snippetId)
+        public TransactionSnippet DeleteTransactionSnippetField(TaskParameter<SnippetField> taskParameter)
         {
-            return _repository.GetById<TransactionSnippet>(snippetId);
-        }
-        public TransactionSnippet DeleteTransactionSnippetField(int parentSnippetId, int transactionSnippetFieldId)
-        {
-            var transactionSnippetField = _repository.GetById<TransactionSnippetField>(transactionSnippetFieldId);
+            var transactionSnippetField = _repository.GetById<TransactionSnippetField>(taskParameter.Parameters.FieldId);
             _repository.Remove(transactionSnippetField);
-            var snippet = _repository.GetById<TransactionSnippet>(parentSnippetId);
+            var snippet = _repository.GetById<TransactionSnippet>(taskParameter.Parameters.Id);
             snippet.Updated = DateTime.UtcNow;
             _repository.Save(snippet);
             return snippet;

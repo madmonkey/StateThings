@@ -43,7 +43,7 @@ namespace StateInterface.Areas.Design.Controllers
         {
             var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenterName, StringComparison.CurrentCultureIgnoreCase));
 
-            var requestForm = _designerTasks.GetForm(recordsCenter.Id, formId);
+            var requestForm = _designerTasks.GetForm(new TaskParameter<FormById>(User.Identity.Name, new FormById(recordsCenter.Id, formId)));//
 
             var availableApplications = _designerTasks.GetApplications(new TaskParameter(User.Identity.Name));
             var formModel = new RequestFormModel(requestForm, Url.Action("Details", "List"), Url.Action("Details", "Field"), availableApplications);
@@ -87,7 +87,7 @@ namespace StateInterface.Areas.Design.Controllers
                 if (parameters != null)
                 {
                     parameters.Validate();
-                    var requestForm = _designerTasks.GetForm(parameters.RecordsCenterId, parameters.FormId);
+                    var requestForm = _designerTasks.GetForm(new TaskParameter<FormById>(User.Identity.Name, new FormById(parameters.RecordsCenterId, parameters.FormId)));//parameters.RecordsCenterId, parameters.FormId
                     if (requestForm != null)
                     {
                         requestForm.Applications.Clear();
@@ -98,7 +98,8 @@ namespace StateInterface.Areas.Design.Controllers
                                 requestForm.Applications.Add(_designerTasks.GetApplications(new TaskParameter(User.Identity.Name)).Where(x => x.Id == application.Id).FirstOrDefault());
                             }
                         }
-                        return Json(new PostApplicationParametersModel(_designerTasks.UpdateRequestForm(requestForm), _designerTasks.GetApplications(new TaskParameter(User.Identity.Name))));
+                        return Json(new PostApplicationParametersModel(_designerTasks.UpdateRequestForm(new TaskParameter<RequestForm>(User.Identity.Name,requestForm)), 
+                            _designerTasks.GetApplications(new TaskParameter(User.Identity.Name))));
                     }
                     throw new ApplicationException(Resources.ApplicationAssociationNotFound);
                 }

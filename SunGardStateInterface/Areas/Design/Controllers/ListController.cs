@@ -43,8 +43,8 @@ namespace StateInterface.Areas.Design.Controllers
 
             var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenterName, StringComparison.CurrentCultureIgnoreCase));
 
-            var list = _designerTasks.GetList(recordsCenter.Id, listName);
-            var formFieldsUsing = _designerTasks.GetFormFieldProjectionsUsingOptionList(list);
+            var list = _designerTasks.GetList(new TaskParameter<ListByName>(User.Identity.Name, new ListByName(recordsCenter.Id, listName)));//recordsCenter.Id, listName
+            var formFieldsUsing = _designerTasks.GetFormFieldProjectionsUsingOptionList(new TaskParameter<OptionList>(User.Identity.Name, list));
             var listModel = new OptionListModel(list, formFieldsUsing, Url.Action("Details", "Form"));
             listModel.DesignHomeUrl = Url.Action("Index", "Home");
             listModel.ListsHomeUrl = Url.Action("Index");

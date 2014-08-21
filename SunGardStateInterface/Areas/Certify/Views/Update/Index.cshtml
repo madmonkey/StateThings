@@ -28,6 +28,7 @@
         <div data-bind="template: { name: 'certifyApplications-template' }"></div>
     </div>
 </div>
+
 <script type="text/html" id="noFormsFound-template">
     <div class="row" data-bind="if: showNoFormsFound() === true">
         <div class="col-xs-12">
@@ -37,16 +38,185 @@
         </div>
     </div>
 </script>
+
+<script type="text/html" id="certifyApplications-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div>
+                <ul class="nav nav-tabs" role="tablist" data-bind="foreach: Applications">
+                    <li data-bind="css: { active: $index() == 0 }"><a class="leadSmaller bold" data-bind="attr:{ href: '#' + ApplicationName()}, html: ApplicationName" role="tab" data-toggle="tab"></a></li>
+                </ul>
+            </div>
+            <div class="tab-content" data-bind="foreach: Applications">
+                <div class="tab-pane" data-bind="attr:{ id: ApplicationName()}, css: { active: $index() == 0 }">
+                    <br />
+                    <span class="lead">Test Progress for <span data-bind="html: ApplicationName"></span></span>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <span>Unit Tested</span>
+                        </div>
+                        <div class="col-xs-4">
+                            <span>Verified</span>
+                        </div>
+                        <div class="col-xs-4">
+                            <span>Certified</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" data-bind="style: { width: QAStatus.PercentUnitTested }">
+                                    <span style="color:black;"><span data-bind="html: QAStatus.PercentUnitTested"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" data-bind="style: { width: QAStatus.PercentVerified }">
+                                    <span style="color:black;"><span data-bind="html: QAStatus.PercentVerified"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="padRight">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" data-bind="style: { width: QAStatus.PercentCertified }">
+                                        <span style="color:black;"><span data-bind="html: QAStatus.PercentCertified"></span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <span>A form's progress may vary from the overall application progress when a form is used by more than one application.</span>
+                    <br />
+                    <div data-bind="template: { name: 'certifyRequestForms-template' }"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="certifyRequestForms-template">
+    <div class="row">
+        <div class="col-xs-12">
+            <div data-bind="foreach: Forms">
+                <div class="panel-group" data-bind="attr:{ id: 'accordian_' + $parent.ApplicationName()+FormId()}">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="padLeft borderLight">
+                                <a class="glyphicon glyphicon-collapse-down" style="margin-top:14px;" data-toggle="collapse" data-bind="attr:{ 'data-parent': 'accordian_' + $parent.ApplicationName()+FormId(), href: '#collapse_' + $parent.ApplicationName()+FormId()}">
+                                </a>
+                                <span class="lead bold" data-bind="html: FormId"></span><span class="lead padLeft" data-bind="html: Title"></span>
+                                <span class="pull-right padRight">
+                                    <a target="_blank" title="Update Form Certification" class="padRight glyphicon glyphicon-edit" style="margin-top:14px;" data-bind="attr:{ href: UpdateFormCertificationUrl}"></a>
+                                    <a target="_blank" title="Form Details" class="padRight glyphicon glyphicon-file" style="margin-top:14px;" data-bind="attr:{ href: FormDetailsUrl}"></a>
+                                    <a href="#" title="Toggle Test History" class="glyphicon glyphicon-tasks" style="margin-top:14px;" data-bind="click: $root.toggleTestHistory"></a>
+                                </span>
+                                <br />
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <span>Unit Tested</span>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <span>Verified</span>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <span>Certified</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" data-bind="style: { width: QAStatus.PercentUnitTested }">
+                                                <span style="color:black;"><span data-bind="html: QAStatus.PercentUnitTested"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" data-bind="style: { width: QAStatus.PercentVerified }">
+                                                <span style="color:black;"><span data-bind="html: QAStatus.PercentVerified"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="padRight">
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" data-bind="style: { width: QAStatus.PercentCertified }">
+                                                    <span style="color:black;"><span data-bind="html: QAStatus.PercentCertified"></span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-bind="attr:{ id: 'collapse_' + $parent.ApplicationName()+FormId()}" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="borderLight-2">
+                                    <div data-bind="template: { name: 'certifyCriteriaSansFields-template', foreach: Criteria }"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="certifyCriteriaSansFields-template">
+    <div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="padLeft">
+                    <div>
+                        <span class="lead bold padLeft" data-bind="html: Name"></span>
+                        <a href="#" title="Toggle Test History" class="pull-right padRight glyphicon glyphicon-tasks" style="margin-top:14px;" data-bind="click: $root.toggleTestHistory"></a>
+                    </div>
+                </p>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div data-bind="template: { name: 'testCaseSansFields-template', foreach: TestCases }"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="testCaseSansFields-template">
+    <div class="row">
+        <div class="col-xs-11 col-xs-offset-1">
+            <div class="">
+                <div class="padHeaderSmall borderLight">
+                    <b>
+                        <span class="padLeft lead-2">
+                            <span>Test Case</span>&nbsp;
+                            <span data-bind="html: TestCaseId"></span>&nbsp;-&nbsp;
+                            <span data-bind="html: CurrentStage"></span>&nbsp;
+                            <span data-bind="if: HasPassed() === true">Passed</span>
+                            <span data-bind="if: HasPassed() === false">Failed</span>
+                            <span data-bind="if: HasPassed() === null">Pending</span>
+                        </span>
+                    </b>
+                </div>
+            </div>
+            <div>
+                <div data-bind="template: { name: 'testCaseHistoryTemplate-template'}"></div>
+            </div>
+        </div>
+    </div>
+    <br />
+</script>
+
 <script type="text/javascript">
     var initialData = @Html.Raw(Model.InitialData)
 </script>
-@Html.Partial("_certifyApplicationsTemplate")
-@Html.Partial("_certifyRequestFormsTemplate")
-@Html.Partial("_certifyCriteriaSansFieldsTemplate")
+@Html.Partial("_testCaseHistoryTemplate")
 @Html.Partial("_requiredFieldTemplate")
 @Html.Partial("_optionalFieldTemplate")
-@Html.Partial("_testCaseSansFieldsTemplate")
-@Html.Partial("_testCaseHistoryTemplate")
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_certify_update")
 }

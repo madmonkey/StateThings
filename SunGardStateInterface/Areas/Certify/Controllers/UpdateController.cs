@@ -31,7 +31,7 @@ namespace StateInterface.Areas.Certify.Controllers
             model.GetFormsUrl = Url.Action("GetForms");
 
             model.InitialData = JsonConvert.SerializeObject(model);
-            ViewBag.Title = "Certification Update";
+            ViewBag.Title = string.Format("Certification Update - {0}", user.CurrentRecordsCenter.Name);
 
             return View(model);
         }
@@ -46,7 +46,7 @@ namespace StateInterface.Areas.Certify.Controllers
         {
             var rc = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenter, StringComparison.CurrentCultureIgnoreCase));
 
-            var requestForm = _designerTasks.GetForm(rc.Id, formId);
+            var requestForm = _designerTasks.GetForm(new TaskParameter<FormById>(User.Identity.Name, new FormById(rc.Id, formId)));//rc.Id, formId
 
             CertifyUpdateFormModel model = new CertifyUpdateFormModel(requestForm, Url.Action("Details", "Form", new { area = "Design" }), Url.Action("UpdateForm"));
             model.ResetTestCaseUrl = Url.Action("ResetTestCase");
@@ -55,7 +55,7 @@ namespace StateInterface.Areas.Certify.Controllers
 
             model.InitialData = JsonConvert.SerializeObject(model);
 
-            ViewBag.Title = string.Format("{0} - {1} Certification", rc.Name, formId);
+            ViewBag.Title = string.Format("{0} Certification - {1}", formId, rc.Name);
 
             return View(model);
         }
@@ -69,7 +69,7 @@ namespace StateInterface.Areas.Certify.Controllers
                     throw new StateInterfaceParameterValidationException(Resources.ParameterNull);
                 }
 
-                var requestForm = _designerTasks.GetForm(model.RecordsCenterId, model.FormId);
+                var requestForm = _designerTasks.GetForm(new TaskParameter<FormById>(User.Identity.Name, new FormById(model.RecordsCenterId, model.FormId)));//model.RecordsCenterId, model.FormId
 
                 var qaStatusModel = new QAStatusModel(requestForm);
 
@@ -93,7 +93,7 @@ namespace StateInterface.Areas.Certify.Controllers
             List<CertifyApplicationModel> certifyApplicationModels = new List<CertifyApplicationModel>();
 
             var applications = _designerTasks.GetApplications(new TaskParameter(User.Identity.Name));
-            var requestForms = _designerTasks.GetForms(model.RecordsCenterName, model.CategoryId);
+            var requestForms = _designerTasks.GetForms(new TaskParameter<FormsCategoryByRecordsCenterName>(User.Identity.Name,new FormsCategoryByRecordsCenterName(model.RecordsCenterName,model.CategoryId)));//model.RecordsCenterName, model.CategoryId
 
             foreach (var requestForm in requestForms)
             {
