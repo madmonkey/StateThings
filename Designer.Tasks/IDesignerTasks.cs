@@ -13,15 +13,15 @@ namespace Designer.Tasks
         RecordsCenter GetRecordsCenterByName(TaskParameter<RecordsCenterName> taskParameter);
         IEnumerable<RecordsCenter> GetRecordsCenters(TaskParameter taskParameter);
         void SetRecordsCenterForUser(TaskParameter<RecordsCenterName> taskParameter);
-        IEnumerable<Role> GetRoles(TaskParameter taskParameter);
+        IEnumerable<Role> GetRoles();
         User GetUser(TaskParameter taskParameter);
         IEnumerable<Category> GetCategories(TaskParameter taskParameter);
         IEnumerable<Application> GetApplications(TaskParameter taskParameter);
         IEnumerable<RequestForm> GetForms(TaskParameter<RecordsCenterId> taskParameter);
         IEnumerable<RequestForm> GetForms(TaskParameter<FormsCategoryByRecordsCenterName> taskParameter);
         IEnumerable<RequestFormProjection> GetFormProjections(TaskParameter<RecordsCenterId> taskParameter);
-        TestCase UpdateTestCase(int criteriaId, string testCaseId, DateTime occurred, string note, string user, bool hasPassed);
-        TestCase ResetTestCase(int criteriaId, string testCaseId, DateTime occurred, string note, string user);
+        TestCase UpdateTestCase(TaskParameter<CriteriaTestCasePassFail> taskParameter);
+        TestCase ResetTestCase(TaskParameter<CriteriaTestCase> taskParameter);
         RequestForm GetForm(TaskParameter<FormById> taskParameter);
         IEnumerable<Field> GetFieldCatalogItems(TaskParameter<RecordsCenterName> taskParameter);
         Field GetField(TaskParameter<FieldByTag> taskParameter);
@@ -122,6 +122,29 @@ namespace Designer.Tasks
         public string FormId { get; private set; }
     }
     
+    public class CriteriaTestCase : ById
+    {
+        public CriteriaTestCase(int criteriaId, string testCaseId, DateTime occurred, string note): base(criteriaId)
+        {
+            this.TestCaseId = testCaseId;
+            this.Occurred = occurred;
+            this.Note = note;
+        }
+        public string TestCaseId { get; private set; }
+        public DateTime Occurred { get; private set; }
+
+        public string Note { get; private set; }
+    }
+
+    public class CriteriaTestCasePassFail : CriteriaTestCase
+    {
+        public CriteriaTestCasePassFail(int criteriaId, string testCaseId, DateTime occurred, string note, bool hasPassed)
+            : base(criteriaId, testCaseId,occurred,note)
+        {
+            this.HasPassed = hasPassed;
+        }
+        public bool HasPassed { get; private set; }
+    }
     public abstract class ById
     {
         public ById(int id)

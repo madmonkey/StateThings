@@ -17,13 +17,9 @@ namespace Designer.Tasks
         {
             _repository = repository;
         }
-        public IEnumerable<Role> GetRoles(TaskParameter taskParameter)
+        public IEnumerable<Role> GetRoles()
         {
-            if (!string.IsNullOrWhiteSpace(taskParameter.CurrentUser))
-            {
-                return _repository.GetAll<Role>();
-            }
-            throw new SecurityAccessDeniedException();
+            return _repository.GetAll<Role>();
         }
         //public User GetUser(TaskParameter<UserByName> taskParameter)
         //{
@@ -71,22 +67,22 @@ namespace Designer.Tasks
         {
             return _repository.GetAll<RequestForm>().Where(x => x.RecordsCenter.Name.Equals(taskParameter.Parameters.Name) && x.Categories.Any(y => y.Id == taskParameter.Parameters.CategoryId)).OrderBy(x => x.FormId);
         }
-        public TestCase UpdateTestCase(int criteriaId, string testCaseId, DateTime occurred, string note, string user, bool hasPassed)
+        public TestCase UpdateTestCase(TaskParameter<CriteriaTestCasePassFail> taskParameter)
         {
-            var criteria = _repository.GetById<Criteria>(criteriaId);
+            var criteria = _repository.GetById<Criteria>(taskParameter.Parameters.Id);
             var qaActionTypes = _repository.GetAll<QAActionType>();
 
             var qaAction = new QAAction()
             {
                 Criteria = criteria,
-                HasPassed = hasPassed,
-                Note = note,
-                OccurredAt = occurred,
-                TestCaseId = testCaseId,
-                ByUser = user,
+                HasPassed = taskParameter.Parameters.HasPassed,
+                Note = taskParameter.Parameters.Note,
+                OccurredAt = taskParameter.Parameters.Occurred,
+                TestCaseId = taskParameter.Parameters.TestCaseId,
+                ByUser = taskParameter.CurrentUser,
             };
 
-            var qaState = criteria.GetTestCaseQAState(testCaseId);
+            var qaState = criteria.GetTestCaseQAState(taskParameter.Parameters.TestCaseId);
 
             if (qaState.QAStage == QAStage.UnitTest)
             {
@@ -106,21 +102,21 @@ namespace Designer.Tasks
 
             criteria.Transaction.RequestForm.GenerateTestCases();
 
-            return criteria.Transaction.RequestForm.TestCases.LastOrDefault(x => x.TestCaseId.Equals(testCaseId));
+            return criteria.Transaction.RequestForm.TestCases.LastOrDefault(x => x.TestCaseId.Equals(taskParameter.Parameters.TestCaseId));
         }
-        public TestCase ResetTestCase(int criteriaId, string testCaseId, DateTime occurred, string note, string user)
+        public TestCase ResetTestCase(TaskParameter<CriteriaTestCase> taskParameter)
         {
-            var criteria = _repository.GetById<Criteria>(criteriaId);
+            var criteria = _repository.GetById<Criteria>(taskParameter.Parameters.Id);
             var qaActionTypes = _repository.GetAll<QAActionType>();
 
             var qaAction = new QAAction()
         {
             Criteria = criteria,
-            Note = note,
-            OccurredAt = occurred,
-            ByUser = user,
+            Note = taskParameter.Parameters.Note,
+            OccurredAt = taskParameter.Parameters.Occurred,
+            ByUser = taskParameter.CurrentUser,
             HasPassed = null,
-            TestCaseId = testCaseId,
+            TestCaseId = taskParameter.Parameters.TestCaseId,
             QAActionType = qaActionTypes.FirstOrDefault(x => x.ActionName.Equals(QAActionType.Reset))
         };
 
@@ -128,7 +124,7 @@ namespace Designer.Tasks
             _repository.Save(criteria);
 
             criteria.Transaction.RequestForm.GenerateTestCases();
-            return criteria.Transaction.RequestForm.TestCases.LastOrDefault(x => x.TestCaseId.Equals(testCaseId));
+            return criteria.Transaction.RequestForm.TestCases.LastOrDefault(x => x.TestCaseId.Equals(taskParameter.Parameters.TestCaseId));
         }
         public RequestForm GetForm(TaskParameter<FormById> taskParameter)
         {

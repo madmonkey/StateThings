@@ -124,7 +124,10 @@ namespace StateInterface.Areas.Certify.Controllers
 
                 model.Validate();
 
-                var testCase = _designerTasks.UpdateTestCase(model.CriteriaId, model.TestCaseId, DateTime.UtcNow, model.Note, User.Identity.Name, model.HasPassed);
+                //var testCase = _designerTasks.UpdateTestCase(model.CriteriaId, model.TestCaseId, DateTime.UtcNow, model.Note, User.Identity.Name, model.HasPassed);
+
+                var testCase = _designerTasks.UpdateTestCase(new TaskParameter<CriteriaTestCasePassFail>(User.Identity.Name, 
+                    new CriteriaTestCasePassFail(model.CriteriaId, model.TestCaseId, DateTime.UtcNow, model.Note, model.HasPassed)));
 
                 var requestForm = testCase.Criteria.Transaction.RequestForm;
 
@@ -153,7 +156,9 @@ namespace StateInterface.Areas.Certify.Controllers
 
                 model.Validate();
 
-                var testCase = _designerTasks.ResetTestCase(model.CriteriaId, model.TestCaseId, DateTime.UtcNow, model.Note, User.Identity.Name);
+                //var testCase = _designerTasks.ResetTestCase(model.CriteriaId, model.TestCaseId, DateTime.UtcNow, model.Note, User.Identity.Name);
+
+                var testCase = _designerTasks.ResetTestCase(new TaskParameter<CriteriaTestCase>(User.Identity.Name, new CriteriaTestCase(model.CriteriaId, model.TestCaseId, DateTime.UtcNow, model.Note)));
 
                 var requestForm = testCase.Criteria.Transaction.RequestForm;
 
