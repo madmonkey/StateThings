@@ -14,6 +14,7 @@ using Designer.Tasks;
 using StateInterface.Designer.Repository;
 using System.Security.Principal;
 using System.Threading;
+using ServiceStack.Text;
 
 namespace StateInterface
 {
@@ -50,6 +51,9 @@ namespace StateInterface
             builder.RegisterType<DesignerRepository>().As<IDesignerRepository>().InstancePerRequest();
 
             var container = builder.Build();
+            
+            //ServiceStack serialization - include ALL properties of models, even if null
+            JsConfig.IncludeNullValues = true;
 
             // For MVC
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

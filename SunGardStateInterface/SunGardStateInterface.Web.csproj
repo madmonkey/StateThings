@@ -89,6 +89,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\packages\ServiceStack.Text.4.0.30\lib\net40\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -235,6 +238,7 @@
     <Compile Include="Areas\Design\Models\Field\FieldsRequestModel.cs" />
     <Compile Include="Areas\Design\Models\Field\UsesField.cs" />
     <Compile Include="Areas\Design\Models\FormRequestModel.cs" />
+    <Compile Include="Areas\Design\Models\Form\UpdateFormCategoriesModel.cs" />
     <Compile Include="Areas\Design\Models\Form\PostApplicationRequestModel.cs" />
     <Compile Include="Areas\Design\Models\Form\SelectItemModel.cs" />
     <Compile Include="Areas\Design\Models\Form\CriteriaModel.cs" />
@@ -286,6 +290,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Serialize.cs" />
+    <Compile Include="Serializers\StateConnectJsonResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

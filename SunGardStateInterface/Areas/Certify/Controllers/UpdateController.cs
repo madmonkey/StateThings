@@ -113,7 +113,7 @@ namespace StateInterface.Areas.Certify.Controllers
                 }
             }
 
-            return Serialize.Json(certifyApplicationModels);
+            return Json(certifyApplicationModels); 
         }
         [HttpPost]
         public ActionResult UpdateTestCase(TestCaseEntryModel model)
