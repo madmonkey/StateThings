@@ -5,9 +5,6 @@ using StateInterface.Designer.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StateInterface.Designer;
 
 namespace Designer.Tasks
 {
@@ -44,11 +41,6 @@ namespace Designer.Tasks
         {
             var user = validateUserContext(currentUser);
             return _repository.GetAll<RecordsCenter>().OrderBy(x => x.Name);
-        }
-        public RecordsCenter GetRecordsCenterById(string currentUser, int id)
-        {
-            var user = validateUserContext(currentUser);
-            return _repository.GetById<RecordsCenter>(id);
         }
         public RecordsCenter GetRecordsCenterByName(string currentUser, string recordsCenterName)
         {
@@ -120,15 +112,15 @@ namespace Designer.Tasks
             var qaActionTypes = _repository.GetAll<QAActionType>();
 
             var qaAction = new QAAction()
-        {
-            Criteria = criteria,
-            Note = note,
-            OccurredAt = occurred,
-            ByUser = user.LoginName,
-            HasPassed = null,
-            TestCaseId = testCaseId,
-            QAActionType = qaActionTypes.FirstOrDefault(x => x.ActionName.Equals(QAActionType.Reset))
-        };
+            {
+                Criteria = criteria,
+                Note = note,
+                OccurredAt = occurred,
+                ByUser = user.LoginName,
+                HasPassed = null,
+                TestCaseId = testCaseId,
+                QAActionType = qaActionTypes.FirstOrDefault(x => x.ActionName.Equals(QAActionType.Reset))
+            };
 
             criteria.QAActions.Add(qaAction);
             _repository.Save(criteria);
@@ -179,27 +171,10 @@ namespace Designer.Tasks
             var user = validateUserContext(currentUser);
             return _repository.GetFormProjectionsForRecordsCenter(GetRecordsCenters(currentUser).FirstOrDefault(x => x.Id == recordsCenterId));
         }
-        public IEnumerable<RequestForm> GetFormsByApplication(string currentUser, int recordsCenterId, int applicationId)
-        {
-            var user = validateUserContext(currentUser);
-            return _repository.GetAll<RequestForm>().Where(requestForm => requestForm.RecordsCenter.Id == recordsCenterId
-                && requestForm.Applications.Any(y => y.Id == applicationId));
-        }
         public IEnumerable<Application> GetApplications(string currentUser)
         {
             var user = validateUserContext(currentUser);
             return _repository.GetAll<Application>();
-        }
-        public ApplicationFormProjection GetFormApplicationAssociations(string currentUser, int recordsCenterId, string formId)
-        {
-            var user = validateUserContext(currentUser);
-            return _repository.GetFormApplicationAssociations(_repository.GetById<RecordsCenter>(recordsCenterId), formId);
-        }
-        public ApplicationFormProjection UpdateFormApplicationAssociations(string currentUser, ApplicationFormProjection applicationFormProjection)
-        {
-            var user = validateUserContext(currentUser);
-            _repository.Save<ApplicationFormProjection>(applicationFormProjection);
-            return _repository.GetById<ApplicationFormProjection>(applicationFormProjection.Id);
         }
         public RequestForm UpdateRequestForm(string currentUser, RequestForm requestForm)
         {
@@ -321,7 +296,6 @@ namespace Designer.Tasks
 
             return failedTestCases;
         }
-
         public IEnumerable<ListProjection> GetListProjections(string currentUser, int recordsCenterId)
         {
             var user = validateUserContext(currentUser);
@@ -337,33 +311,12 @@ namespace Designer.Tasks
             var user = validateUserContext(currentUser);
             return _repository.GetAll<TransactionSnippet>().FirstOrDefault(x => x.RecordsCenter.Id == recordsCenterId && x.TokenName == tokenName);
         }
-        public IEnumerable<TransactionSnippetField> GetTransactionSnippetFields(string currentUser, RecordsCenter recordCenter, string tokenName)
-        {
-            //var user = validateUserContext(currentUser);
-            //var transaction = _repository.GetAll<TransactionSnippet>().FirstOrDefault(x => x.TokenName == tokenName);
-            //if (transaction != null)
-            //{
-
-            //    return _repository.GetListProjectionsForRecordsCenter(GetRecordsCenters(currentUser).FirstOrDefault(x => x.Id == recordCenter.Id));
-            //}
-            throw new ObjectNotFoundException();
-        }
-        public TransactionSnippet CreateTransactionSnippet(string currentUser, RecordsCenter recordsCenter, string name, string description)
-        {
-            var user = validateUserContext(currentUser);
-            return UpdateTransactionSnippet(currentUser, new TransactionSnippet() { RecordsCenter = recordsCenter, TokenName = name, Description = description });
-        }
         public TransactionSnippet UpdateTransactionSnippet(string currentUser, TransactionSnippet transactionsnippet)
         {
             var user = validateUserContext(currentUser);
             transactionsnippet.Updated = DateTime.UtcNow;
             _repository.Save<TransactionSnippet>(transactionsnippet);
             return transactionsnippet;
-        }
-        public TransactionSnippet CreateTransactionSnippetField(string currentUser, int parentSnippetId, string tagName, int length)
-        {
-            var user = validateUserContext(currentUser);
-            return UpdateTransactionSnippetField(currentUser, parentSnippetId, new TransactionSnippetField() { TagName = tagName, Length = length });
         }
         public TransactionSnippet UpdateTransactionSnippetField(string currentUser, int parentSnippetId, TransactionSnippetField transactionSnippetField)
         {
@@ -380,7 +333,6 @@ namespace Designer.Tasks
             }
             throw new KeyNotFoundException();
         }
-
         public TransactionSnippet DeleteTransactionSnippet(string currentUser, int snippetId)
         {
             var user = validateUserContext(currentUser);
@@ -408,7 +360,6 @@ namespace Designer.Tasks
             _repository.Save(snippet);
             return snippet;
         }
-
         public void SetRecordsCenterForUser(string userName, string recordsCenterName)
         {
             var user = _repository.GetUser(userName);
