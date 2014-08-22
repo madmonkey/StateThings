@@ -8,10 +8,10 @@ using System.Web;
 
 namespace StateInterface.Areas.Design.Models
 {
-    public class ListModel
+    public class ListCatalogModel
     {
         public RecordsCenterSelectorModel RecordsCenterSelector { get; set; }
-        public List<ListCatalogProjectionModel> Lists { get; set; }
+        public List<CatalogItemModel> CatalogItems { get; set; }
 
         public string InitialData { get; set; }
         public ListsRequestModel ListsRequest { get; set; }
@@ -19,12 +19,12 @@ namespace StateInterface.Areas.Design.Models
         public string ListDetailsUrl { get; set; }
         public string DesignHomeUrl { get; set; }
 
-        public ListModel()
+        public ListCatalogModel()
         {
+            CatalogItems = new List<CatalogItemModel>();
             ListsRequest = new ListsRequestModel();
-            Lists = new List<ListCatalogProjectionModel>();
         }
-        public ListModel(User user, IEnumerable<RecordsCenter> recordsCenters)
+        public ListCatalogModel(User user, IEnumerable<RecordsCenter> recordsCenters)
             : this()
         {
             RecordsCenterSelector = new RecordsCenterSelectorModel(user, recordsCenters);

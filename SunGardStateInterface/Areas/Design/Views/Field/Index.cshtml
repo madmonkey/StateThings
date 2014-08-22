@@ -13,14 +13,18 @@
             <li><a data-bind="attr: { href: DesignHomeUrl }">Design</a></li>
             <li class="active">Fields</li>
         </ol>
-        <div class="pull-left"><h2 class="padLeft">Field Design</h2></div>
-        <div class="pull-left padLeft" style="margin-top:15px;"><div class="loading" data-bind="visible: fieldsAreLoading"></div></div>
+        <div class="pull-left">
+            <h2 class="padLeft">Field Design</h2>
+        </div>
+        <div class="inlineBlock padLeft">
+            <div class="loading" style="margin-top: 16px;" data-bind="visible: fieldsAreLoading"></div>
+        </div>
     </div>
 </div>
 <div data-bind="template: { name: 'noFieldsFound-template' }"></div>
 <div class="row">
     <div class="col-xs-12">
-        <div data-bind="template: { name: 'fieldsCatalog-template' }"></div>
+        <div data-bind="template: { name: 'catalogItems-template' }"></div>
     </div>
 </div>
 <script type="text/html" id="noFieldsFound-template">
@@ -31,54 +35,11 @@
     </div>
 </script>
 
+@Html.Partial("_catalogItemsTemplate")
+
 <script type="text/javascript">
     var initialData = @Html.Raw(Model.InitialData)
 </script>
-
-<script type="text/html" id="fieldsCatalog-template">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="row">
-                <br />
-                <div class="padLeft">
-                    <div class="col-xs-6" data-bind="foreach: Fields.slice(0, fieldsSplit())">
-                        <div data-bind="template: { name: 'fieldsCatalogItem-template' }"></div>
-                    </div>
-                    <div class="col-xs-6" data-bind="foreach: Fields.slice(fieldsSplit(), Fields().length)">
-                        <div data-bind="template: { name: 'fieldsCatalogItem-template' }"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="fieldsCatalog-template">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="row">
-                <br />
-                <div class="padLeft">
-                    <div class="col-xs-6" data-bind="foreach: Fields.slice(0, fieldsSplit())">
-                        <div data-bind="template: { name: 'fieldsCatalogItem-template' }"></div>
-                    </div>
-                    <div class="col-xs-6" data-bind="foreach: Fields.slice(fieldsSplit(), Fields().length)">
-                        <div data-bind="template: { name: 'fieldsCatalogItem-template' }"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="fieldsCatalogItem-template">
-    <a data-bind="attr: { href: DetailsUrl, id: TagName } ">
-        <span class="formLink" data-bind="html: TagName"></span>
-    </a>
-    <span class="leadSmaller" data-bind="html: ToolTip"></span>
-    <br />
-</script>
-
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_design_field")
 }

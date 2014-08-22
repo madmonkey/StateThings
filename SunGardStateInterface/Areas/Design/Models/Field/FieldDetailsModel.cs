@@ -1,5 +1,6 @@
 ﻿using StateInterface.Designer.Model;
 using StateInterface.Designer.Model.Projections;
+using StateInterface.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace StateInterface.Areas.Design.Models
         public string TagName { get; set; }
         public string Description { get; set; }
         public string ToolTip { get; set; }
+        public string LastUpdated { get; set; }
         public bool AcceptReturn { get; set; }
         public string DefaultValue { get; set; }
         public string Type { get; set; }
@@ -39,6 +41,10 @@ namespace StateInterface.Areas.Design.Models
             IsHiddenField = field.IsHiddenField;
        
             RecordsCenterName = field.RecordsCenter.Name;
+
+            LastUpdated = field.Updated.HasValue
+                ? field.Updated.Value.ToString(Resources.DateTimeFormat)
+                : field.Created.ToString(Resources.DateTimeFormat);
 
             ToolTip = field.ToolTip;
             Type = field.FormatMask.ToString();

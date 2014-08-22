@@ -29,15 +29,15 @@ namespace StateInterface.Areas.Design.Controllers
             var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
             User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
 
-            var model = new SnippetsResponseModel(user, recordCenters)
+            var model = new TransactionSnippetCatalogModel(user, recordCenters)
                 {
-                    TransactionSnippets = getSnippetModels(user.CurrentRecordsCenter.Name),
+                    RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) },
+                    CatalogItems = getCatalogItemModels(user.CurrentRecordsCenter.Name),
                     DesignHomeUrl = Url.Action("Index", "Home"),
                     GetSnippetsUrl = Url.Action("GetSnippets"),
                     SnippetDetailsUrl = Url.Action("Details"),
                     CreateSnippetUrl = Url.Action("CreateSnippet"),
                     DeleteSnippetUrl = Url.Action("DeleteSnippet"),
-                    RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) },
                     CanDesignManage = user.CanDesignManage
                 };
 
@@ -55,9 +55,31 @@ namespace StateInterface.Areas.Design.Controllers
             }
             request.Validate();
 
-            var transactionSnippets = getSnippetModels(request.RecordsCenterName);
-
+            List<CatalogItemModel> transactionSnippets = getCatalogItemModels(request.RecordsCenterName);
+            
             return Json(transactionSnippets);
+        }
+
+        private List<CatalogItemModel> getCatalogItemModels(string recordsCenterName)
+        {
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
+            if (recordsCenter != null)
+            {
+                var snippets = _designerTasks.GetTransactionSnippets(new TaskParameter<RecordsCenterId>(User.Identity.Name, new RecordsCenterId(recordsCenter.Id)));
+                var catalogItems = new List<CatalogItemModel>();
+                foreach (var snippet in snippets)
+                {
+                    catalogItems.Add(new CatalogItemModel()
+                        {
+                            Name = snippet.TokenName,
+                            Description = snippet.Description,
+                            DetailsUrl = string.Format("{0}/{1}/{2}", Url.Action("Details"), recordsCenter.Name, snippet.TokenName)
+                        });
+                }
+                return catalogItems; 
+            }
+
+            throw new StateInterfaceParameterValidationException(Resources.RecordsCenterNotFound);
         }
         [HttpGet]
         public ActionResult Details(string recordsCenterName, string tokenName)
@@ -146,20 +168,6 @@ namespace StateInterface.Areas.Design.Controllers
             throw new System.Web.Http.HttpResponseException(new System.Net.Http.HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized));
         }
 
-        private List<TransactionSnippetModel> getSnippetModels(string recordsCenterName)
-        {
-            var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
-            var snippets = _designerTasks.GetTransactionSnippets(new TaskParameter<RecordsCenterId>(User.Identity.Name, new RecordsCenterId(recordsCenter.Id)));
-            var transactionSnippets = new List<TransactionSnippetModel>();
-            foreach (var snippet in snippets)
-            {
-                var snippetModel = new TransactionSnippetModel(snippet, TransactionSnippetFieldTypeHelper.TypeValues());
-                snippetModel.SnippetDetailsUrl = string.Format("{0}/{1}/{2}", Url.Action("Details"), recordsCenter.Name, snippetModel.TokenName);//String.Concat(Url.Action("Details"), "/", recordsCenter.Name, "/", snippetModel.TokenName);
-                transactionSnippets.Add(snippetModel);
-            }
-            return transactionSnippets;
-        }
-
         private ActionResult CreateOrUpdateSnippetField(TransactionSnippetFieldModel snippetFieldRequest)
         {
             User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
@@ -199,7 +207,7 @@ namespace StateInterface.Areas.Design.Controllers
                 {
                     throw new StateInterfaceParameterValidationException(Resources.ParameterEmpty);
                 }
-
+                
                 snippetRequest.Validate(user);
                 TransactionSnippet snippet = _designerTasks.GetTransactionSnippet(new TaskParameter<Snippet>(User.Identity.Name, new Snippet(snippetRequest.Id)));
                 if (updateExisting && snippet == null)
@@ -232,11 +240,13 @@ namespace StateInterface.Areas.Design.Controllers
         private void setProperties(TransactionSnippetModel snippet, string recordsCenterName, User user)
         {
             snippet.RecordsCenterName = recordsCenterName;
-            snippet.CanDesignManage = user.CanDesignManage;
-            snippet.SnippetDetailsUrl = String.Concat(Url.Action("Details"), "/", recordsCenterName, "/", snippet.TokenName);
+            snippet.CanDesignManage = user.CanDesignManage;            
+            snippet.SnippetHelpUrl = Url.Action("Help");
             snippet.UpdateSnippetUrl = Url.Action("UpdateSnippet");
             snippet.UpdateSnippetFieldUrl = Url.Action("UpdateSnippetField");
             snippet.DeleteSnippetFieldUrl = Url.Action("DeleteSnippetField");
+            snippet.DesignHomeUrl = Url.Action("Index", "Home");
+            snippet.TransactionsHomeUrl = Url.Action("Index");
         }
     }
 }

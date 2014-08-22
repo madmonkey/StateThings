@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace StateInterface.Areas.Design.Models
 {
-    public class FormModel
+    public class FormCatalogModel
     {
         public RecordsCenterSelectorModel RecordsCenterSelector { get; set; }
-        public List<RequestFormCatalogProjectionModel> RequestForms { get; set; }
+        public List<CatalogItemModel> CatalogItems { get; set; }
 
         public string InitialData { get; set; }
         public FormsRequestModel FormsRequest { get; set; }
@@ -15,12 +15,12 @@ namespace StateInterface.Areas.Design.Models
         public string FormDetailsUrl { get; set; }
         public string DesignHomeUrl { get; set; }
 
-        public FormModel()
+        public FormCatalogModel()
         {
+            CatalogItems = new List<CatalogItemModel>();
             FormsRequest = new FormsRequestModel();
-            RequestForms = new List<RequestFormCatalogProjectionModel>();
         }
-        public FormModel(User user, IEnumerable<RecordsCenter> recordsCenters)
+        public FormCatalogModel(User user, IEnumerable<RecordsCenter> recordsCenters)
             :this()
         {
             RecordsCenterSelector = new RecordsCenterSelectorModel(user, recordsCenters);

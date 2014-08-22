@@ -1,12 +1,15 @@
-﻿$(function () {
+﻿/*global ko*/
+
+$(function () {
     var services = new myApp.services();
     var vm = new myApp.vm(initialData);
 
     vm.snippetsAreLoading = ko.observable(false);
     vm.showNoSnippetFound = ko.observable(false);
+    vm.catalogItemsSplit = ko.observable(Math.ceil(vm.CatalogItems().length / 2));
 
     vm.evaluateShowNoSnippetsMessage = function () {
-        if (vm.TransactionSnippets().length === 0) {
+        if (vm.CatalogItems().length === 0) {
             vm.showNoSnippetFound(true);
         }
         else {
@@ -14,7 +17,25 @@
         }
     };
 
-    vm.evaluateShowNoSnippetsMessage();
+    vm.RecordsCenterSelector.SelectedRecordsCenterName.subscribe(function (newValue) {
+        vm.getSnippets(newValue);
+    });
+
+    vm.getSnippets = function (recordsCenterName) {
+        vm.snippetsAreLoading(true);
+        vm.SnippetsParameter.RecordsCenterName(recordsCenterName);
+        var params = ko.toJSON(vm.SnippetsParameter);
+
+        services.postToServer(params, function (data) {
+            ko.mapping.fromJS(data, {}, vm.CatalogItems);
+
+
+            vm.snippetsAreLoading(false);
+
+            vm.catalogItemsSplit(Math.ceil(vm.CatalogItems().length / 2));
+
+        }, vm.GetSnippetsUrl());
+    };
 
     vm.snippetModal = ko.observable(false);
     vm.SnippetRequest.Name = ko.observable().extend({initializeValidation: '', validateNonEmpty: '*' });
@@ -34,33 +55,14 @@
         vm.snippetModal(vm);
     };
 
-    vm.RecordsCenterSelector.SelectedRecordsCenterName.subscribe(function (newValue) {
-        vm.getSnippets(newValue);
-    });
-
-    vm.getSnippets = function (recordsCenterName) {
-        vm.snippetsAreLoading(true);
-
-        vm.SnippetsRequest.RecordsCenterName(recordsCenterName);
-        var param = ko.toJSON(vm.SnippetsRequest);
-
-        services.postToServer(param, function (data) {
-            ko.mapping.fromJS(data, {}, vm.TransactionSnippets);
-
-            vm.evaluateShowNoSnippetsMessage();
-
-            vm.snippetsAreLoading(false);
-
-        }, vm.GetSnippetsUrl());
-    };
-
-    vm.createSnippet = function() {
+    vm.createSnippet = function () {
         var newTab = window.open('', '_blank');
         vm.SnippetRequest.RecordsCenterName(vm.RecordsCenterSelector.SelectedRecordsCenterName());
         services.postToServer(ko.toJSON(vm.SnippetRequest), function(data) {
             newTab.location = data.SnippetDetailsUrl;
-        }, vm.CreateSnippetUrl());
+        }, vm.CreateSnippetUrl()); 
     };
 
+    vm.evaluateShowNoSnippetsMessage();
     ko.applyBindings(vm);
 });

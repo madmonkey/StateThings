@@ -121,7 +121,7 @@
     <value>Application Association is not found.</value>
   </data>
   <data name="DateTimeFormat" xml:space="preserve">
-    <value>{0:MM/dd/yy H:mm:ss}</value>
+    <value>MM/dd/yy H:mm:ss</value>
   </data>
   <data name="DayDateTimeFormat" xml:space="preserve">
     <value>ddd, MMM dd, yyyy HH:mm tt</value>

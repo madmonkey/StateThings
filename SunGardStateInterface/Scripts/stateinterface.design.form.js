@@ -1,16 +1,15 @@
 ﻿/*global ko*/
 
 $(function () {
-
     var services = new myApp.services();
-
     var vm = new myApp.vm(initialData);
 
     vm.formsAreLoading = ko.observable(false);
     vm.showNoFormsFound = ko.observable(false);
+    vm.catalogItemsSplit = ko.observable(Math.ceil(vm.CatalogItems().length / 2));
 
     vm.evaluateShowNoFormsMessage = function () {
-        if (vm.RequestForms().length === 0) {
+        if (vm.CatalogItems().length === 0) {
             vm.showNoFormsFound(true);
         }
         else {
@@ -18,31 +17,27 @@ $(function () {
         }
     };
 
-    vm.requestFormsSplit = ko.observable(Math.ceil(vm.RequestForms().length / 2));
-
-    vm.evaluateShowNoFormsMessage();
-
     vm.RecordsCenterSelector.SelectedRecordsCenterName.subscribe(function (newValue) {
         vm.getForms(newValue);
     });
 
     vm.getForms = function (recordsCenterName) {
         vm.formsAreLoading(true);
-
         vm.GetFormsParameters.RecordsCenterName(recordsCenterName);
         var params = ko.toJSON(vm.GetFormsParameters);
 
         services.postToServer(params, function (data) {
-            ko.mapping.fromJS(data, {}, vm.RequestForms);
+            ko.mapping.fromJS(data, {}, vm.CatalogItems);
 
             vm.evaluateShowNoFormsMessage();
 
             vm.formsAreLoading(false);
 
-            vm.requestFormsSplit(Math.ceil(vm.RequestForms().length / 2));
+            vm.catalogItemsSplit(Math.ceil(vm.CatalogItems().length / 2));
 
         }, vm.GetFormsUrl());
     };
 
+    vm.evaluateShowNoFormsMessage();
     ko.applyBindings(vm);
 });

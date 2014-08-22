@@ -237,11 +237,14 @@
 <script type="text/html" id="snippetProperties-template">
     <div class="row">
         <div class="col-xs-12">
-            <div class="padHeader" style="padding-bottom: 0">
+            <div class="padTop">
+                <div>
+                    <span class="leadSmaller" data-bind="html: RecordsCenterName"></span>
+                </div>
                 <span class="leadLarger" data-bind="html:TokenName"></span>
                 <a href="#" data-bind="visible: CanDesignManage, click: editSnippet" class="glyphicon glyphicon-edit padLeft" title="Edit Transaction Properties"></a>
                 <div class="pull-right padRight">
-                    <a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" href="@Url.Action("Help")"></a>
+                    <a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" data-bind="attr: { href: SnippetHelpUrl }"></a>
                 </div>
             </div>
             <div><span class="leadSmaller" data-bind="html: Description"></span></div>
@@ -279,7 +282,7 @@
             </h2>
             <div class="row">
                 <div class="col-xs-12">
-                    <table class="fieldTable">
+                    <table class="fullWidthTable">
                         <thead>
                             <tr class="fieldPropertiesTableHeader">
                                 <td></td>
@@ -356,7 +359,7 @@
                                 <td>
                                     <span class="fieldPropertiesContent" data-bind="html: TrimInputToLength"></span>
                                 </td>
-                                <td style="width:40px">
+                                <td>
                                     <div>
                                         <a href="#" data-bind="visible: $root.CanDesignManage, click: $parent.editField" class="glyphicon glyphicon-edit padHeaderSmall" title="Edit Field"></a>
                                         <a href="#" data-bind="visible: $root.CanDesignManage, click: $parent.deleteField" class="glyphicon glyphicon-remove-circle padHeaderSmall" title="Delete Field"></a>

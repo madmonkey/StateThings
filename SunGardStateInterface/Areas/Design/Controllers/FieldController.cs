@@ -25,7 +25,7 @@ namespace StateInterface.Areas.Design.Controllers
             var model = new FieldCatalogModel(user, recordCenters)
                 {
                     RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) },
-                    Fields = getFieldModels(user.CurrentRecordsCenter.Name),
+                    CatalogItems = getFieldModels(user.CurrentRecordsCenter.Name),
                     GetFieldsUrl = Url.Action("GetFields"),
                     FieldDetailsUrl = Url.Action("Details"),
                     DesignHomeUrl = Url.Action("Index", "Home")
@@ -61,14 +61,30 @@ namespace StateInterface.Areas.Design.Controllers
 
             request.Validate();
 
-            List<FieldCatalogItemModel> fieldCatalogItemModels = getFieldModels(request.RecordsCenterName);
+            List<CatalogItemModel> fieldCatalogItemModels = getFieldModels(request.RecordsCenterName);
 
             return Json(fieldCatalogItemModels);
         }
-        private List<FieldCatalogItemModel> getFieldModels(string recordsCenterName)
+        private List<CatalogItemModel> getFieldModels(string recordsCenterName)
         {
-            var fields = _designerTasks.GetFieldCatalogItems(new TaskParameter<RecordsCenterName>(User.Identity.Name, new RecordsCenterName(recordsCenterName)));
-            return fields.Select(field => new FieldCatalogItemModel(field, Url.Action("Details") + "/" + recordsCenterName)).ToList();
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
+            if (recordsCenter != null)
+            {
+                var fields = _designerTasks.GetFieldCatalogItems(new TaskParameter<RecordsCenterName>(User.Identity.Name, new RecordsCenterName(recordsCenterName)));
+                var catalogItems = new List<CatalogItemModel>();
+                foreach (var field in fields)
+                {
+                    catalogItems.Add(new CatalogItemModel()
+                        {
+                            Name = field.TagName,
+                            Description = field.Description,
+                            DetailsUrl = string.Format("{0}/{1}/{2}", Url.Action("Details"), recordsCenter.Name, field.TagName)
+                        });
+                }
+                return catalogItems;
+            }
+
+            throw new StateInterfaceParameterValidationException(Resources.RecordsCenterNotFound);
         }
     }
 }

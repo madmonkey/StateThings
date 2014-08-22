@@ -13,35 +13,51 @@
             <li><a data-bind="attr: { href: FieldsHomeUrl }">Fields</a></li>
             <li class="active"><span data-bind="html: TagName"></span></li>
         </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
         <div class="padLeft">
             <div data-bind="template: { name: 'field-template' }"></div>
         </div>
     </div>
 </div>
 
-<script type="text/javascript">
-    var initialData = @Html.Raw(Model.InitialData)
-</script>
-
 <script type="text/html" id="field-template">
     <div class="row">
         <div class="col-xs-12">
-            <div class="padHeader" style="padding-bottom: 0">
+            <div class="padTop">
+                <div>
+                    <span class="leadSmaller" data-bind="html: RecordsCenterName"></span>
+                </div>
                 <span class="leadLarger" data-bind="html: TagName"></span>
                 <div class="pull-right">
                     @*<a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" href="@Url.Action("Help")"></a>*@
                 </div>
             </div>
             <div class="leadSmaller">
-                <span data-bind="html: ToolTip"></span>
+                <div>
+                    <span data-bind="html: ToolTip"></span>
+                </div>
+                <div>
+                    <span data-bind="html: Description"></span>
+                </div>
+                <div data-bind="visible: IsHiddenField">
+                    <span>Hidden</span>
+                </div>
+                <div>
+                    <span>Last Updated on</span>
+                    <span data-bind="html: LastUpdated"></span>
+                </div>
+                <br />
+                <div>Forms Using This Field</div>
+                <div data-bind="foreach: FormsUsing">
+                    <a data-bind="attr: { href: FormDetailsUrl }">
+                        <span class="padRight" data-bind="html: RequestFormName"></span>
+                    </a>
+                </div>
+                <br />
             </div>
-            <div class="leadSmaller">
-                <span data-bind="html: Description"></span>
-            </div>
-            <div class="leadSmaller" data-bind="visible: IsHiddenField">
-                <span>Hidden</span>
-            </div>
-            <br />
         </div>
     </div>
     <div class="row">
@@ -130,20 +146,12 @@
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <br />
-            <p class="leadSmaller bold">Forms Using This Field</p>
-            <div class="leadSmaller" data-bind="foreach: FormsUsing">
-                <a data-bind="attr: { href: FormDetailsUrl }">
-                    <span class="padRight" data-bind="html: RequestFormName"></span>
-                </a>
-            </div>
-        </div>
-    </div>
 </script>
 
 
+<script type="text/javascript">
+    var initialData = @Html.Raw(Model.InitialData)
+</script>
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_design_field_Details")
 }

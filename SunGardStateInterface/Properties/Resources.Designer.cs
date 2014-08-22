@@ -70,7 +70,7 @@ namespace StateInterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0:MM/dd/yy H:mm:ss}.
+        ///   Looks up a localized string similar to MM/dd/yy H:mm:ss.
         /// </summary>
         public static string DateTimeFormat {
             get {

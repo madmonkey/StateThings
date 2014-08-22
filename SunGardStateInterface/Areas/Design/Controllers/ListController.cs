@@ -23,12 +23,12 @@ namespace StateInterface.Areas.Design.Controllers
             var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
             var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
 
-            var model = new ListModel(user, recordCenters)
+            var model = new ListCatalogModel(user, recordCenters)
                 {
+                    RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) },
                     GetListsUrl = Url.Action("GetLists"),
                     ListDetailsUrl = Url.Action("Details"),
-                    Lists = getListModels(user.CurrentRecordsCenter.Name),
-                    RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) },
+                    CatalogItems = getCatalogItemModels(user.CurrentRecordsCenter.Name),
                     DesignHomeUrl = Url.Action("Index", "Home")
                 };
 
@@ -65,18 +65,28 @@ namespace StateInterface.Areas.Design.Controllers
                 throw new ApplicationException(Resources.ParameterInvalid);
             }
 
-            var listModels = getListModels(request.RecordsCenterName);
+            List<CatalogItemModel> listModels = getCatalogItemModels(request.RecordsCenterName);
 
             return Json(listModels);
         }
 
-        private List<ListCatalogProjectionModel> getListModels(string recordsCenterName)
+        private List<CatalogItemModel> getCatalogItemModels(string recordsCenterName)
         {
             var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenterName));
             if (recordsCenter != null)
             {
                 var lists = _designerTasks.GetListProjections(new TaskParameter<RecordsCenterId>(User.Identity.Name) { Parameters = new RecordsCenterId(recordsCenter.Id) });
-                return lists.Select(list => new ListCatalogProjectionModel(list, Url.Action("Details") + "/" + recordsCenter.Name)).ToList();
+                var catalogItems = new List<CatalogItemModel>();
+                foreach (var list in lists)
+                {
+                    catalogItems.Add(new CatalogItemModel()
+                        {
+                            Name = list.ListName,
+                            Description = string.Empty,
+                            DetailsUrl = string.Format("{0}/{1}/{2}", Url.Action("Details"), recordsCenter.Name, list.ListName)
+                        });
+                }
+                return catalogItems;
             }
             throw new StateInterfaceParameterValidationException(Resources.RecordsCenterNotFound);
         }

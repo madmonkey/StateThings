@@ -1,5 +1,5 @@
 ﻿@* List Index Page *@
-@model StateInterface.Areas.Design.Models.ListModel
+@model StateInterface.Areas.Design.Models.ListCatalogModel
 <div class="row">
     <div class="col-xs-12">
         <div class="pull-right padRight leadSmaller">
@@ -20,9 +20,10 @@
 <div data-bind="template: { name: 'noListFound-template' }"></div>
 <div class="row">
     <div class="col-xs-12">
-        <div data-bind="template: { name: 'optionListsList-template' }"></div>
+        <div data-bind="template: { name: 'catalogItems-template' }"></div>
     </div>
 </div>
+
 <script type="text/html" id="noListFound-template">
     <div class="row" data-bind="if: showNoListsFound() === true">
         <div class="col-xs-12">
@@ -33,27 +34,7 @@
     </div>
 </script>
 
-<script type="text/html" id="optionListsList-template">
-    <br />
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="row">
-                <div class="col-xs-6" data-bind="foreach: Lists.slice(0, listsSplit())">
-                    <a class="padLeft" data-bind="attr: { href: ListDetailsUrl } ">
-                        <span class="listLink" data-bind="html: ListName"></span>
-                    </a>
-                    <br />
-                </div>
-                <div class="col-xs-6" data-bind="foreach: Lists.slice(listsSplit())">
-                    <a class="padLeft" data-bind="attr: { href: ListDetailsUrl } ">
-                        <span class="listLink" data-bind="html: ListName"></span>
-                    </a>
-                    <br />
-                </div>
-            </div>
-        </div>
-    </div>
-</script>
+@Html.Partial("_catalogItemsTemplate")
 
 <script type="text/javascript">
     var initialData = @Html.Raw(Model.InitialData)

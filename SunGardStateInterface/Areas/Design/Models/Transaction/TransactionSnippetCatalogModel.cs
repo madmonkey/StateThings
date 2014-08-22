@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace StateInterface.Areas.Design.Models
 {
-    public class SnippetsResponseModel
+    public class TransactionSnippetCatalogModel
     {
         public RecordsCenterSelectorModel RecordsCenterSelector { get; set; }
-        public List<TransactionSnippetModel> TransactionSnippets { get; set; }
+        public List<CatalogItemModel> CatalogItems { get; set; }
 
         public SnippetsRequestModel SnippetsRequest { get; set; }
         public SnippetRequestModel SnippetRequest { get; set; }
@@ -19,13 +19,13 @@ namespace StateInterface.Areas.Design.Models
         public string InitialData { get; set; }
         public string DesignHomeUrl { get; set; }
 
-        public SnippetsResponseModel()
+        public TransactionSnippetCatalogModel()
         {
-            TransactionSnippets = new List<TransactionSnippetModel>();
+            CatalogItems = new List<CatalogItemModel>();
             SnippetsRequest = new SnippetsRequestModel();
             SnippetRequest = new SnippetRequestModel();
         }
-        public SnippetsResponseModel(User user, IEnumerable<RecordsCenter> recordsCenters)
+        public TransactionSnippetCatalogModel(User user, IEnumerable<RecordsCenter> recordsCenters)
             : this()
         {
             RecordsCenterSelector = new RecordsCenterSelectorModel(user, recordsCenters);

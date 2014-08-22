@@ -208,9 +208,7 @@ a:link {
     width: 555px;
 }
 
-.fieldTable {
-    /*margin-left: 15px; 
-    margin-right: 10px;*/
+.fullWidthTable {
     width: 100%;
 }
 
@@ -230,6 +228,10 @@ a:link {
 
 .itemUsingItem {
     font-size: .8em;
+}
+
+.inlineBlock {
+    display: inline-block
 }
 
 /* -------------- Form -------------- */
@@ -271,14 +273,6 @@ a:link {
     margin: 3px 3px 3px 3px;
     padding: 3px 4px 3px 4px;
     line-height: 30px;
-}
-
-.hiddenField {
-    color: #3388ff;
-}
-
-.evenFormField {
-    background-color: #e3e6f1;
 }
 
 .listLink {

@@ -228,18 +228,18 @@
     <Compile Include="Areas\Certify\Models\CertifyFormFieldModel.cs" />
     <Compile Include="Areas\Certify\Models\CertifyCriteriaModel.cs" />
     <Compile Include="Areas\Certify\Models\CertifyRequestFormModel.cs" />
+    <Compile Include="Areas\Design\Models\CatalogItemModel.cs" />
     <Compile Include="Areas\Design\Models\Field\FieldCatalogModel.cs" />
-    <Compile Include="Areas\Design\Models\Field\FieldCatalogItemModel.cs" />
     <Compile Include="Areas\Design\Models\Field\FieldDetailsModel.cs" />
     <Compile Include="Areas\Design\Models\Field\FormFieldModel.cs" />
     <Compile Include="Areas\Design\Models\Field\FieldsRequestModel.cs" />
     <Compile Include="Areas\Design\Models\Field\UsesField.cs" />
     <Compile Include="Areas\Design\Models\FormRequestModel.cs" />
     <Compile Include="Areas\Design\Models\Form\PostApplicationRequestModel.cs" />
-    <Compile Include="Areas\Design\Models\Form\ApplicationModel.cs" />
+    <Compile Include="Areas\Design\Models\Form\SelectItemModel.cs" />
     <Compile Include="Areas\Design\Models\Form\CriteriaModel.cs" />
     <Compile Include="Areas\Design\Models\Form\CriteriaNodeModel.cs" />
-    <Compile Include="Areas\Design\Models\Form\FormModel.cs" />
+    <Compile Include="Areas\Design\Models\Form\FormCatalogModel.cs" />
     <Compile Include="Areas\Design\Models\Form\GetFormParametersModel.cs" />
     <Compile Include="Areas\Design\Models\Form\FormsRequestModel.cs" />
     <Compile Include="Areas\Design\Models\Form\RequestFormCategoryModel.cs" />
@@ -253,16 +253,15 @@
     <Compile Include="Areas\Design\Models\Layout\ControlModel.cs" />
     <Compile Include="Areas\Design\Models\Layout\StyleModel.cs" />
     <Compile Include="Areas\Design\Models\Associations\RecordsCenterModel.cs" />
+    <Compile Include="Areas\Design\Models\List\ListCatalogModel.cs" />
     <Compile Include="Areas\Design\Models\List\ListsRequestModel.cs" />
-    <Compile Include="Areas\Design\Models\List\ListCatalogProjectionModel.cs" />
-    <Compile Include="Areas\Design\Models\List\ListModel.cs" />
     <Compile Include="Areas\Design\Models\List\OptionListTierModel.cs" />
     <Compile Include="Areas\Design\Models\List\OptionListModel.cs" />
     <Compile Include="Areas\Design\Models\List\OptionListItemModel.cs" />
     <Compile Include="Areas\Design\Models\List\UsesList.cs" />
-    <Compile Include="Areas\Design\Models\Transaction\SnippetsResponseModel.cs" />
     <Compile Include="Areas\Design\Models\Transaction\SnippetRequestModel.cs" />
     <Compile Include="Areas\Design\Models\Transaction\SnippetsRequestModel.cs" />
+    <Compile Include="Areas\Design\Models\Transaction\TransactionSnippetCatalogModel.cs" />
     <Compile Include="Areas\Design\Models\Transaction\TransactionSnippetFieldModel.cs" />
     <Compile Include="Areas\Design\Models\Transaction\TransactionSnippetFieldTypeHelper.cs" />
     <Compile Include="Areas\Design\Models\Transaction\TransactionSnippetModel.cs" />
@@ -386,6 +385,7 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Unauthorized.html" />
+    <Content Include="Areas\Design\Views\Shared\_catalogItemsTemplate.cshtml" />
     <None Include="Properties\PublishProfiles\localhost.pubxml" />
     <None Include="Properties\PublishProfiles\PSJDevTest Debug.pubxml" />
     <None Include="Properties\PublishProfiles\PSJDevTest Release.pubxml" />
@@ -453,7 +453,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\site.css" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />

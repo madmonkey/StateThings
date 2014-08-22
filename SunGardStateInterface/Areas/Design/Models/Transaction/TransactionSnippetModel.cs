@@ -34,7 +34,7 @@ namespace StateInterface.Areas.Design.Models
         public string InitialData { get; set; }
         public string DesignHomeUrl { get; set; }
         public string TransactionsHomeUrl { get; set; }
-        public string SnippetDetailsUrl { get; set; }
+        public string SnippetHelpUrl { get; set; }
         public string UpdateSnippetUrl { get; set; }
         public string UpdateSnippetFieldUrl { get; set; }
         public string DeleteSnippetFieldUrl { get; set; }

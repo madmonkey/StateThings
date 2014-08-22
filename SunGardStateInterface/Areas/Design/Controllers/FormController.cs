@@ -25,13 +25,13 @@ namespace StateInterface.Areas.Design.Controllers
             var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
             var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
 
-            var model = new FormModel(user, recordCenters)
+            var model = new FormCatalogModel(user, recordCenters)
                 {
+                    RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) },
+                    CatalogItems = getCatalogItemModels(user.CurrentRecordsCenter.Name),
                     GetFormsUrl = Url.Action("GetForms"),
                     FormDetailsUrl = Url.Action("Details"),
                     DesignHomeUrl = Url.Action("Index", "Home"),
-                    RequestForms = getRequestFormModels(user.CurrentRecordsCenter.Name),
-                    RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) }
                 };
 
             model.InitialData = JsonConvert.SerializeObject(model);
@@ -48,15 +48,17 @@ namespace StateInterface.Areas.Design.Controllers
             {
                 var requestForm = _designerTasks.GetForm(new TaskParameter<FormById>(User.Identity.Name, new FormById(recordsCenter.Id, formId)));
                 var availableApplications = _designerTasks.GetApplications(new TaskParameter(User.Identity.Name));
-                var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
+                User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
+
                 var formModel = new RequestFormModel(requestForm, Url.Action("Details", "List"), Url.Action("Details", "Field"), availableApplications)
-                    {
-                        CanDesignManage = user.CanDesignManage,
-                        UpdateApplicationsAssociationUrl = Url.Action("UpdateFormApplications", new {}),
-                        DesignHomeUrl = Url.Action("Index", "Home"),
-                        FormsHomeUrl = Url.Action("Index"),
-                        PreviewFormUrl = string.Format("{0}/{1}/{2}", Url.Action("Preview", "Layout"), requestForm.RecordsCenter.Name, requestForm.FormId)
-                    };
+                {
+                    FormHelpUrl = Url.Action("Help"),
+                    PreviewFormUrl = string.Format("{0}/{1}/{2}", Url.Action("Preview", "Layout"), requestForm.RecordsCenter.Name, requestForm.FormId),
+                    CanDesignManage = user.CanDesignManage,
+                    UpdateApplicationsAssociationUrl = Url.Action("UpdateFormApplications", new { }),
+                    DesignHomeUrl = Url.Action("Index", "Home"),
+                    FormsHomeUrl = Url.Action("Index")
+                };
 
                 formModel.InitialData = JsonConvert.SerializeObject(formModel);
 
@@ -73,7 +75,7 @@ namespace StateInterface.Areas.Design.Controllers
                 throw new ApplicationException(Resources.ParameterInvalid);
             }
 
-            List<RequestFormCatalogProjectionModel> requestFormModels = getRequestFormModels(request.RecordsCenterName);
+            List<CatalogItemModel> requestFormModels = getCatalogItemModels(request.RecordsCenterName);
 
             return Json(requestFormModels);
         }
@@ -111,17 +113,28 @@ namespace StateInterface.Areas.Design.Controllers
                 }
                 throw new ApplicationException(Resources.ParameterInvalid);
             }
-            throw new System.Web.Http.HttpResponseException(new System.Net.Http.HttpResponseMessage(HttpStatusCode.Unauthorized)); 
-            
+            throw new System.Web.Http.HttpResponseException(new System.Net.Http.HttpResponseMessage(HttpStatusCode.Unauthorized));
+
         }
-        private List<RequestFormCatalogProjectionModel> getRequestFormModels(string recordsCenterName)
+        private List<CatalogItemModel> getCatalogItemModels(string recordsCenterName)
         {
             var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenterName));
             if (recordsCenter != null)
             {
                 var requestForms = _designerTasks.GetFormProjections(new TaskParameter<RecordsCenterId>(User.Identity.Name) { Parameters = new RecordsCenterId(recordsCenter.Id) });
-                return requestForms.Select(requestForm => new RequestFormCatalogProjectionModel(requestForm, Url.Action("Details") + "/" + recordsCenter.Name)).ToList();
+                var catalogItems = new List<CatalogItemModel>();
+                foreach (var requestForm in requestForms)
+                {
+                    catalogItems.Add(new CatalogItemModel()
+                        {
+                            Name = requestForm.FormId,
+                            Description = requestForm.Description,
+                            DetailsUrl = string.Format("{0}/{1}/{2}", Url.Action("Details"), recordsCenter.Name, requestForm.FormId)
+                        });
+                }
+                return catalogItems;
             }
+
             throw new StateInterfaceParameterValidationException(Resources.RecordsCenterNotFound);
         }
     }

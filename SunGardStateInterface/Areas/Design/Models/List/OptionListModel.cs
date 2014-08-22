@@ -13,8 +13,7 @@ namespace StateInterface.Areas.Design.Models
     {
         public int Id { get; set; }
         public string RecordsCenterName { get; set; }
-        public string Created { get; set; }
-        public string Updated { get; set; }
+        public string LastUpdated { get; set; }
         public string ListName { get; set; }
         public List<OptionListTierModel> OptionListTiers { get; set; }
         public List<OptionListItemModel> OptionListItems { get; set; }
@@ -30,9 +29,10 @@ namespace StateInterface.Areas.Design.Models
             Id = optionList.Id;
             RecordsCenterName = optionList.RecordsCenter.Name;
 
-            //Potentially optionList.Created.ToString(Resources.DateTimeFormat);
-            Created = string.Format(Resources.DateTimeFormat, optionList.Created);
-            Updated = string.Format(Resources.DateTimeFormat, optionList.Updated);
+
+            LastUpdated = optionList.Updated.HasValue
+                ? optionList.Updated.Value.ToString(Resources.DateTimeFormat)
+                : optionList.Created.ToString(Resources.DateTimeFormat);
 
             ListName = optionList.ListName;
 

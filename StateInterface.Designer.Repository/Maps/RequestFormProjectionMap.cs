@@ -10,6 +10,7 @@ namespace StateInterface.Designer.Repository.Mappings
             Id(x => x.Id).Column("Id");
             Map(x => x.FormId);
             Map(x => x.Title);
+            Map(x => x.Description);
             References(x => x.RecordsCenter);
             HasMany(x => x.Categories).AsBag().KeyColumn("RequestForm_Id").ReadOnly();
             Table("[RequestForm]");

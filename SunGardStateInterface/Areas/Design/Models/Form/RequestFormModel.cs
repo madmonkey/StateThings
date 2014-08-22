@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using StateInterface.Properties;
 
 namespace StateInterface.Areas.Design.Models
 {
@@ -13,8 +14,7 @@ namespace StateInterface.Areas.Design.Models
         public string RecordsCenterName { get; set; }
 
         public string Version { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime? Updated { get; set; }
+        public string LastUpdated { get; set; }
 
         public string FormId { get; set; }
         public string Title { get; set; }
@@ -22,31 +22,35 @@ namespace StateInterface.Areas.Design.Models
 
         public List<FormFieldModel> FormFields { get; set; }
 
-        public List<RequestFormCategoryModel> Associations { get; set; }
+        public List<RequestFormCategoryModel> Categories { get; set; }
 
-        public List<ApplicationModel> Applications { get; set; }
-        public List<ApplicationModel> ApplicationsForEdit { get; set; }
+        public List<SelectItemModel> Applications { get; set; }
+        public List<SelectItemModel> ApplicationsForEdit { get; set; }
         public string SubmissionMode { get; set; }
         public List<TransactionModel> Transactions { get; set; }
 
         public string InitialData { get; set; }
-        //public string GetFormUrl { get; set; }
+        public string FormHelpUrl { get; set; }
         public string PreviewFormUrl { get; set; }
         public bool CanDesignManage { get; set; }
         public string UpdateApplicationsAssociationUrl { get; set; }
         public string DesignHomeUrl { get; set; }
         public string FormsHomeUrl { get; set; }
 
-        public RequestFormModel(RequestForm requestForm,
-            string listDetailsUrl, string fieldDetailsUrl,
-            IEnumerable<Application> availableApplications)
+        public RequestFormModel(RequestForm requestForm, string listDetailsUrl, string fieldDetailsUrl, IEnumerable<Application> availableApplications)
             : this(requestForm, listDetailsUrl, fieldDetailsUrl)
         {
             var selectedApplications = this.Applications.ToList();
-            this.Applications = new List<ApplicationModel>();
+            this.Applications = new List<SelectItemModel>();
             foreach (var application in availableApplications)
             {
-                this.Applications.Add(new ApplicationModel(application) { IsSelected = selectedApplications.Any(x => x.Id == application.Id) });
+                this.Applications.Add(new SelectItemModel() 
+                {
+                    Id = application.Id,
+                    Name = application.Name,
+                    Description = application.Description,
+                    IsSelected = selectedApplications.Any(x => x.Id == application.Id) 
+                });
             }
         }
         public RequestFormModel(RequestForm requestForm, string listDetailsUrl, string fieldDetailsUrl)
@@ -55,8 +59,10 @@ namespace StateInterface.Areas.Design.Models
             RecordsCenterName = requestForm.RecordsCenter.Name;
 
             Version = requestForm.Version;
-            Created = requestForm.Created;
-            Updated = requestForm.Updated;
+
+            LastUpdated = requestForm.Updated.HasValue
+                ? requestForm.Updated.Value.ToString(Resources.DateTimeFormat)
+                : requestForm.Created.ToString(Resources.DateTimeFormat);
 
             FormId = requestForm.FormId;
             Title = requestForm.Title;
@@ -71,17 +77,22 @@ namespace StateInterface.Areas.Design.Models
                 FormFields.Add(new FormFieldModel(formField, listDetailsUrl, fieldDetailsUrl));
             }
 
-            Associations = new List<RequestFormCategoryModel>();
+            Categories = new List<RequestFormCategoryModel>();
             foreach (Category category in requestForm.Categories.OrderBy(x => x.Name))
             {
-                Associations.Add(new RequestFormCategoryModel(category));
+                Categories.Add(new RequestFormCategoryModel(category));
             }
 
-            Applications = new List<ApplicationModel>();
-            ApplicationsForEdit = new List<ApplicationModel>();
-            foreach (Application app in requestForm.Applications.OrderBy(x => x.Name))
+            Applications = new List<SelectItemModel>();
+            ApplicationsForEdit = new List<SelectItemModel>();
+            foreach (Application application in requestForm.Applications.OrderBy(x => x.Name))
             {
-                Applications.Add(new ApplicationModel(app));
+                Applications.Add(new SelectItemModel()
+                    {
+                        Id = application.Id,
+                        Name = application.Name,
+                        Description = application.Description,
+                    });
             }
 
             SubmissionMode = requestForm.SubmissionMode.ToString();

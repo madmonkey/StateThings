@@ -11,7 +11,7 @@ namespace StateInterface.Areas.Design.Models
     {
         public string InitialData { get; set; }
         public RecordsCenterSelectorModel RecordsCenterSelector { get; set; }
-        public IEnumerable<FieldCatalogItemModel> Fields { get; set; }
+        public IEnumerable<CatalogItemModel> CatalogItems { get; set; }
 
         public FieldsRequestModel FieldsRequest { get; set; }
         public string GetFieldsUrl { get; set; }
@@ -19,8 +19,8 @@ namespace StateInterface.Areas.Design.Models
         public string DesignHomeUrl { get; set; }
         public FieldCatalogModel(User user, IEnumerable<RecordsCenter> recordsCenters)
         {
+            CatalogItems = new List<CatalogItemModel>();
             FieldsRequest = new FieldsRequestModel();
-            Fields = new List<FieldCatalogItemModel>();
             RecordsCenterSelector = new RecordsCenterSelectorModel(user, recordsCenters);
         }
     }

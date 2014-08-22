@@ -16,10 +16,9 @@ $(function () {
     // Option 3: Hand rolled view model (Best performance)
     var vm = {
         Id: initialData.Id,
-        RecordsCenterId: initialData.RecordsCenterId,
+        RecordsCenterName: initialData.RecordsCenterName,
         ListName: initialData.ListName,
-        Created: initialData.Created,
-        Updated: initialData.Updated,
+        LastUpdated: initialData.LastUpdated,
         OptionListTiers: initialData.OptionListTiers,
         OptionListItems: initialData.OptionListItems,
         CanDesignManage: initialData.CanDesignManage,

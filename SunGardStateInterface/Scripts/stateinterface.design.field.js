@@ -6,19 +6,16 @@ $(function () {
 
     vm.fieldsAreLoading = ko.observable(false);
     vm.showNoFieldsFound = ko.observable(false);
+    vm.catalogItemsSplit = ko.observable(Math.ceil(vm.CatalogItems().length / 2));
 
     vm.evaluateShowNoFieldsMessage = function () {
-        if (vm.Fields().length === 0) {
+        if (vm.CatalogItems().length === 0) {
             vm.showNoFieldsFound(true);
         }
         else {
             vm.showNoFieldsFound(false);
         }
     };
-
-    vm.fieldsSplit = ko.observable(Math.ceil(vm.Fields().length / 2));
-
-    vm.evaluateShowNoFieldsMessage();
 
     vm.RecordsCenterSelector.SelectedRecordsCenterName.subscribe(function (newValue) {
         vm.getFields(newValue);
@@ -27,18 +24,20 @@ $(function () {
     vm.getFields = function (recordsCenterName) {
         vm.fieldsAreLoading(true);
         vm.GetFieldsParameters.RecordsCenterName(recordsCenterName);
-        services.postToServer(ko.toJSON(vm.GetFieldsParameters),
-            function (data) {
-                ko.mapping.fromJS(data, {}, vm.Fields);
+        var params = ko.toJSON(vm.GetFieldsParameters)
 
-                vm.evaluateShowNoFieldsMessage();
+        services.postToServer(params, function (data) {
+            ko.mapping.fromJS(data, {}, vm.CatalogItems);
 
-                vm.fieldsAreLoading(false);
+            vm.evaluateShowNoFieldsMessage();
 
-                vm.fieldsSplit(Math.ceil(vm.Fields().length / 2));
+            vm.fieldsAreLoading(false);
 
-            }, vm.GetFieldsUrl());
+            vm.catalogItemsSplit(Math.ceil(vm.CatalogItems().length / 2));
+
+        }, vm.GetFieldsUrl());
     };
 
+    vm.evaluateShowNoFieldsMessage();
     ko.applyBindings(vm);
 });

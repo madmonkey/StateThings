@@ -53,13 +53,13 @@
             case "Date": {
                 vm.isList(true);
                 vm.isTransform(false);
-                vm.isUpper(false);                
-                vm.isCarriageReturn(false);                
+                vm.isUpper(false);
+                vm.isCarriageReturn(false);
                 vm.isLength(false);
                 vm.isFrequency(true);
                 vm.isSeparator(true);
                 vm.isDefaultValue(false);
-                vm.isTrimInput(false);                
+                vm.isTrimInput(false);
                 vm.isPad(false);
                 services.copyArray(vm.AvailableDateFormats, vm.AvailableOptions);
                 break;
@@ -68,7 +68,7 @@
                 vm.isList(true);
                 vm.isTransform(false);
                 vm.isUpper(true);
-                vm.isCarriageReturn(false);                
+                vm.isCarriageReturn(false);
                 vm.isLength(true);
                 vm.isFrequency(true);
                 vm.isSeparator(true);
@@ -81,56 +81,56 @@
             case "Numeric": {
                 vm.isList(false);
                 vm.isTransform(false);
-                vm.isUpper(false);                
-                vm.isCarriageReturn(false);                
+                vm.isUpper(false);
+                vm.isCarriageReturn(false);
                 vm.isLength(true);
                 vm.isFrequency(true);
                 vm.isSeparator(true);
                 vm.isDefaultValue(true);
-                vm.isTrimInput(false);                
-                vm.isPad(true);                
+                vm.isTrimInput(false);
+                vm.isPad(true);
                 break;
             }
             case "SSN": {
                 vm.isList(false);
                 vm.isTransform(false);
-                vm.isUpper(false);                
-                vm.isCarriageReturn(false);                
+                vm.isUpper(false);
+                vm.isCarriageReturn(false);
                 vm.isLength(false);
                 vm.isFrequency(true);
                 vm.isSeparator(true);
                 vm.isDefaultValue(false);
-                vm.isTrimInput(false);                
-                vm.isPad(true);                
+                vm.isTrimInput(false);
+                vm.isPad(true);
                 break;
             }
             case "Counter": {
                 vm.isList(false);
                 vm.isTransform(false);
-                vm.isUpper(false);                
-                vm.isCarriageReturn(false);                
+                vm.isUpper(false);
+                vm.isCarriageReturn(false);
                 vm.isLength(true);
                 vm.isFrequency(false);
                 vm.isSeparator(false);
                 vm.isDefaultValue(false);
-                vm.isTrimInput(false);                
-                vm.isPad(true);                
+                vm.isTrimInput(false);
+                vm.isPad(true);
                 break;
             }
             case "Convert": {
                 vm.isList(false);
                 vm.isTransform(true);
-                if ((oldValue == 'Date') || (oldValue == 'Name')) {
+                if ((oldValue === 'Date') || (oldValue === 'Name')) {
                     vm.SelectedField.TransformFormat('');
-                }                
+                }
                 vm.isUpper(true);
                 vm.isCarriageReturn(true);
                 vm.isLength(true);
                 vm.isFrequency(true);
                 vm.isSeparator(true);
                 vm.isDefaultValue(true);
-                vm.isTrimInput(false);                
-                vm.isPad(true);                
+                vm.isTrimInput(false);
+                vm.isPad(true);
                 break;
             }
             case "Text": {
@@ -149,33 +149,33 @@
             case "SystemDate": {
                 vm.isList(false);
                 vm.isTransform(true);
-                if ((oldValue == 'Date') || (oldValue == 'Name')) {
+                if ((oldValue === 'Date') || (oldValue === 'Name')) {
                     vm.SelectedField.TransformFormat('');
                 }
-                vm.isUpper(false);                
-                vm.isCarriageReturn(false);                
+                vm.isUpper(false);
+                vm.isCarriageReturn(false);
                 vm.isLength(true);
                 vm.isFrequency(false);
                 vm.isSeparator(false);
                 vm.isDefaultValue(false);
-                vm.isTrimInput(false);                
-                vm.isPad(false);                               
+                vm.isTrimInput(false);
+                vm.isPad(false);
                 break;
             }
             case "StateProvinceRegion": {
                 vm.isList(false);
                 vm.isTransform(true);
-                if ((oldValue == 'Date') || (oldValue == 'Name')) {
+                if ((oldValue === 'Date') || (oldValue === 'Name')) {
                     vm.SelectedField.TransformFormat('');
                 }
                 vm.isUpper(true);
-                vm.isCarriageReturn(false);                
+                vm.isCarriageReturn(false);
                 vm.isLength(true);
                 vm.isFrequency(true);
                 vm.isSeparator(true);
                 vm.isDefaultValue(true);
-                vm.isTrimInput(false);                
-                vm.isPad(true);                
+                vm.isTrimInput(false);
+                vm.isPad(true);
                 break;
             }
             default: { // set to Text
@@ -192,64 +192,64 @@
                 break;
             }
         }
-    })
+    });
 
     vm.finalizeSelectedField = function () {
         switch (vm.SelectedField.Field()) {
-            case "Date": {              
-                vm.SelectedField.MakeUpperCase(null);                
-                vm.SelectedField.AcceptCarriageReturns(null);                
-                vm.SelectedField.Length(null);              
-                vm.SelectedField.DefaultValue('');                
-                vm.SelectedField.TrimInputToLength(null);                
-                vm.SelectedField.PadCharacterDec(null);                
+            case "Date": {
+                vm.SelectedField.MakeUpperCase(null);
+                vm.SelectedField.AcceptCarriageReturns(null);
+                vm.SelectedField.Length(null);
+                vm.SelectedField.DefaultValue('');
+                vm.SelectedField.TrimInputToLength(null);
+                vm.SelectedField.PadCharacterDec(null);
                 break;
             }
-            case "Name": {                
-                vm.SelectedField.AcceptCarriageReturns(null);                
-                vm.SelectedField.DefaultValue('');                
+            case "Name": {
+                vm.SelectedField.AcceptCarriageReturns(null);
+                vm.SelectedField.DefaultValue('');
                 break;
             }
-            case "Numeric": {                
-                vm.SelectedField.MakeUpperCase(null);                
-                vm.SelectedField.AcceptCarriageReturns(null);                
-                vm.SelectedField.TrimInputToLength(null);                
+            case "Numeric": {
+                vm.SelectedField.MakeUpperCase(null);
+                vm.SelectedField.AcceptCarriageReturns(null);
+                vm.SelectedField.TrimInputToLength(null);
                 break;
             }
-            case "SSN": {                
-                vm.SelectedField.TransformFormat('');                
-                vm.SelectedField.MakeUpperCase(null);                
-                vm.SelectedField.AcceptCarriageReturns(null);                
-                vm.SelectedField.Length(null);                
-                vm.SelectedField.DefaultValue('');                
-                vm.SelectedField.TrimInputToLength(null);                
+            case "SSN": {
+                vm.SelectedField.TransformFormat('');
+                vm.SelectedField.MakeUpperCase(null);
+                vm.SelectedField.AcceptCarriageReturns(null);
+                vm.SelectedField.Length(null);
+                vm.SelectedField.DefaultValue('');
+                vm.SelectedField.TrimInputToLength(null);
                 break;
             }
-            case "Counter": {                
-                vm.SelectedField.TransformFormat('');               
-                vm.SelectedField.MakeUpperCase(null);                
-                vm.SelectedField.AcceptCarriageReturns(null);                
-                vm.SelectedField.Frequency(null);                
-                vm.SelectedField.Separator('');                
-                vm.SelectedField.DefaultValue('');                
-                vm.SelectedField.TrimInputToLength(null);                
+            case "Counter": {
+                vm.SelectedField.TransformFormat('');
+                vm.SelectedField.MakeUpperCase(null);
+                vm.SelectedField.AcceptCarriageReturns(null);
+                vm.SelectedField.Frequency(null);
+                vm.SelectedField.Separator('');
+                vm.SelectedField.DefaultValue('');
+                vm.SelectedField.TrimInputToLength(null);
                 break;
             }
             case "Convert": {
-                vm.SelectedField.TrimInputToLength(null);                
+                vm.SelectedField.TrimInputToLength(null);
                 break;
             }
-            case "Text": {                
-                vm.SelectedField.TransformFormat('');                
+            case "Text": {
+                vm.SelectedField.TransformFormat('');
                 break;
             }
             case "SystemDate": {
-                vm.SelectedField.MakeUpperCase(null);                
-                vm.SelectedField.AcceptCarriageReturns(null);                
-                vm.SelectedField.Frequency(null);                
-                vm.SelectedField.Separator('');                
-                vm.SelectedField.DefaultValue('');                
-                vm.SelectedField.TrimInputToLength(null);                
+                vm.SelectedField.MakeUpperCase(null);
+                vm.SelectedField.AcceptCarriageReturns(null);
+                vm.SelectedField.Frequency(null);
+                vm.SelectedField.Separator('');
+                vm.SelectedField.DefaultValue('');
+                vm.SelectedField.TrimInputToLength(null);
                 vm.SelectedField.PadCharacterDec(null);
                 break;
             }
@@ -263,7 +263,7 @@
                 break;
             }
         }
-    }
+    };
 
     vm.copyToSelectedField = function (item) {
         vm.transform(item.TransformFormat());
@@ -278,7 +278,7 @@
         vm.SelectedField.Length(item.Length());
         vm.SelectedField.PadCharacterDec(item.PadCharacterDec());
         vm.SelectedField.TrimInputToLength(item.TrimInputToLength());
-        vm.SelectedField.DefaultValue(item.DefaultValue());      
+        vm.SelectedField.DefaultValue(item.DefaultValue());
         vm.SelectedField.Field(item.Field());
         vm.SelectedField.Frequency(item.Frequency());
         vm.SelectedField.Separator(item.Separator());
@@ -289,7 +289,7 @@
         if (vm.SelectedField.PadCharacterDec() == null) {
             vm.SelectedField.PadCharacterDec('');
         }
-    }
+    };
 
     vm.copyNewToSelectedField = function () {
         vm.transform('');
@@ -318,7 +318,7 @@
         vm.isDefaultValue(true);
         vm.isTrimInput(true);
         vm.isPad(true);
-    }
+    };
 
     vm.copyToSnippetForEdit = function (item) {
         vm.SnippetForEdit.RecordsCenterName(item.RecordsCenterName);
@@ -328,12 +328,12 @@
         vm.SnippetForEdit.Definition(item.TransactionDefinition());
         vm.SnippetForEdit.Criteria(item.Criteria());
         vm.SnippetForEdit.IncludePrefixAndSuffix(item.IncludePrefixAndSuffix());
-    }
+    };
 
     vm.transform = ko.observable('');
     vm.setSelectedOption = function () {
         vm.SelectedField.TransformFormat(vm.transform());
-    }    
+    };
 
     vm.indexId = ko.observable();
     vm.checkForDuplication = function () {
@@ -346,7 +346,7 @@
                 }
             }
         }
-    }
+    };
 
     var duplicateSubscription = vm.SelectedField.TagName.subscribe(function (newValue) {
         vm.checkForDuplication();
@@ -369,51 +369,51 @@
         duplicateSubscription.dispose();
         vm.copyNewToSelectedField();
         vm.copyToSelectedField(item);
-        vm.snippetFieldModal(item);        
+        vm.snippetFieldModal(item);
         warningSubscription = vm.SelectedField.TagName.subscribe(function (newValue) {
             vm.fieldNameWarning(true);
         });
         duplicateSubscription = vm.SelectedField.TagName.subscribe(function (newValue) {
             vm.checkForDuplication();
-        });        
-    }
+        });
+    };
 
     vm.addField = function () {
         vm.fieldNameWarning(false);
         warningSubscription.dispose();
         vm.copyNewToSelectedField();
         vm.snippetFieldModal(vm.SelectedField);
-    }
+    };
 
     vm.deleteField = function (item) {
         vm.copyToSelectedField(item);
         vm.confirmDeleteModal(item);
-    }
+    };
 
     vm.editSnippet = function () {
         vm.copyToSnippetForEdit(vm);
         vm.snippetPropertiesModal(vm);
         vm.snippetNameWarning(false);
-    }
+    };
 
     vm.updateSnippetField = function () {
         vm.finalizeSelectedField();
         services.postToServer(ko.toJSON(vm.SelectedField), function (data) {
             ko.mapping.fromJS(data, {}, vm);
-        }, vm.UpdateSnippetFieldUrl()); 
-    }
+        }, vm.UpdateSnippetFieldUrl());
+    };
 
     vm.deleteSnippetField = function () {
         services.postToServer(ko.toJSON(vm.SelectedField), function (data) {
             ko.mapping.fromJS(data, {}, vm);
-        }, vm.DeleteSnippetFieldUrl()); 
-    }
+        }, vm.DeleteSnippetFieldUrl());
+    };
 
     vm.updateSnippet = function () {
         services.postToServer(ko.toJSON(vm.SnippetForEdit), function (data) {
             ko.mapping.fromJS(data, {}, vm);
         }, vm.UpdateSnippetUrl());
-    }
+    };
 
     ko.applyBindings(vm);
 });

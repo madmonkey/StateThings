@@ -13,6 +13,10 @@
             <li><a data-bind="attr: { href: FormsHomeUrl }">Forms</a></li>
             <li class="active"><span data-bind="html: FormId"></span></li>
         </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
         <div class="padLeft padRight">
             <div data-bind="template: { name: 'properties-template' }"></div>
             <div data-bind="template: { name: 'fields-template' }"></div>
@@ -31,7 +35,7 @@
             <form role="form">
                 <div class="modal-body">
                     <span class="leadSmaller">Please select the applications that use this form</span>
-                    <table style="width:100%;">
+                    <table class="fullWidthTable">
                         <tr class="bold leadSmaller" data-bind="foreach: ApplicationsForEdit">
                             <td>
                                 <span><input type="checkbox" data-bind="checked: IsSelected"></span>
@@ -52,35 +56,47 @@
 <script type="text/html" id="properties-template">
     <div class="row">
         <div class="col-xs-12">
-            <div class="padHeader" style="padding-bottom: 0">
+            <div class="padTop">
+                <div>
+                    <span class="leadSmaller" data-bind="html: RecordsCenterName"></span>
+                </div>
                 <span class="leadLarger" data-bind="html:FormId"></span>
-                <span class="leadSmaller" data-bind="html: Title"></span><span class="leadSmaller">, v</span><span class="leadSmaller" data-bind="html: Version"></span>
-
+                <div class="leadSmaller inlineBlock">
+                    <span data-bind="html: Title"></span>
+                    <span>, v</span>
+                    <span data-bind="html: Version"></span>
+                </div>
                 <div class="pull-right">
                     <a target="_blank" title="Preview Form" class="padRight glyphicon glyphicon-eye-open" style="margin-top:14px;" data-bind="attr:{ href: PreviewFormUrl() }"></a>
-                    <a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" href="@Url.Action("Help")"></a>
+                    <a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" data-bind="attr: { href: FormHelpUrl }"></a>
                 </div>
             </div>
             <div class="leadSmaller">
-                <span data-bind="html: Description"></span>
-            </div>
-            <br />
-            <div class="leadSmaller">
-                <span>Submission Mode:</span>
-                <span data-bind="html: SubmissionMode"></span>
-            </div>
-            <div class="leadSmaller">
-                <span>Categories:</span>
-                <span data-bind="foreach: Associations">
-                    <span data-bind="html: Name"></span>
-                </span>
-            </div>
-            <div class="leadSmaller">
-                <span>Applications:</span>
-                <span data-bind="foreach: Applications">
-                    <span data-bind="html: Name, visible: IsSelected"></span>
-                </span>
-                <a href="#" title="Update Association" class="glyphicon glyphicon-edit padLeft" data-bind="visible: CanDesignManage, click: updateApplications"></a>
+                <div data-bind="html: Description"></div>
+                <br />
+                <div>
+                    <span>Last Updated on</span>
+                    <span data-bind="html: LastUpdated"></span>
+                </div>
+                <br />
+                <div>
+                    <span>Submission Mode:</span>
+                    <span data-bind="html: SubmissionMode"></span>
+                </div>
+                <div>
+                    <span>Categories:</span>
+                    <span data-bind="foreach: Categories">
+                        <span data-bind="html: Name"></span>
+                    </span>
+                    <span data-bind="visible: Categories.length > 0">Uncategorized</span>
+                </div>
+                <div>
+                    <span>Applications:</span>
+                    <span data-bind="foreach: Applications">
+                        <span data-bind="html: Name, visible: IsSelected"></span>
+                    </span>
+                    <a href="#" title="Update Association" class="glyphicon glyphicon-edit padLeft" data-bind="visible: CanDesignManage, click: updateApplications"></a>
+                </div>
             </div>
         </div>
     </div>
@@ -98,7 +114,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="panel-collapse collapse in" data-bind="attr: { id: 'collapse_fields' }">
-                        <table class="fieldTable">
+                        <table class="fullWidthTable">
                             <thead>
                                 <tr class="fieldPropertiesTableHeader">
                                     <td></td>
@@ -126,8 +142,8 @@
                                 </tr>
                                 <tr style="height:10px"></tr>
                             </thead>
-                            <tbody data-bind="foreach: FormFields">
-                                <tr class="propertiesRow" style="vertical-align:top">
+                            <tbody style="vertical-align: top" data-bind="foreach: FormFields">
+                                <tr class="propertiesRow">
                                     <td>
                                         <div>
                                             <a target="_blank" data-bind="attr: { href: FieldDetailsUrl }">
@@ -137,7 +153,7 @@
                                             <div class="additionalFieldDetails" data-bind="visible: OptionListName().length > 0">
                                                 <a target="_blank" data-bind="attr: { href: ListDetailsUrl }">
                                                     <span data-bind="html: OptionListName"></span>
-                                                    <span>list</span>
+                                                    @*<span>list</span>*@
                                                 </a>
                                             </div>
                                             <div class="additionalFieldDetails" data-bind="visible: IsHiddenField">
@@ -182,21 +198,21 @@
             <div class="panel-group" data-bind="attr: { id: 'accordian_transactions' }">
                 <h2 class="pull-left">
                     <a class="pull-left glyphicon glyphicon-collapse-down" style="margin-top: 5px" data-toggle="collapse" data-bind="attr:{ 'data-parent': 'accordian_transactions', href: '#collapse_transactions' }"></a>
-                    &nbsp;Transactions
+                    <span>&nbsp;Transactions</span>
                 </h2>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="panel-collapse collapse in" data-bind="attr: { id: 'collapse_transactions' }">
-                    <div class="panel-body">
-                        <div class="padLeft">
-                            <div data-bind="foreach: Transactions">
-                                <h3 data-bind="html: Name"></h3>
-                                <div data-bind="foreach: TxNodes">
-                                    <span data-bind="css: { fieldNode: IsField, textNode: !IsField() }"><span class="leadSmaller" data-bind="html: DisplayValue"></span></span>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel-collapse collapse in" data-bind="attr: { id: 'collapse_transactions' }">
+                        <div class="panel-body padLeft">
+                            <div>
+                                <div data-bind="foreach: Transactions">
+                                    <h3 data-bind="html: Name"></h3>
+                                    <div data-bind="foreach: TxNodes">
+                                        <span data-bind="css: { fieldNode: IsField, textNode: !IsField() }"><span class="leadSmaller" data-bind="html: DisplayValue"></span></span>
+                                    </div>
+                                    <div data-bind="template: { name: 'criteria-template' }"></div>
                                 </div>
-                                <div data-bind="template: { name: 'criteria-template' }"></div>
                             </div>
                         </div>
                     </div>
@@ -209,42 +225,50 @@
 <script type="text/html" id="criteria-template">
     <div class="row">
         <div class="col-xs-12">
-            <div style="margin-left:30px;">
-                <div class="row">
-                    <div>
-                        <div class="padLeft leadSmaller" data-bind="foreach: Criteria">
-                            <h4 data-bind="html: Name"></h4>
-                            <div class="col-xs-12">
-                                <div class="col-xs-2 pull-left">
-                                    <p class="leadsmaller">Required:</p>
-                                </div>
-
-                                <div class="col-xs-10 pull-left" data-bind="foreach: RequiredFields">
-                                    <span class="leadSmaller" data-bind="html: Name"></span>
-                                </div>
-                            </div>
-                            <div class="col-xs-12" data-bind="visible: ConditionalFields().length > 0">
-                                <div class="col-xs-2 pull-left">
-                                    <p class="leadSmaller">Conditional:</p>
-                                </div>
-
-                                <div class="col-xs-10 pull-left" data-bind="foreach: ConditionalFields">
-                                    <span class="leadSmaller" data-bind="html: Name"></span>
-                                    <span class="leadSmaller" data-bind="html: Condition"></span>
-                                    <span class="leadSmaller" data-bind="html: CheckValue"></span>
-                                </div>
-                            </div>
-                            <div class="col-xs-12" data-bind="visible: OptionalFields().length > 0">
-                                <div class="col-xs-2 pull-left">
-                                    <p class="leadSmaller">Optional:</p>
-                                </div>
-
-                                <div class="col-xs-10 pull-left" data-bind="foreach: OptionalFields">
-                                    <span class="leadSmaller" data-bind="html: Name"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="padLeft" data-bind="foreach: Criteria">
+                <h4 data-bind="html: Name"></h4>
+                <div class="padLeft">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td style="vertical-align: top" class="padRight padBottom">
+                                    <span class="leadSmaller padRight">Required</span>
+                                </td>
+                                <td class="padBottom" data-bind="foreach: RequiredFields">
+                                    <span class="leadSmaller padLeft" data-bind="html: Name"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody data-bind="visible: ConditionalFields().length > 0">
+                            <tr>
+                                <td style="vertical-align: top" class="padRight padBottom">
+                                    <span class="leadSmaller padRight">Conditional</span>
+                                </td>
+                                <td class="padBottom" data-bind="foreach: ConditionalFields">
+                                    <div class="inlineBlock leadSmaller">
+                                        <span class="padLeft" data-bind="html: Name"></span>
+                                        <span data-bind="html: Condition"></span>
+                                        <span data-bind="html: CheckValue"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody data-bind="visible: OptionalFields().length > 0">
+                            <tr>
+                                <td style="vertical-align: top" class="padRight padBottom">
+                                    <span class="leadSmaller padRight">Optional</span>
+                                </td>
+                                <td class="padBottom" data-bind="foreach: OptionalFields">
+                                    <span class="leadSmaller padLeft" data-bind="html: Name"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tr>
+                            <td>
+                                <br />
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -254,7 +278,6 @@
 <script type="text/javascript">
     var initialData = @Html.Raw(Model.InitialData)
 </script>
-
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_design_form_details")
 }
