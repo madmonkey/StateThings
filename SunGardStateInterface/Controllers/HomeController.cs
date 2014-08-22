@@ -25,7 +25,7 @@ namespace StateInterface.Controllers
         public ActionResult SetRecordsCenter(RecordsCenterParametersModel model)
         {
             //User.Identity.Name, model.RecordsCenterName
-            _designerTasks.SetRecordsCenterForUser(new TaskParameter<RecordsCenterName>(User.Identity.Name, new RecordsCenterName(model.RecordsCenterName)));
+            _designerTasks.SetRecordsCenterForUser(User.Identity.Name, model.RecordsCenterName);
 
             return Json(model);
         }

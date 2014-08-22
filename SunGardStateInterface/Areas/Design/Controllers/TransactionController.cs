@@ -26,8 +26,8 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
-            User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
+            var recordCenters = _designerTasks.GetRecordsCenters(User.Identity.Name);
+            User user = _designerTasks.GetUser(User.Identity.Name);
 
             var model = new TransactionSnippetCatalogModel(user, recordCenters)
                 {
@@ -62,10 +62,10 @@ namespace StateInterface.Areas.Design.Controllers
 
         private List<CatalogItemModel> getCatalogItemModels(string recordsCenterName)
         {
-            var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name, recordsCenterName);
             if (recordsCenter != null)
             {
-                var snippets = _designerTasks.GetTransactionSnippets(new TaskParameter<RecordsCenterId>(User.Identity.Name, new RecordsCenterId(recordsCenter.Id)));
+                var snippets = _designerTasks.GetTransactionSnippets(User.Identity.Name, recordsCenter.Id);
                 var catalogItems = new List<CatalogItemModel>();
                 foreach (var snippet in snippets)
                 {
@@ -88,10 +88,10 @@ namespace StateInterface.Areas.Design.Controllers
             {
                 throw new StateInterfaceParameterValidationException(Resources.ParameterEmpty);
             }
-            var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name, recordsCenterName);
             if (recordsCenter != null)
             {
-                var snippet = _designerTasks.GetTransactionSnippet(new TaskParameter<SnippetFieldByToken>(User.Identity.Name, new SnippetFieldByToken(recordsCenter.Id, tokenName)));//recordsCenter.Id, tokenName
+                var snippet = _designerTasks.GetTransactionSnippet(User.Identity.Name, recordsCenter.Id, tokenName);
                 if (snippet != null)
                 {
                     var transactionSnippet = new TransactionSnippetModel(snippet, TransactionSnippetFieldTypeHelper.TypeValues())
@@ -101,7 +101,7 @@ namespace StateInterface.Areas.Design.Controllers
                         TransactionsHomeUrl = Url.Action("Index")
                     };
 
-                    var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
+                    var user = _designerTasks.GetUser(User.Identity.Name);
                     setProperties(transactionSnippet, recordsCenter.Name, user);
                     transactionSnippet.InitialData = JsonConvert.SerializeObject(transactionSnippet);
 
@@ -135,14 +135,14 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpPost]
         public ActionResult DeleteSnippet(int snippetId)
         {
-            var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
+            var user = _designerTasks.GetUser(User.Identity.Name);
             if (user.CanDesignManage)
             {
                 if (snippetId <= 0)
                 {
                     throw new StateInterfaceParameterValidationException(Resources.ParameterInvalid);
                 }
-                var transactionSnippet = new TransactionSnippetModel(_designerTasks.DeleteTransactionSnippet(new TaskParameter<Snippet>(User.Identity.Name, new Snippet(snippetId))), TransactionSnippetFieldTypeHelper.TypeValues());
+                var transactionSnippet = new TransactionSnippetModel(_designerTasks.DeleteTransactionSnippet(User.Identity.Name, snippetId), TransactionSnippetFieldTypeHelper.TypeValues());
                 setProperties(transactionSnippet, string.Empty, user);
                 transactionSnippet.InitialData = JsonConvert.SerializeObject(transactionSnippet);
                 return Json(transactionSnippet);
@@ -152,14 +152,14 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpPost]
         public ActionResult DeleteSnippetField(TransactionSnippetFieldModel snippetFieldRequest)
         {
-            User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
+            User user = _designerTasks.GetUser(User.Identity.Name);
             if (user.CanDesignManage)
             {
                 if (snippetFieldRequest == null)
                 {
                     throw new StateInterfaceParameterValidationException(Resources.ParameterEmpty);
                 }
-                var snippet = _designerTasks.DeleteTransactionSnippetField(new TaskParameter<SnippetField>(User.Identity.Name, new SnippetField(snippetFieldRequest.SnippetId, snippetFieldRequest.Id)));//snippetFieldParameter.SnippetId, snippetFieldParameter.Id
+                var snippet = _designerTasks.DeleteTransactionSnippetField(User.Identity.Name, snippetFieldRequest.SnippetId, snippetFieldRequest.Id);
                 var transactionSnippet = new TransactionSnippetModel(snippet, TransactionSnippetFieldTypeHelper.TypeValues());
                 setProperties(transactionSnippet, snippetFieldRequest.RecordsCenterName, user);
                 transactionSnippet.InitialData = JsonConvert.SerializeObject(transactionSnippet);
@@ -170,7 +170,7 @@ namespace StateInterface.Areas.Design.Controllers
 
         private ActionResult CreateOrUpdateSnippetField(TransactionSnippetFieldModel snippetFieldRequest)
         {
-            User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
+            User user = _designerTasks.GetUser(User.Identity.Name);
             if (user.CanDesignManage)
             {
                 if (snippetFieldRequest == null)
@@ -180,7 +180,7 @@ namespace StateInterface.Areas.Design.Controllers
                 snippetFieldRequest.Validate();
                 try
                 {
-                    var snippet = _designerTasks.UpdateTransactionSnippetField(new TaskParameter<SnippetFieldDetail>(User.Identity.Name, new SnippetFieldDetail(snippetFieldRequest.SnippetId, snippetFieldRequest.ToDomainModel())));//snippetFieldParameter.SnippetId, snippetFieldParameter.ToDomainModel()
+                    var snippet = _designerTasks.UpdateTransactionSnippetField(User.Identity.Name, snippetFieldRequest.SnippetId, snippetFieldRequest.ToDomainModel());
                     var transactionSnippet = new TransactionSnippetModel(snippet, TransactionSnippetFieldTypeHelper.TypeValues());
                     setProperties(transactionSnippet, snippetFieldRequest.RecordsCenterName, user);
                     transactionSnippet.InitialData = JsonConvert.SerializeObject(transactionSnippet);
@@ -200,7 +200,7 @@ namespace StateInterface.Areas.Design.Controllers
 
         private ActionResult CreateOrUpdateSnippet(SnippetRequestModel snippetRequest, bool updateExisting = true)
         {
-            User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
+            User user = _designerTasks.GetUser(User.Identity.Name);
             if (user.CanDesignManage)
             {
                 if (snippetRequest == null)
@@ -209,7 +209,7 @@ namespace StateInterface.Areas.Design.Controllers
                 }
                 
                 snippetRequest.Validate(user);
-                TransactionSnippet snippet = _designerTasks.GetTransactionSnippet(new TaskParameter<Snippet>(User.Identity.Name, new Snippet(snippetRequest.Id)));
+                TransactionSnippet snippet = _designerTasks.GetTransactionSnippet(User.Identity.Name, snippetRequest.Id);
                 if (updateExisting && snippet == null)
                 {
                     throw new StateInterfaceParameterValidationException(Resources.SnippetNotFound);
@@ -219,7 +219,7 @@ namespace StateInterface.Areas.Design.Controllers
                     snippet = new TransactionSnippet
                         {
                             Id = snippetRequest.Id,
-                            RecordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(snippetRequest.RecordsCenterName) }),
+                            RecordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name, snippetRequest.RecordsCenterName),
                             Created = DateTime.UtcNow
                         };
                 }
@@ -229,7 +229,7 @@ namespace StateInterface.Areas.Design.Controllers
                 snippet.Criteria = snippetRequest.Criteria;
                 snippet.IncludePrefixAndSuffix = snippetRequest.IncludePrefixAndSuffix;
 
-                var transactionSnippet = new TransactionSnippetModel(_designerTasks.UpdateTransactionSnippet(new TaskParameter<TransactionSnippet>(User.Identity.Name, snippet)), TransactionSnippetFieldTypeHelper.TypeValues());
+                var transactionSnippet = new TransactionSnippetModel(_designerTasks.UpdateTransactionSnippet(User.Identity.Name, snippet), TransactionSnippetFieldTypeHelper.TypeValues());
                 setProperties(transactionSnippet, snippetRequest.RecordsCenterName, user);
                 transactionSnippet.InitialData = JsonConvert.SerializeObject(transactionSnippet);
                 return Json(transactionSnippet);

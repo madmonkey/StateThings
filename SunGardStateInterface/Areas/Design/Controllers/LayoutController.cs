@@ -23,13 +23,13 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpGet]
         public ActionResult Preview(string recordsCenterName, string formId)
         {
-            var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name == recordsCenterName);
+            var recordsCenter = _designerTasks.GetRecordsCenters(User.Identity.Name).FirstOrDefault(x => x.Name == recordsCenterName);
 
             ViewBag.Title = string.Format("{0} - {1} Preview", recordsCenter != null ? recordsCenter.Name : "Not Found", formId);
 
             if (recordsCenter != null)
             {
-                var requestForm = _designerTasks.GetForm(new TaskParameter<FormById>(User.Identity.Name, new FormById(recordsCenter.Id, formId)));//recordsCenter.Id, formId
+                var requestForm = _designerTasks.GetForm(User.Identity.Name, recordsCenter.Id, formId);
 
                 return View(new ControlsModel(requestForm).Controls);
             }

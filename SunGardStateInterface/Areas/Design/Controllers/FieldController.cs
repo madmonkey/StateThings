@@ -20,8 +20,8 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
-            var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
+            var recordCenters = _designerTasks.GetRecordsCenters(User.Identity.Name);
+            var user = _designerTasks.GetUser(User.Identity.Name);
             var model = new FieldCatalogModel(user, recordCenters)
                 {
                     RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) },
@@ -40,8 +40,8 @@ namespace StateInterface.Areas.Design.Controllers
         public ActionResult Details(string recordsCenterName, string tagName)
         {
             //todo: add validation (consider user vs. system) - recordcenter and tagname exist, msg if not
-            var field = _designerTasks.GetField(new TaskParameter<FieldByTag>(User.Identity.Name, new FieldByTag(recordsCenterName, tagName)));//recordsCenterName, tagName
-            var formsUsing = _designerTasks.GetFormProjectionsUsingField(new TaskParameter<Field>(User.Identity.Name, field));
+            var field = _designerTasks.GetField(User.Identity.Name, recordsCenterName, tagName);
+            var formsUsing = _designerTasks.GetFormProjectionsUsingField(User.Identity.Name, field);
             var model = new FieldDetailsModel(field, formsUsing, Url.Action("Details", "Form"));
             model.DesignHomeUrl = Url.Action("Index", "Home");
             model.FieldsHomeUrl = Url.Action("Index");
@@ -67,10 +67,10 @@ namespace StateInterface.Areas.Design.Controllers
         }
         private List<CatalogItemModel> getFieldModels(string recordsCenterName)
         {
-            var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name,recordsCenterName);
             if (recordsCenter != null)
             {
-                var fields = _designerTasks.GetFieldCatalogItems(new TaskParameter<RecordsCenterName>(User.Identity.Name, new RecordsCenterName(recordsCenterName)));
+                var fields = _designerTasks.GetFieldCatalogItems(User.Identity.Name, recordsCenterName);
                 var catalogItems = new List<CatalogItemModel>();
                 foreach (var field in fields)
                 {

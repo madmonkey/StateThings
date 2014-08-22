@@ -22,8 +22,8 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
-            var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
+            var recordCenters = _designerTasks.GetRecordsCenters(User.Identity.Name);
+            var user = _designerTasks.GetUser(User.Identity.Name);
 
             var model = new FormCatalogModel(user, recordCenters)
                 {
@@ -42,13 +42,13 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpGet]
         public ActionResult Details(string recordsCenterName, string formId)
         {
-            var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenterName, StringComparison.CurrentCultureIgnoreCase));
+            var recordsCenter = _designerTasks.GetRecordsCenters(User.Identity.Name).FirstOrDefault(x => x.Name.Equals(recordsCenterName, StringComparison.CurrentCultureIgnoreCase));
 
             if (recordsCenter != null)
             {
-                var requestForm = _designerTasks.GetForm(new TaskParameter<FormById>(User.Identity.Name, new FormById(recordsCenter.Id, formId)));
-                var availableApplications = _designerTasks.GetApplications(new TaskParameter(User.Identity.Name));
-                User user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
+                var requestForm = _designerTasks.GetForm(User.Identity.Name, recordsCenter.Id, formId);
+                var availableApplications = _designerTasks.GetApplications(User.Identity.Name);
+                User user = _designerTasks.GetUser(User.Identity.Name);
 
                 var formModel = new RequestFormModel(requestForm, Url.Action("Details", "List"), Url.Action("Details", "Field"), availableApplications)
                 {
@@ -89,13 +89,13 @@ namespace StateInterface.Areas.Design.Controllers
         public ActionResult UpdateFormApplications(PostApplicationRequestModel request)
         {
             //todo: unauthorized :: (elmah)
-            if (_designerTasks.GetUser(new TaskParameter(User.Identity.Name)).CanDesignManage)
+            if (_designerTasks.GetUser(User.Identity.Name).CanDesignManage)
             {
                 if (request != null)
                 {
                     request.Validate();
-                    var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name, new RecordsCenterName(request.RecordsCenterName)));
-                    var requestForm = _designerTasks.GetForm(new TaskParameter<FormById>(User.Identity.Name, new FormById(recordsCenter.Id, request.FormId)));
+                    var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name, request.RecordsCenterName);
+                    var requestForm = _designerTasks.GetForm(User.Identity.Name, recordsCenter.Id, request.FormId);
                     if (requestForm != null)
                     {
                         requestForm.Applications.Clear();
@@ -103,11 +103,11 @@ namespace StateInterface.Areas.Design.Controllers
                         {
                             if (application.IsSelected)
                             {
-                                requestForm.Applications.Add(_designerTasks.GetApplications(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Id == application.Id));
+                                requestForm.Applications.Add(_designerTasks.GetApplications(User.Identity.Name).FirstOrDefault(x => x.Id == application.Id));
                             }
                         }
-                        return Json(new PostApplicationRequestModel(_designerTasks.UpdateRequestForm(new TaskParameter<RequestForm>(User.Identity.Name, requestForm)),
-                            _designerTasks.GetApplications(new TaskParameter(User.Identity.Name))));
+                        return Json(new PostApplicationRequestModel(_designerTasks.UpdateRequestForm(User.Identity.Name, requestForm),
+                            _designerTasks.GetApplications(User.Identity.Name)));
                     }
                     throw new ApplicationException(Resources.ApplicationAssociationNotFound);
                 }
@@ -118,10 +118,10 @@ namespace StateInterface.Areas.Design.Controllers
         }
         private List<CatalogItemModel> getCatalogItemModels(string recordsCenterName)
         {
-            var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenterName));
+            var recordsCenter = _designerTasks.GetRecordsCenters(User.Identity.Name).FirstOrDefault(x => x.Name.Equals(recordsCenterName));
             if (recordsCenter != null)
             {
-                var requestForms = _designerTasks.GetFormProjections(new TaskParameter<RecordsCenterId>(User.Identity.Name) { Parameters = new RecordsCenterId(recordsCenter.Id) });
+                var requestForms = _designerTasks.GetFormProjections(User.Identity.Name, recordsCenter.Id);
                 var catalogItems = new List<CatalogItemModel>();
                 foreach (var requestForm in requestForms)
                 {

@@ -21,9 +21,9 @@ namespace StateInterface.Areas.Certify.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var recordsCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
-            var categories = _designerTasks.GetCategories(new TaskParameter(User.Identity.Name));
-            var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
+            var recordsCenters = _designerTasks.GetRecordsCenters(User.Identity.Name);
+            var categories = _designerTasks.GetCategories(User.Identity.Name);
+            var user = _designerTasks.GetUser(User.Identity.Name);
 
             var model = new CertifyUpdateModel(user, recordsCenters, categories)
                 {
@@ -45,9 +45,9 @@ namespace StateInterface.Areas.Certify.Controllers
         [HttpGet]
         public ActionResult UpdateForm(string recordsCenter, string formId)
         {
-            var rc = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenter, StringComparison.CurrentCultureIgnoreCase));
+            var rc = _designerTasks.GetRecordsCenters(User.Identity.Name).FirstOrDefault(x => x.Name.Equals(recordsCenter, StringComparison.CurrentCultureIgnoreCase));
 
-            var requestForm = _designerTasks.GetForm(new TaskParameter<FormById>(User.Identity.Name, new FormById(rc.Id, formId)));//rc.Id, formId
+            var requestForm = _designerTasks.GetForm(User.Identity.Name, rc.Id, formId);
 
             var model = new CertifyUpdateFormModel(requestForm, Url.Action("Details", "Form", new { area = "Design" }), Url.Action("UpdateForm"))
                 {
@@ -72,7 +72,7 @@ namespace StateInterface.Areas.Certify.Controllers
                     throw new StateInterfaceParameterValidationException(Resources.ParameterNull);
                 }
 
-                var requestForm = _designerTasks.GetForm(new TaskParameter<FormById>(User.Identity.Name, new FormById(model.RecordsCenterId, model.FormId)));//model.RecordsCenterId, model.FormId
+                var requestForm = _designerTasks.GetForm(User.Identity.Name, model.RecordsCenterId, model.FormId);
 
                 var qaStatusModel = new QAStatusModel(requestForm);
 
@@ -95,8 +95,8 @@ namespace StateInterface.Areas.Certify.Controllers
 
             var certifyApplicationModels = new List<CertifyApplicationModel>();
 
-            var applications = _designerTasks.GetApplications(new TaskParameter(User.Identity.Name));
-            var requestForms = _designerTasks.GetForms(new TaskParameter<FormsCategoryByRecordsCenterName>(User.Identity.Name, new FormsCategoryByRecordsCenterName(model.RecordsCenterName, model.CategoryId)));//model.RecordsCenterName, model.CategoryId
+            var applications = _designerTasks.GetApplications(User.Identity.Name);
+            var requestForms = _designerTasks.GetForms(User.Identity.Name, model.RecordsCenterName, model.CategoryId);
 
             foreach (var requestForm in requestForms)
             {
@@ -129,8 +129,7 @@ namespace StateInterface.Areas.Certify.Controllers
 
                 //var testCase = _designerTasks.UpdateTestCase(model.CriteriaId, model.TestCaseId, DateTime.UtcNow, model.Note, User.Identity.Name, model.HasPassed);
 
-                var testCase = _designerTasks.UpdateTestCase(new TaskParameter<CriteriaTestCasePassFail>(User.Identity.Name,
-                    new CriteriaTestCasePassFail(model.CriteriaId, model.TestCaseId, DateTime.UtcNow, model.Note, model.HasPassed)));
+                var testCase = _designerTasks.UpdateTestCase(User.Identity.Name, model.CriteriaId, model.TestCaseId, DateTime.UtcNow, model.Note, model.HasPassed);
 
                 var requestForm = testCase.Criteria.Transaction.RequestForm;
 
@@ -161,7 +160,7 @@ namespace StateInterface.Areas.Certify.Controllers
 
                 //var testCase = _designerTasks.ResetTestCase(model.CriteriaId, model.TestCaseId, DateTime.UtcNow, model.Note, User.Identity.Name);
 
-                var testCase = _designerTasks.ResetTestCase(new TaskParameter<CriteriaTestCase>(User.Identity.Name, new CriteriaTestCase(model.CriteriaId, model.TestCaseId, DateTime.UtcNow, model.Note)));
+                var testCase = _designerTasks.ResetTestCase(User.Identity.Name, model.CriteriaId, model.TestCaseId, DateTime.UtcNow, model.Note);
 
                 var requestForm = testCase.Criteria.Transaction.RequestForm;
 

@@ -21,7 +21,7 @@ namespace StateInterface.Areas.Connect.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var recordsCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
+            var recordsCenters = _designerTasks.GetRecordsCenters(User.Identity.Name);
 
             var specificationsModel = new SpecificationsModel(recordsCenters, Url.Action("GetForms"));
 
@@ -31,9 +31,9 @@ namespace StateInterface.Areas.Connect.Controllers
         [HttpPost]
         public ActionResult GetForms(FormsRequestParametersModel formsRequest)
         {
-            var categories = _designerTasks.GetCategories(new TaskParameter(User.Identity.Name));
-            var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Id == formsRequest.RecordsCenterId);
-            var formProjections = _designerTasks.GetFormProjections(new TaskParameter<RecordsCenterId>(User.Identity.Name) { Parameters = new RecordsCenterId(formsRequest.RecordsCenterId) });
+            var categories = _designerTasks.GetCategories(User.Identity.Name);
+            var recordsCenter = _designerTasks.GetRecordsCenters(User.Identity.Name).FirstOrDefault(x => x.Id == formsRequest.RecordsCenterId);
+            var formProjections = _designerTasks.GetFormProjections(User.Identity.Name, formsRequest.RecordsCenterId);
 
             List<CategoryModel> categoryModels = new List<CategoryModel>();
 

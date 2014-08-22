@@ -18,7 +18,7 @@ namespace StateInterface.Test
         public void GetStuff()
         {
             IDesignerTasks repository = new DesignerTasks(new DesignerRepository());
-            var stuff = repository.GetRecordsCenterAcceptanceStatus(new TaskParameter<RecordsCenterId>("lkm\\Thomas.Monico",new RecordsCenterId(8)));
+            var stuff = repository.GetRecordsCenterAcceptanceStatus("lkm\\Thomas.Monico",8);
 
             Console.WriteLine(stuff.Count());
             //IStateInterfaceRepository theOtherRepository = new StateInterfaceRepository();

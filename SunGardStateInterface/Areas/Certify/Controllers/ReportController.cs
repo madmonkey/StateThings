@@ -20,7 +20,7 @@ namespace StateInterface.Areas.Certify.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var recordsCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
+            var recordsCenters = _designerTasks.GetRecordsCenters(User.Identity.Name);
             var reportModel = new ReportModel(recordsCenters)
                 {
                     GetCertificationStatusUrl = Url.Action("Status"),
@@ -45,14 +45,14 @@ namespace StateInterface.Areas.Certify.Controllers
                 throw new StateInterfaceParameterValidationException(Resources.RecordsCenterInvalid);
             }
 
-            var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name, recordsCenterName);
 
             if (recordsCenter == null)
             {
                 throw new StateInterfaceParameterValidationException(string.Format(Resources.RecordsCenterNotFound));
             }
 
-            var statisticsRecordsCenter = _designerTasks.GetStatisticsForRecordsCenter(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenter.Name) });
+            var statisticsRecordsCenter = _designerTasks.GetStatisticsForRecordsCenter(User.Identity.Name,recordsCenter.Name);
             var statistics = new StatisticsRecordsCenterModel(statisticsRecordsCenter)
                 {
                     GetAverageUrl = Url.Action("GetAverage", new { })
@@ -70,14 +70,14 @@ namespace StateInterface.Areas.Certify.Controllers
                 throw new StateInterfaceParameterValidationException(Resources.RecordsCenterInvalid);
             }
 
-            var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name, recordsCenterName);
 
             if (recordsCenter == null)
             {
                 throw new StateInterfaceParameterValidationException(Resources.RecordsCenterNotFound);
             }
 
-            var statisticsRecordsCenter = _designerTasks.GetStatisticsForRecordsCenter(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenter.Name) });
+            var statisticsRecordsCenter = _designerTasks.GetStatisticsForRecordsCenter(User.Identity.Name, recordsCenter.Name);
             var statistics = new StatisticsRecordsCenterModel(statisticsRecordsCenter);
 
             statistics.InitialData = JsonConvert.SerializeObject(statistics);
@@ -92,14 +92,14 @@ namespace StateInterface.Areas.Certify.Controllers
                 throw new StateInterfaceParameterValidationException(Resources.RecordsCenterInvalid);
             }
 
-            var recordsCenter = _designerTasks.GetRecordsCenterByName(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name,recordsCenterName);
 
             if (recordsCenter == null)
             {
                 throw new StateInterfaceParameterValidationException(Resources.RecordsCenterNotFound);
             }
 
-            var openIssues = _designerTasks.GetOpenIssues(new TaskParameter<RecordsCenterName>(User.Identity.Name) { Parameters = new RecordsCenterName(recordsCenterName) });
+            var openIssues = _designerTasks.GetOpenIssues(User.Identity.Name, recordsCenterName);
             var openIssuesModel = new OpenIssuesModel(recordsCenter, openIssues, Url.Action("Details", "Form", new { area = "Design" }), Url.Action("UpdateForm", "Update"));
 
             openIssuesModel.InitialData = JsonConvert.SerializeObject(openIssuesModel);

@@ -20,8 +20,8 @@ namespace StateInterface.Areas.Design.Controllers
         }
         public ActionResult Index()
         {
-            var recordCenters = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name));
-            var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
+            var recordCenters = _designerTasks.GetRecordsCenters(User.Identity.Name);
+            var user = _designerTasks.GetUser(User.Identity.Name);
 
             var model = new ListCatalogModel(user, recordCenters)
                 {
@@ -41,12 +41,12 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpGet]
         public ActionResult Details(string recordsCenterName, string listName)
         {
-            var user = _designerTasks.GetUser(new TaskParameter(User.Identity.Name));
+            var user = _designerTasks.GetUser(User.Identity.Name);
 
-            var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenterName, StringComparison.CurrentCultureIgnoreCase));
+            var recordsCenter = _designerTasks.GetRecordsCenters(User.Identity.Name).FirstOrDefault(x => x.Name.Equals(recordsCenterName, StringComparison.CurrentCultureIgnoreCase));
 
-            var list = _designerTasks.GetList(new TaskParameter<ListByName>(User.Identity.Name, new ListByName(recordsCenter.Id, listName)));//recordsCenter.Id, listName
-            var formFieldsUsing = _designerTasks.GetFormFieldProjectionsUsingOptionList(new TaskParameter<OptionList>(User.Identity.Name, list));
+            var list = _designerTasks.GetList(User.Identity.Name, recordsCenter.Id, listName);
+            var formFieldsUsing = _designerTasks.GetFormFieldProjectionsUsingOptionList(User.Identity.Name, list);
             var listModel = new OptionListModel(list, formFieldsUsing, Url.Action("Details", "Form"));
             listModel.DesignHomeUrl = Url.Action("Index", "Home");
             listModel.ListsHomeUrl = Url.Action("Index");
@@ -72,10 +72,10 @@ namespace StateInterface.Areas.Design.Controllers
 
         private List<CatalogItemModel> getCatalogItemModels(string recordsCenterName)
         {
-            var recordsCenter = _designerTasks.GetRecordsCenters(new TaskParameter(User.Identity.Name)).FirstOrDefault(x => x.Name.Equals(recordsCenterName));
+            var recordsCenter = _designerTasks.GetRecordsCenters(User.Identity.Name).FirstOrDefault(x => x.Name.Equals(recordsCenterName));
             if (recordsCenter != null)
             {
-                var lists = _designerTasks.GetListProjections(new TaskParameter<RecordsCenterId>(User.Identity.Name) { Parameters = new RecordsCenterId(recordsCenter.Id) });
+                var lists = _designerTasks.GetListProjections(User.Identity.Name,recordsCenter.Id);
                 var catalogItems = new List<CatalogItemModel>();
                 foreach (var list in lists)
                 {
