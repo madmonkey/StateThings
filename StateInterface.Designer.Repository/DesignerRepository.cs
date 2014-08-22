@@ -69,7 +69,7 @@ namespace StateInterface.Designer.Repository
                     .FirstOrDefault(x => x.Name == recordsCenterName);
 
                 transaction.Commit();
-                return recordsCenter;
+                return evaluteEntity<RecordsCenter>(recordsCenter);
             }
         }
         public Field FindFieldByTag(string tagName, RecordsCenter recordsCenter)
@@ -85,7 +85,7 @@ namespace StateInterface.Designer.Repository
         public IQueryable<Field> GetAllFields()
         {
             IQueryable<Field> fields = Session.Query<Field>().OrderBy(x => x.TagName);
-            return fields;
+            return evaluteEntity<IQueryable<Field>>(fields);
         }
         public IQueryable<Field> GetFieldsForRecordsCenter(RecordsCenter recordsCenter)
         {
@@ -96,7 +96,7 @@ namespace StateInterface.Designer.Repository
                     .Where(x => x.RecordsCenter.Name == recordsCenter.Name);
                 transaction.Commit();
 
-                return fields;
+                return evaluteEntity<IQueryable<Field>>(fields);
             }
         }
         public IEnumerable<FieldProjection> GetFieldProjectionsForRecordsCenter(RecordsCenter recordsCenter)
@@ -114,7 +114,7 @@ namespace StateInterface.Designer.Repository
                     .List<FieldProjection>();
                 transaction.Commit();
 
-                return fields;
+                return evaluteEntity<IEnumerable<FieldProjection>>(fields);
             }
         }
         public IList<RequestFormProjection> GetFormProjectionsUsingField(Field field)
@@ -134,18 +134,18 @@ namespace StateInterface.Designer.Repository
                     .List<RequestFormProjection>();
 
                 transaction.Commit();
-                return forms;
+                return evaluteEntity<IList<RequestFormProjection>>(forms);
             }
         }
         public Field GetField(int fieldId)
         {
             var textField = GetById<Field>(fieldId);
-            return textField;
+            return evaluteEntity<Field>(textField);
         }
         public User GetUser(string userName)
         {
             var user = GetAll<User>().FirstOrDefault(x=> x.LoginName.Equals(userName));
-            return user;
+            return evaluteEntity<User>(user);
         }
         public IList<Field> FindFields(List<string> searchTerms, RecordsCenter recordsCenter)
         {
@@ -187,7 +187,7 @@ namespace StateInterface.Designer.Repository
                 RequestForm requestForm = Session.Query<RequestForm>()
                     .FirstOrDefault(x => x.RecordsCenter.Id == recordCenter.Id && x.FormId == formId);
                 transaction.Commit();
-                return requestForm;
+                return evaluteEntity<RequestForm>(requestForm);
             }
         }
         public RequestFormProjection GetFormProjectionForRecordsCenter(string formId, RecordsCenter recordsCenter)
@@ -195,8 +195,7 @@ namespace StateInterface.Designer.Repository
             using (Session.BeginTransaction())
             {
                 var requestFormProjection = Session.Query<RequestFormProjection>().FirstOrDefault(x => x.RecordsCenter.Id == recordsCenter.Id && x.FormId == formId);
-
-                return requestFormProjection;
+                return evaluteEntity<RequestFormProjection>(requestFormProjection);
             }
         }
         public OptionList GetList(string listName, RecordsCenter recordCenter)
@@ -206,7 +205,7 @@ namespace StateInterface.Designer.Repository
                 OptionList optionList = Session.Query<OptionList>()
                     .FirstOrDefault(x => x.RecordsCenter.Id == recordCenter.Id && x.ListName == listName);
                 transaction.Commit();
-                return optionList;
+                return evaluteEntity<OptionList>(optionList);
             }
         }
         public RequestForm GetStatelessFormById(int id, RecordsCenter recordsCenter)
@@ -218,7 +217,7 @@ namespace StateInterface.Designer.Repository
                      && x.RecordsCenter.Id == recordsCenter.Id).FirstOrDefault();
 
                 transaction.Commit();
-                return form;
+                return evaluteEntity<RequestForm>(form);
             }
         }
         public IEnumerable<RequestFormProjection> GetFormProjectionsForRecordsCenter(RecordsCenter recordsCenter)
@@ -226,8 +225,7 @@ namespace StateInterface.Designer.Repository
             using (Session.BeginTransaction())
             {
                 var requestFormProjections = Session.Query<RequestFormProjection>().Where(x => x.RecordsCenter.Id == recordsCenter.Id).OrderBy(x=> x.FormId);
-
-                return requestFormProjections;
+                return evaluteEntity<IEnumerable<RequestFormProjection>>(requestFormProjections);
             }
         }
         public IQueryable<RequestForm> GetFormsForRecordsCenter(RecordsCenter recordsCenter)
@@ -238,8 +236,7 @@ namespace StateInterface.Designer.Repository
                     .Query<RequestForm>()
                     .Where(x => x.RecordsCenter.Name == recordsCenter.Name);
                 transaction.Commit();
-
-                return requestForms;
+                return evaluteEntity<IQueryable<RequestForm>>(requestForms);
             }
         }
         public IQueryable<string> FindFormIdsLike(string formIdPattern)
@@ -334,8 +331,7 @@ namespace StateInterface.Designer.Repository
                     .Query<Header>()
                     .Where(x => x.RecordsCenter.Name == recordsCenter.Name);
                 transaction.Commit();
-
-                return headers;
+                return evaluteEntity<IQueryable<Header>>(headers);
             }
         }
         public IQueryable<Header> GetHeadersUsingField(Field field, RecordsCenter recordsCenter)
@@ -348,7 +344,7 @@ namespace StateInterface.Designer.Repository
                         && (x.HeaderNodes.Where(y => (y as HeaderFieldNode).Field.Id == field.Id).Any()));
 
                 transaction.Commit();
-                return headers;
+                return evaluteEntity<IQueryable<Header>>(headers);
             }
         }
         public IList<Header> FindHeaders(List<string> searchTerms, RecordsCenter recordsCenter)
@@ -396,8 +392,7 @@ namespace StateInterface.Designer.Repository
                     .Add(Projections.Property("form.Title"), "Title")))
                     .SetResultTransformer(Transformers.AliasToBean(typeof(RequestFormProjection)))
                 .List<RequestFormProjection>();
-
-            return forms;
+            return evaluteEntity<IList<RequestFormProjection>>(forms);
         }
         public IList<OptionListProjection> GetOptionListProjectionsForRecordsCenter(RecordsCenter recordsCenter)
         {
@@ -413,8 +408,7 @@ namespace StateInterface.Designer.Repository
                         .SetResultTransformer(Transformers.AliasToBean(typeof(OptionListProjection)))
                     .List<OptionListProjection>();
                 transaction.Commit();
-
-                return optionLists;
+                return evaluteEntity<IList<OptionListProjection>>(optionLists);
             }
         }
         public IQueryable<OptionList> GetOptionListsForRecordsCenter(RecordsCenter recordsCenter)
@@ -425,17 +419,16 @@ namespace StateInterface.Designer.Repository
                     .Query<OptionList>()
                     .Where(x => x.RecordsCenter.Id == recordsCenter.Id);
                 transaction.Commit();
-
-                return optionLists;
+                return evaluteEntity<IQueryable<OptionList>>(optionLists);
             }
         }
         public IEnumerable<ListProjection> GetListProjectionsForRecordsCenter(RecordsCenter recordsCenter)
         {
-            using (Session.BeginTransaction())
+            using (var transaction = Session.BeginTransaction())
             {
                 var listProjections = Session.Query<ListProjection>().Where(x => x.RecordsCenter.Id == recordsCenter.Id).OrderBy(x => x.ListName);
-
-                return listProjections;
+                transaction.Commit();
+                return evaluteEntity<IEnumerable<ListProjection>>(listProjections);
             }
         }
         public IList<FormFieldProjection> GetFormFieldProjectionsUsingOptionList(OptionList list)
@@ -455,7 +448,7 @@ namespace StateInterface.Designer.Repository
                     .List<FormFieldProjection>();
 
                 transaction.Commit();
-                return formFields;
+                return evaluteEntity<IList<FormFieldProjection>>(formFields);
             }
         }
         public OptionList FindOptionListByName(string listName, RecordsCenter recordsCenter)
@@ -491,7 +484,7 @@ namespace StateInterface.Designer.Repository
                     .FirstOrDefault();
 
                 transaction.Commit();
-                return list;
+                return evaluteEntity<OptionList>(list);
             }
         }
         public IList<OptionList> FindOptionLists(List<string> searchTerms, RecordsCenter recordsCenter)
@@ -530,24 +523,27 @@ namespace StateInterface.Designer.Repository
         {
             using (var transaction = Session.BeginTransaction())
             {
-                RecordsCenter header = Session.Query<RecordsCenter>().FirstOrDefault(x => x.Name == name);
+                RecordsCenter recordsCenter = Session.Query<RecordsCenter>().FirstOrDefault(x => x.Name == name);
                 transaction.Commit();
-                return header;
+                return evaluteEntity<RecordsCenter>(recordsCenter);
             }
         }
         public IEnumerable<RequestFormDetailProjection> GetRecordsCenterAcceptanceStatus(RecordsCenter recordsCenter)
         {
-            using (Session.BeginTransaction())
+            using (var transaction = Session.BeginTransaction())
             {
                 var projections = Session.Query<RequestFormDetailProjection>().Where(x => x.RecordsCenter.Id == recordsCenter.Id).ToList();
-                return projections;
+                transaction.Commit();
+                return evaluteEntity<IEnumerable<RequestFormDetailProjection>>(projections);
             }
         }
         public ApplicationFormProjection GetFormApplicationAssociations(RecordsCenter recordsCenter, string formId)
         {
-            using (Session.BeginTransaction())
+            using (var transaction = Session.BeginTransaction())
             {
-                return Session.Query<ApplicationFormProjection>().Where(x => x.RecordsCenter.Id == recordsCenter.Id && x.FormId == formId).FirstOrDefault();
+                var applicationProjection = Session.Query<ApplicationFormProjection>().Where(x => x.RecordsCenter.Id == recordsCenter.Id && x.FormId == formId).FirstOrDefault();
+                transaction.Commit();
+                return evaluteEntity<ApplicationFormProjection>(applicationProjection);
             }
         }
         public ApplicationFormProjection UpdateFormApplicationAssociations(ApplicationFormProjection applicationFormProjection)
@@ -559,6 +555,7 @@ namespace StateInterface.Designer.Repository
         public TransactionSnippet UpdateTransactionSnippetField(int parentSnippetId, TransactionSnippetField transactionSnippetField)
         {
             TransactionSnippet currentSnippet;
+            validateEntity<TransactionSnippetField>(transactionSnippetField);
             using (var transaction = Session.BeginTransaction())
             {
                 currentSnippet = _session.Query<TransactionSnippet>().FirstOrDefault(x => x.Id == parentSnippetId);
@@ -589,6 +586,31 @@ namespace StateInterface.Designer.Repository
                 transaction.Commit();
                 return currentSnippet;
             }
+        }
+
+        private void validateEntity<T>(T entity)
+        {
+            IValidate canTestModel = entity as IValidate;
+            if(canTestModel !=null)
+            {
+                try
+                {
+                    canTestModel.IsValid();
+                }
+                catch (Exception)
+                {
+                    throw new ValidationException();
+                }
+                
+            }
+        }
+        private T evaluteEntity<T>(T entity)
+        {
+            if(entity !=null)
+            {
+                return entity;
+            }
+            throw new ObjectNotFoundException();
         }
     }
 }
