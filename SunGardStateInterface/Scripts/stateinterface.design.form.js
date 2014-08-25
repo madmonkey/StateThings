@@ -1,7 +1,4 @@
-﻿/*global ko*/
-
-$(function () {
-    var services = new myApp.services();
+﻿$(function () {
     var vm = new myApp.vm(initialData);
 
     vm.formsAreLoading = ko.observable(false);
@@ -23,18 +20,13 @@ $(function () {
 
     vm.getForms = function (recordsCenterName) {
         vm.formsAreLoading(true);
-        vm.GetFormsParameters.RecordsCenterName(recordsCenterName);
-        var params = ko.toJSON(vm.GetFormsParameters);
-
-        services.postToServer(params, function (data) {
+        vm.FormsParameters.RecordsCenterName(recordsCenterName);
+        var params = ko.toJSON(vm.FormsParameters);
+        vm.services.postToServer(params, function (data) {
             ko.mapping.fromJS(data, {}, vm.CatalogItems);
-
             vm.evaluateShowNoFormsMessage();
-
             vm.formsAreLoading(false);
-
             vm.catalogItemsSplit(Math.ceil(vm.CatalogItems().length / 2));
-
         }, vm.GetFormsUrl());
     };
 

@@ -1,9 +1,4 @@
-﻿/*global ko*/
-
-$(function () {
-
-    var services = new myApp.services();
-
+﻿$(function () {
     // Option 1: Mapping plugin with observables
     //var vm = new myApp.vm(initialData);
    
@@ -28,5 +23,4 @@ $(function () {
     };
 
     ko.applyBindings(vm);
-
 });

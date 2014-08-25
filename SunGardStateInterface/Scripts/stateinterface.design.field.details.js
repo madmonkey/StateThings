@@ -1,7 +1,4 @@
-﻿/*global ko*/
-
-$(function () {
-    var services = new myApp.services();
+﻿$(function () {
     var vm = new myApp.vm(initialData);
 
     ko.applyBindings(vm);

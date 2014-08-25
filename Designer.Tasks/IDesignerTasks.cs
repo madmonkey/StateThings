@@ -21,13 +21,15 @@ namespace Designer.Tasks
         TestCase UpdateTestCase(string currentUser, int criteriaId, string testCaseId, DateTime occurred, string note, bool hasPassed);
         TestCase ResetTestCase(string currentUser, int criteriaId, string testCaseId, DateTime occurred, string note);
         RequestForm GetForm(string currentUser, int recordsCenterId, string formId);
+        RequestForm GetForm(string currentUser, string recordsCenterName, string formId);
         IEnumerable<Field> GetFieldCatalogItems(string currentUser, string recordsCenterName);
         Field GetField(string currentUser, string recordsCenterName, string tagName);
         OptionList GetList(string currentUser, int recordsCenterId, string listName);
         IEnumerable<FormFieldProjection> GetFormFieldProjectionsUsingOptionList(string currentUser, OptionList list);
         IEnumerable<RequestFormProjection> GetFormProjectionsUsingField(string currentUser, Field field);
         IEnumerable<RequestFormDetailProjection> GetRecordsCenterAcceptanceStatus(string currentUser, int recordsCenterId);
-        RequestForm UpdateRequestForm(string currentUser, RequestForm requestForm);
+        RequestForm UpdateRequestFormApplications(string currentUser, string recordsCenterName, string formId, IEnumerable<int> selectedApplicationIds);
+        RequestForm UpdateRequestFormCategrories(string currentUser, string recordsCenterName, string formId, IEnumerable<int> selectedCategoryIds);
         StatisticsRecordsCenter GetStatisticsForRecordsCenter(string currentUser, string recordsCenterName);
         IEnumerable<TestCase> GetOpenIssues(string currentUser, string recordsCenterName);
         IEnumerable<ListProjection> GetListProjections(string currentUser, int recordsCenterId);
@@ -39,23 +41,5 @@ namespace Designer.Tasks
         TransactionSnippet DeleteTransactionSnippetField(string currentUser, int parentSnippetId, TransactionSnippetField transactionSnippetField);
         TransactionSnippet DeleteTransactionSnippetField(string currentUser, int parentSnippetId, int transactionSnippetFieldId);
         TransactionSnippet GetTransactionSnippet(string currentUser, int snippetId);
-    }
-
-    public abstract class ById
-    {
-        public ById(int id)
-        {
-            this.Id = id;
-        }
-        public int Id { get; private set; }
-    }
-    
-    public abstract class ByKey
-    {
-        public ByKey(string key)
-        {
-            this.Key = key;
-        }
-        public string Key { get; private set; }
     }
 }

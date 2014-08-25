@@ -2,57 +2,53 @@
 var myApp = myApp || {};
 
 $(function () {
-
-    myApp.services = function () {
-        var self = this;
-
-        self.postToServer = function (data, callBack, url) {
-            self.submitToServer('POST', data, callBack, url);
-        };
-
-        self.putToServer = function (data, callBack, url) {
-            self.submitToServer('PUT', data, callBack, url);
-        };
-
-        self.deleteFromServer = function (data, callBack, url) {
-            self.submitToServer('DELETE', data, callBack, url);
-        };
-
-        self.getFromServer = function (data, callBack, url) {
-            self.submitToServer('GET', data, callBack, url);
-        }
-
-        self.submitToServer = function (verb, data, callBack, url) {
-            $.ajax({
-                url: url,
-                type: verb,
-                data: data,
-                datatype: "json",
-                contentType: "application/json charset=utf-8",
-                success: function (result) {
-                    callBack(result);
-                },
-                error: function (result) { alert("error"); }
-            });
-        };
-
-        self.copyArray = function (fromArray, toArray) {
-            toArray.splice(0, toArray().length);
-            for (var i = 0; i < fromArray().length; i++) {
-                var temp = ko.toJS(fromArray()[i]);
-                var copy = ko.mapping.fromJS(temp);
-                toArray.push(copy);
-            }
-        }
-
-        $(".modal").on('shown.bs.modal', function () {
-            $(this).find("[autofocus]:first").focus();
-        });
-
-    };
-
     myApp.vm = function (data) {
         var self = this;
+        self.services = new function () {
+            var self = this;
+            self.postToServer = function (data, callBack, url) {
+                self.submitToServer('POST', data, callBack, url);
+            };
+
+            self.putToServer = function (data, callBack, url) {
+                self.submitToServer('PUT', data, callBack, url);
+            };
+
+            self.deleteFromServer = function (data, callBack, url) {
+                self.submitToServer('DELETE', data, callBack, url);
+            };
+
+            self.getFromServer = function (data, callBack, url) {
+                self.submitToServer('GET', data, callBack, url);
+            }
+
+            self.submitToServer = function (verb, data, callBack, url) {
+                $.ajax({
+                    url: url,
+                    type: verb,
+                    data: data,
+                    datatype: "json",
+                    contentType: "application/json charset=utf-8",
+                    success: function (result) {
+                        callBack(result);
+                    },
+                    error: function (result) { alert("error"); }
+                });
+            };
+
+            self.copyArray = function (fromArray, toArray) {
+                toArray.splice(0, toArray().length);
+                for (var i = 0; i < fromArray().length; i++) {
+                    var temp = ko.toJS(fromArray()[i]);
+                    var copy = ko.mapping.fromJS(temp);
+                    toArray.push(copy);
+                }
+            }
+
+            $(".modal").on('shown.bs.modal', function () {
+                $(this).find("[autofocus]:first").focus();
+            });
+        };
 
         ko.bindingHandlers.bootstrapShowModal = {
             init: function (element, valueAccessor) {
@@ -181,13 +177,12 @@ $(function () {
         ko.mapping.fromJS(data, {}, this);
 
         if (typeof self.RecordsCenterSelector != 'undefined') {
-            var services = new myApp.services();
             self.RecordsCenterSelector.SelectedRecordsCenterName.subscribe(function (newValue) {
                 var request = {
                     RecordsCenterName: newValue
                 };
                 var params = JSON.stringify(request);
-                services.postToServer(params, function (data) {
+                self.services.postToServer(params, function (data) {
 
                 }, self.RecordsCenterSelector.SetRecordsCenterUrl());
             });

@@ -25,7 +25,7 @@ namespace StateInterface.Areas.Design.Models
             set {_transactionSnippetFieldModels = value;} 
         }
         public TransactionSnippetFieldModel SelectedField { get; set; }
-        public SnippetRequestModel SnippetForEdit { get; set; }
+        public SnippetParametersModel SnippetForEdit { get; set; }
         public IEnumerable<KeyValuePair<string,string>> AvailableTypes { get; set; }
         public IEnumerable<KeyValuePair<string, string>> AvailableOptions { get; set; }
         public IEnumerable<KeyValuePair<string, string>> AvailableNameFormats { get; set; }
@@ -60,7 +60,7 @@ namespace StateInterface.Areas.Design.Models
                 _transactionSnippetFieldModels.Add(new TransactionSnippetFieldModel(field));
             }
             SelectedField = new TransactionSnippetFieldModel(new TransactionSnippetField());
-            SnippetForEdit = new SnippetRequestModel();
+            SnippetForEdit = new SnippetParametersModel();
             AvailableTypes = availableTypes;
             AvailableOptions = new List<KeyValuePair<string, string>>();
             AvailableNameFormats = new List<KeyValuePair<string, string>>() 

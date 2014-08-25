@@ -19,6 +19,13 @@ namespace StateInterface
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                 new[] { "StateInterface.Controllers" }
             );
+
+            // Show a 404 page for anything else.
+            routes.MapRoute("NotFound", "{*url}",
+                new { controller = "Home", action = "NotFound" },
+                new[] { "StateInterface.Controllers" }
+
+            );
         }
     }
 }

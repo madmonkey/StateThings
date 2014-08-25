@@ -1,7 +1,4 @@
-﻿/*global ko*/
-
-$(function () {
-    var services = new myApp.services();
+﻿$(function () {
     var vm = new myApp.vm(initialData);
 
     vm.listsAreLoading = ko.observable(false);
@@ -23,18 +20,13 @@ $(function () {
 
     vm.getLists = function (recordsCenterName) {
         vm.listsAreLoading(true);
-        vm.GetListsParameters.RecordsCenterName(recordsCenterName);
-        var params = ko.toJSON(vm.GetListsParameters);
-
-        services.postToServer(params, function (data) {
+        vm.ListsParameters.RecordsCenterName(recordsCenterName);
+        var params = ko.toJSON(vm.ListsParameters);
+        vm.services.postToServer(params, function (data) {
             ko.mapping.fromJS(data, {}, vm.CatalogItems);
-
             vm.evaluateShowNoListsMessage();
-
             vm.listsAreLoading(false);
-
             vm.catalogItemsSplit(Math.ceil(vm.CatalogItems().length / 2));
-
         }, vm.GetListsUrl());
     };
 

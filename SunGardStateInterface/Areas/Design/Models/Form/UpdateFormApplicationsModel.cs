@@ -6,29 +6,29 @@ using System.Web;
 
 namespace StateInterface.Areas.Design.Models
 {
-    public class PostApplicationRequestModel
+    public class UpdateFormApplicationsModel
     {
         public string RecordsCenterName { get; set; }
         public string FormId { get; set; }
         public List<SelectItemModel> Applications { get; set; }
 
-        public PostApplicationRequestModel()
+        public UpdateFormApplicationsModel()
         {
             Applications = new List<SelectItemModel>();
         }
-        public PostApplicationRequestModel(RequestForm applicationFormProjection, IEnumerable<Application> availableApplications)
+        public UpdateFormApplicationsModel(RequestForm requestForm, IEnumerable<Application> applications)
+            : this()
         {
-            Applications = new List<SelectItemModel>();
-            this.RecordsCenterName = applicationFormProjection.RecordsCenter.Name;
-            this.FormId = applicationFormProjection.FormId;
-            foreach (var application in availableApplications)
+            this.RecordsCenterName = requestForm.RecordsCenter.Name;
+            this.FormId = requestForm.FormId;
+            foreach (var application in applications)
             {
                 this.Applications.Add(new SelectItemModel()
                 {
                     Id = application.Id,
                     Name = application.Name,
                     Description = application.Description,
-                    IsSelected = applicationFormProjection.Applications.Any(x => x.Id == application.Id)
+                    IsSelected = requestForm.Applications.Any(x => x.Id == application.Id)
                 });
             }
         }

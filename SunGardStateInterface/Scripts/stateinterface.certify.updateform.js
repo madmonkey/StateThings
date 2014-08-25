@@ -1,9 +1,4 @@
-﻿/*global ko*/
-
-$(function () {
-
-    var services = new myApp.services();
-
+﻿$(function () {
     var vm = new myApp.vm(initialData);
 
     vm.showTestHistory = ko.observable(false);
@@ -53,37 +48,6 @@ $(function () {
         vm.SelectedTestCase.HasPassed(hasPassed);
     };
 
-    vm.updateTestCase = function () {
-        vm.formIsLoading(true);
-        var params = ko.toJSON(vm.SelectedTestCase);
-        if (vm.SelectedTestCase.HasPassed() === null) {
-            services.postToServer(params, function (data) {
-                vm.applyTestCaseUpdate(data);
-                vm.formIsLoading(false);
-            }, vm.ResetTestCaseUrl());
-        }
-        else {
-            services.postToServer(params, function (data) {
-                vm.applyTestCaseUpdate(data);
-                vm.formIsLoading(false);
-            }, vm.UpdateTestCaseUrl());
-        }
-    };
-
-    vm.getCurrentFormQAState = function () {
-        formIsLoading(true);
-        var request = {
-            RecordsCenterId: vm.RecordsCenterId(),
-            FormId: vm.SelectedTestCase.FormId()
-        };
-
-        var params = JSON.stringify(request)
-        services.postToServer(params, function (data) {
-            vm.applyformQAStatusUpdate(data);
-            vm.formIsLoading(false);
-        }, vm.GetFormQAStateUrl());
-    };
-
     vm.applyformQAStatusUpdate = function (data) {
         ko.mapping.fromJS(data, {}, vm.RequestForm.QAStatus);
     };
@@ -100,6 +64,37 @@ $(function () {
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             vm.activeTabId(e.target.hash);
         });
+    };
+
+    vm.updateTestCase = function () {
+        vm.formIsLoading(true);
+        var params = ko.toJSON(vm.SelectedTestCase);
+        if (vm.SelectedTestCase.HasPassed() === null) {
+            vm.services.postToServer(params, function (data) {
+                vm.applyTestCaseUpdate(data);
+                vm.formIsLoading(false);
+            }, vm.ResetTestCaseUrl());
+        }
+        else {
+            vm.services.postToServer(params, function (data) {
+                vm.applyTestCaseUpdate(data);
+                vm.formIsLoading(false);
+            }, vm.UpdateTestCaseUrl());
+        }
+    };
+
+    vm.getCurrentFormQAState = function () {
+        formIsLoading(true);
+        var request = {
+            RecordsCenterId: vm.RecordsCenterId(),
+            FormId: vm.SelectedTestCase.FormId()
+        };
+
+        var params = JSON.stringify(request)
+        vm.services.postToServer(params, function (data) {
+            vm.applyformQAStatusUpdate(data);
+            vm.formIsLoading(false);
+        }, vm.GetFormQAStateUrl());
     };
 
     ko.applyBindings(vm);

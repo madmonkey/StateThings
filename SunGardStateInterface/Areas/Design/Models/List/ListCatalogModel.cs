@@ -14,7 +14,7 @@ namespace StateInterface.Areas.Design.Models
         public List<CatalogItemModel> CatalogItems { get; set; }
 
         public string InitialData { get; set; }
-        public ListsRequestModel ListsRequest { get; set; }
+        public ListsParametersModel ListsParameters { get; set; }
         public string GetListsUrl { get; set; }
         public string ListDetailsUrl { get; set; }
         public string DesignHomeUrl { get; set; }
@@ -22,7 +22,7 @@ namespace StateInterface.Areas.Design.Models
         public ListCatalogModel()
         {
             CatalogItems = new List<CatalogItemModel>();
-            ListsRequest = new ListsRequestModel();
+            ListsParameters = new ListsParametersModel();
         }
         public ListCatalogModel(User user, IEnumerable<RecordsCenter> recordsCenters)
             : this()

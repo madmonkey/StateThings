@@ -1,6 +1,6 @@
 ﻿$(function () {
-    var services = new myApp.services();
     var vm = new myApp.vm(initialData);
+
     vm.MaxIntegerValue = 2147483647;
     vm.snippetFieldModal = ko.observable();
     vm.snippetPropertiesModal = ko.observable();
@@ -61,7 +61,7 @@
                 vm.isDefaultValue(false);
                 vm.isTrimInput(false);
                 vm.isPad(false);
-                services.copyArray(vm.AvailableDateFormats, vm.AvailableOptions);
+                vm.services.copyArray(vm.AvailableDateFormats, vm.AvailableOptions);
                 break;
             }
             case "Name": {
@@ -75,7 +75,7 @@
                 vm.isDefaultValue(false);
                 vm.isTrimInput(true);
                 vm.isPad(true);
-                services.copyArray(vm.AvailableNameFormats, vm.AvailableOptions);
+                vm.services.copyArray(vm.AvailableNameFormats, vm.AvailableOptions);
                 break;
             }
             case "Numeric": {
@@ -398,19 +398,19 @@
 
     vm.updateSnippetField = function () {
         vm.finalizeSelectedField();
-        services.postToServer(ko.toJSON(vm.SelectedField), function (data) {
+        vm.services.postToServer(ko.toJSON(vm.SelectedField), function (data) {
             ko.mapping.fromJS(data, {}, vm);
         }, vm.UpdateSnippetFieldUrl());
     };
 
     vm.deleteSnippetField = function () {
-        services.postToServer(ko.toJSON(vm.SelectedField), function (data) {
+        vm.services.postToServer(ko.toJSON(vm.SelectedField), function (data) {
             ko.mapping.fromJS(data, {}, vm);
         }, vm.DeleteSnippetFieldUrl());
     };
 
     vm.updateSnippet = function () {
-        services.postToServer(ko.toJSON(vm.SnippetForEdit), function (data) {
+        vm.services.postToServer(ko.toJSON(vm.SnippetForEdit), function (data) {
             ko.mapping.fromJS(data, {}, vm);
         }, vm.UpdateSnippetUrl());
     };

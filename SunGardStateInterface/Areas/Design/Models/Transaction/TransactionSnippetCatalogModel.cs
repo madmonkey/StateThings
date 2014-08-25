@@ -9,8 +9,8 @@ namespace StateInterface.Areas.Design.Models
         public RecordsCenterSelectorModel RecordsCenterSelector { get; set; }
         public List<CatalogItemModel> CatalogItems { get; set; }
 
-        public SnippetsRequestModel SnippetsRequest { get; set; }
-        public SnippetRequestModel SnippetRequest { get; set; }
+        public SnippetsParametersModel SnippetsParameters { get; set; }
+        public SnippetParametersModel SnippetParameters { get; set; }
         public string GetSnippetsUrl { get; set; }
         public string SnippetDetailsUrl { get; set; }
         public string CreateSnippetUrl { get; set; }
@@ -22,8 +22,8 @@ namespace StateInterface.Areas.Design.Models
         public TransactionSnippetCatalogModel()
         {
             CatalogItems = new List<CatalogItemModel>();
-            SnippetsRequest = new SnippetsRequestModel();
-            SnippetRequest = new SnippetRequestModel();
+            SnippetsParameters = new SnippetsParametersModel();
+            SnippetParameters = new SnippetParametersModel();
         }
         public TransactionSnippetCatalogModel(User user, IEnumerable<RecordsCenter> recordsCenters)
             : this()

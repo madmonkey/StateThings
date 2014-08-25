@@ -1,9 +1,4 @@
-﻿/*global ko*/
-
-$(function () {
-
-    var services = new myApp.services();
-
+﻿$(function () {
     var vm = new myApp.vm(initialData);
 
     vm.formsAreLoading = ko.observable(false);
@@ -11,10 +6,8 @@ $(function () {
 
     vm.getForms = function (data) {
         vm.formsAreLoading(true);
-
         var params = ko.toJSON(vm.FormsRequestParameters);
-
-        services.postToServer(params, function (data) {
+        vm.services.postToServer(params, function (data) {
             ko.mapping.fromJS(data, {}, vm.Categories);
 
             if (vm.Categories().length === 0) {
@@ -28,5 +21,4 @@ $(function () {
     };
 
     ko.applyBindings(vm);
-
 });

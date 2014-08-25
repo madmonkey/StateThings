@@ -17,7 +17,6 @@ namespace Designer.Tasks
         {
             _repository = repository;
         }
-
         public IEnumerable<Role> GetRoles()
         {
             return _repository.GetAll<Role>();
@@ -133,6 +132,13 @@ namespace Designer.Tasks
             var user = validateUserContext(currentUser);
             return _repository.GetForm(formId, _repository.GetById<RecordsCenter>(recordsCenterId));
         }
+        public RequestForm GetForm(string currentUser, string recordsCenterName, string formId)
+        {
+            var user = validateUserContext(currentUser);
+
+            return _repository.GetAll<RequestForm>()
+                .FirstOrDefault(x=> x.RecordsCenter.Name.Equals(recordsCenterName) && x.FormId.Equals(formId));
+        }
         public IEnumerable<Field> GetFieldCatalogItems(string currentUser, string recordsCenterName)
         {
             var user = validateUserContext(currentUser);
@@ -176,12 +182,39 @@ namespace Designer.Tasks
             var user = validateUserContext(currentUser);
             return _repository.GetAll<Application>();
         }
-        public RequestForm UpdateRequestForm(string currentUser, RequestForm requestForm)
+        public RequestForm UpdateRequestFormApplications(string currentUser, string recordsCenterName, string formId, IEnumerable<int> selectedApplicationIds)
         {
             var user = validateUserContext(currentUser);
-            _repository.Save(requestForm);
-            return _repository.GetById<RequestForm>(requestForm.Id);
+            var requestForm = GetForm(currentUser, recordsCenterName, formId);
+            var applications = GetApplications(currentUser);
 
+            requestForm.Applications.Clear();
+            foreach (var selectedApplicationId in selectedApplicationIds)
+            {
+                var application = applications.FirstOrDefault(x => x.Id == selectedApplicationId);
+                requestForm.Applications.Add(application);
+            }
+
+            _repository.Save(requestForm);
+
+            return requestForm;
+        }
+        public RequestForm UpdateRequestFormCategrories(string currentUser, string recordsCenterName, string formId, IEnumerable<int> selectedCategoryIds)
+        {
+            var user = validateUserContext(currentUser);
+            var requestForm = GetForm(currentUser, recordsCenterName, formId);
+            var categories = GetCategories(currentUser);
+
+            requestForm.Categories.Clear();
+            foreach (var selectedCategoryId in selectedCategoryIds)
+            {
+                var application = categories.FirstOrDefault(x => x.Id == selectedCategoryId);
+                requestForm.Categories.Add(application);
+            }
+
+            _repository.Save(requestForm);
+
+            return requestForm;
         }
         public StatisticsRecordsCenter GetStatisticsForRecordsCenter(string currentUser, string recordsCenterName)
         {
@@ -367,7 +400,6 @@ namespace Designer.Tasks
             user.CurrentRecordsCenter = recordsCenter;
             _repository.Save(user);
         }
-
         private User validateUserContext(string currentUser)
         {
             if (!string.IsNullOrWhiteSpace(currentUser))

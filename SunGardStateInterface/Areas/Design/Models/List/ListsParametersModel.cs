@@ -5,11 +5,11 @@ using System.Web;
 
 namespace StateInterface.Areas.Design.Models
 {
-    public class ListsRequestModel
+    public class ListsParametersModel
     {
         public string RecordsCenterName { get; set; }
 
-        public ListsRequestModel()
+        public ListsParametersModel()
         {
         }
     }

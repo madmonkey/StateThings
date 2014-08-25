@@ -3,11 +3,11 @@ using StateInterface.Properties;
 
 namespace StateInterface.Areas.Design.Models
 {
-    public class SnippetsRequestModel
+    public class SnippetsParametersModel
     {
         public string RecordsCenterName { get; set; }
 
-        public SnippetsRequestModel()
+        public SnippetsParametersModel()
         {
         }
 

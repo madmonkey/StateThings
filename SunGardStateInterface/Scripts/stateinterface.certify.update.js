@@ -1,8 +1,4 @@
-﻿/*global ko*/
-
-$(function () {
-
-    var services = new myApp.services();
+﻿$(function () {
     var vm = new myApp.vm(initialData);
 
     vm.showTestHistory = ko.observable(false);
@@ -16,11 +12,9 @@ $(function () {
 
     vm.getForms = function () {
         vm.formsAreLoading(true);
-
         vm.CertificationParameters.RecordsCenterName(vm.RecordsCenterSelector.SelectedRecordsCenterName());
         var params = ko.toJSON(vm.CertificationParameters);
-
-        services.postToServer(params, function (data) {
+        vm.services.postToServer(params, function (data) {
             ko.mapping.fromJS(data, {}, vm.Applications);
 
             if (vm.Applications().length === 0) {

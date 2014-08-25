@@ -1,15 +1,10 @@
-﻿/*global ko*/
-
-$(function () {
-
-    var services = new myApp.services();
-
+﻿$(function () {
     var vm = new myApp.vm(initialData);
-
+    
     vm.applicationAssociationModal = ko.observable();
 
     vm.updateApplications = function (item) {
-        services.copyArray(vm.Applications, vm.ApplicationsForEdit);
+        vm.services.copyArray(vm.Applications, vm.ApplicationsForEdit);
         vm.applicationAssociationModal(item);
     };
 
@@ -20,7 +15,7 @@ $(function () {
             Applications: vm.ApplicationsForEdit
         };
 
-        services.postToServer(ko.toJSON(param), function (data) {
+        vm.services.postToServer(ko.toJSON(param), function (data) {
             vm.Applications(data.Applications);
         }, vm.UpdateApplicationsAssociationUrl());
     };

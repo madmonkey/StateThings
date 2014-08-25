@@ -4,7 +4,7 @@ using StateInterface.Designer.Model;
 
 namespace StateInterface.Areas.Design.Models
 {
-    public class SnippetRequestModel
+    public class SnippetParametersModel
     {
         public string RecordsCenterName { get; set; }
         public string Name { get; set; }
@@ -14,7 +14,7 @@ namespace StateInterface.Areas.Design.Models
         public string Criteria { get; set; }
         public bool IncludePrefixAndSuffix { get; set; }
 
-        public SnippetRequestModel()
+        public SnippetParametersModel()
         {
         }
         

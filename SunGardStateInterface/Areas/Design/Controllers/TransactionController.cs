@@ -47,15 +47,15 @@ namespace StateInterface.Areas.Design.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult GetSnippets(SnippetsRequestModel request)
+        public ActionResult GetSnippets(SnippetsParametersModel parameters)
         {
-            if (request == null)
+            if (parameters == null)
             {
                 throw new StateInterfaceParameterValidationException(Resources.ParameterNull);
             }
-            request.Validate();
+            parameters.Validate();
 
-            List<CatalogItemModel> transactionSnippets = getCatalogItemModels(request.RecordsCenterName);
+            List<CatalogItemModel> transactionSnippets = getCatalogItemModels(parameters.RecordsCenterName);
             
             return Json(transactionSnippets);
         }
@@ -69,7 +69,7 @@ namespace StateInterface.Areas.Design.Controllers
                 var catalogItems = new List<CatalogItemModel>();
                 foreach (var snippet in snippets)
                 {
-                    catalogItems.Add(new CatalogItemModel()
+                    catalogItems.Add(new CatalogItemModel
                         {
                             Name = snippet.TokenName,
                             Description = snippet.Description,
@@ -113,14 +113,67 @@ namespace StateInterface.Areas.Design.Controllers
             throw new StateInterfaceParameterValidationException(Resources.RecordsCenterNotFound);
         }
         [HttpPost]
-        public ActionResult CreateSnippet(SnippetRequestModel snippetRequest)
+        public ActionResult CreateSnippet(SnippetParametersModel snippetParameters)
         {
-            return CreateOrUpdateSnippet(snippetRequest, false);
+            User user = _designerTasks.GetUser(User.Identity.Name);
+            if (user.CanDesignManage)
+            {
+                if (snippetParameters == null)
+                {
+                    throw new StateInterfaceParameterValidationException(Resources.ParameterEmpty);
+                }
+
+                snippetParameters.Validate(user);
+                var snippet = new TransactionSnippet
+                    {
+                        Id = snippetParameters.Id,
+                        RecordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name, snippetParameters.RecordsCenterName),
+                        Created = DateTime.UtcNow,
+                        TokenName = snippetParameters.Name,
+                        Description = snippetParameters.Description
+                    };
+
+                var transactionSnippet = new TransactionSnippetModel(_designerTasks.UpdateTransactionSnippet(User.Identity.Name, snippet), TransactionSnippetFieldTypeHelper.TypeValues());
+                var catalogItem = new CatalogItemModel
+                {
+                    Name = transactionSnippet.TokenName,
+                    Description = transactionSnippet.Description,
+                    DetailsUrl = string.Format("{0}/{1}/{2}", Url.Action("Details"), user.CurrentRecordsCenter.Name, transactionSnippet.TokenName)
+                };
+
+                return Json(catalogItem);
+            }
+            throw new System.Web.Http.HttpResponseException(new System.Net.Http.HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized));
         }
         [HttpPost]
-        public ActionResult UpdateSnippet(SnippetRequestModel snippetRequest)
+        public ActionResult UpdateSnippet(SnippetParametersModel snippetParameters)
         {
-            return CreateOrUpdateSnippet(snippetRequest);
+            User user = _designerTasks.GetUser(User.Identity.Name);
+            if (user.CanDesignManage)
+            {
+                if (snippetParameters == null)
+                {
+                    throw new StateInterfaceParameterValidationException(Resources.ParameterEmpty);
+                }
+
+                snippetParameters.Validate(user);
+                var snippet = _designerTasks.GetTransactionSnippet(User.Identity.Name, snippetParameters.Id);
+                if (snippet == null)
+                {
+                    throw new StateInterfaceParameterValidationException(Resources.SnippetNotFound);
+                }
+                snippet.TokenName = snippetParameters.Name;
+                snippet.Description = snippetParameters.Description;
+                snippet.TransactionDefinition = snippetParameters.Definition;
+                snippet.Criteria = snippetParameters.Criteria;
+                snippet.IncludePrefixAndSuffix = snippetParameters.IncludePrefixAndSuffix;
+
+                var transactionSnippet = new TransactionSnippetModel(_designerTasks.UpdateTransactionSnippet(User.Identity.Name, snippet), TransactionSnippetFieldTypeHelper.TypeValues());
+                setProperties(transactionSnippet, snippetParameters.RecordsCenterName, user);
+                transactionSnippet.InitialData = JsonConvert.SerializeObject(transactionSnippet);
+                return Json(transactionSnippet);
+            }
+            throw new System.Web.Http.HttpResponseException(new System.Net.Http.HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized));
         }
         [HttpPost]
         public ActionResult CreateSnippetField(TransactionSnippetFieldModel snippetFieldRequest)
@@ -194,45 +247,6 @@ namespace StateInterface.Areas.Design.Controllers
                 {
                     throw new StateInterfaceParameterValidationException(Resources.SnippetNotFound);
                 }
-            }
-            throw new System.Web.Http.HttpResponseException(new System.Net.Http.HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized));
-        }
-
-        private ActionResult CreateOrUpdateSnippet(SnippetRequestModel snippetRequest, bool updateExisting = true)
-        {
-            User user = _designerTasks.GetUser(User.Identity.Name);
-            if (user.CanDesignManage)
-            {
-                if (snippetRequest == null)
-                {
-                    throw new StateInterfaceParameterValidationException(Resources.ParameterEmpty);
-                }
-                
-                snippetRequest.Validate(user);
-                TransactionSnippet snippet = _designerTasks.GetTransactionSnippet(User.Identity.Name, snippetRequest.Id);
-                if (updateExisting && snippet == null)
-                {
-                    throw new StateInterfaceParameterValidationException(Resources.SnippetNotFound);
-                }
-                if (!updateExisting)
-                {
-                    snippet = new TransactionSnippet
-                        {
-                            Id = snippetRequest.Id,
-                            RecordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name, snippetRequest.RecordsCenterName),
-                            Created = DateTime.UtcNow
-                        };
-                }
-                snippet.TokenName = snippetRequest.Name;
-                snippet.Description = snippetRequest.Description;
-                snippet.TransactionDefinition = snippetRequest.Definition;
-                snippet.Criteria = snippetRequest.Criteria;
-                snippet.IncludePrefixAndSuffix = snippetRequest.IncludePrefixAndSuffix;
-
-                var transactionSnippet = new TransactionSnippetModel(_designerTasks.UpdateTransactionSnippet(User.Identity.Name, snippet), TransactionSnippetFieldTypeHelper.TypeValues());
-                setProperties(transactionSnippet, snippetRequest.RecordsCenterName, user);
-                transactionSnippet.InitialData = JsonConvert.SerializeObject(transactionSnippet);
-                return Json(transactionSnippet);
             }
             throw new System.Web.Http.HttpResponseException(new System.Net.Http.HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized));
         }

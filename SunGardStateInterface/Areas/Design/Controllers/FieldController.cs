@@ -52,16 +52,16 @@ namespace StateInterface.Areas.Design.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult GetFields(FieldsRequestModel request)
+        public ActionResult GetFields(FieldsParametersModel parameters)
         {
-            if (request == null)
+            if (parameters == null)
             {
                 throw new StateInterfaceParameterValidationException(Resources.ParentIdInvalid);
             }
 
-            request.Validate();
+            parameters.Validate();
 
-            List<CatalogItemModel> fieldCatalogItemModels = getFieldModels(request.RecordsCenterName);
+            List<CatalogItemModel> fieldCatalogItemModels = getFieldModels(parameters.RecordsCenterName);
 
             return Json(fieldCatalogItemModels);
         }

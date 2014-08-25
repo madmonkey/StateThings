@@ -10,7 +10,7 @@ namespace StateInterface.Areas.Design.Models
         public List<CatalogItemModel> CatalogItems { get; set; }
 
         public string InitialData { get; set; }
-        public FormsRequestModel FormsRequest { get; set; }
+        public FormsParametersModel FormsParameters { get; set; }
         public string GetFormsUrl { get; set; }
         public string FormDetailsUrl { get; set; }
         public string DesignHomeUrl { get; set; }
@@ -18,7 +18,7 @@ namespace StateInterface.Areas.Design.Models
         public FormCatalogModel()
         {
             CatalogItems = new List<CatalogItemModel>();
-            FormsRequest = new FormsRequestModel();
+            FormsParameters = new FormsParametersModel();
         }
         public FormCatalogModel(User user, IEnumerable<RecordsCenter> recordsCenters)
             :this()

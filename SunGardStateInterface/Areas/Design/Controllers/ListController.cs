@@ -58,14 +58,14 @@ namespace StateInterface.Areas.Design.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetLists(ListsRequestModel request)
+        public ActionResult GetLists(ListsParametersModel parameters)
         {
-            if (request == null || string.IsNullOrWhiteSpace(request.RecordsCenterName))
+            if (parameters == null || string.IsNullOrWhiteSpace(parameters.RecordsCenterName))
             {
                 throw new ApplicationException(Resources.ParameterInvalid);
             }
 
-            List<CatalogItemModel> listModels = getCatalogItemModels(request.RecordsCenterName);
+            List<CatalogItemModel> listModels = getCatalogItemModels(parameters.RecordsCenterName);
 
             return Json(listModels);
         }

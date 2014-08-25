@@ -67,7 +67,6 @@
     <Compile Include="DesignerTasks.cs" />
     <Compile Include="IDesignerTasks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TaskParameter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StateInterface.Designer.Domain\StateInterface.Designer.Model.csproj">

@@ -1,7 +1,6 @@
-﻿
-$(function () {
-
+﻿$(function () {
     var vm = new myApp.vm(initialData);
+
     $(function () {
         $("#datepicker").datepicker();
     });
@@ -65,26 +64,14 @@ $(function () {
             IsAverageInput: vm.isAverageInput()
         };
 
-        $.ajax({
-            url: vm.GetAverageUrl(),
-            type: 'POST',
-            data: param,
-            dataType: 'json',
-            error: function (error) {
-                if (vm.isAverageInput()) {
-                    vm.date('Error occurred');
-                } else {
-                    vm.average('Error occurred');
-                }
-            },
-            success: function (result) {
-                if (vm.isAverageInput()) {
-                    vm.date(result.text);
-                } else {
-                    vm.average(result.text);
-                }
+        vm.services.postToServer(JSON.stringify(param), function (result) {
+            if (vm.isAverageInput()) {
+                vm.date(result.text);
+            } else {
+                vm.average(result.text);
             }
-        });
+        }, vm.GetAverageUrl());
     };
+
     ko.applyBindings(vm);
 });
