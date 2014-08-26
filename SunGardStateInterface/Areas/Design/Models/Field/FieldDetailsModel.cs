@@ -32,6 +32,7 @@ namespace StateInterface.Areas.Design.Models
         public string InitialData { get; set; }
         public string DesignHomeUrl { get; set; }
         public string FieldsHomeUrl { get; set; }
+        public string FieldHelpUrl { get; set; }
 
         public FieldDetailsModel(Field field, IEnumerable<RequestFormProjection> formsUsing, string formDetailsUrl)
         {

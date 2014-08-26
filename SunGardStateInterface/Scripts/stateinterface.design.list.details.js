@@ -19,7 +19,8 @@
         CanDesignManage: initialData.CanDesignManage,
         FormFieldsUsing: initialData.FormFieldsUsing,
         DesignHomeUrl: initialData.DesignHomeUrl,
-        ListsHomeUrl: initialData.ListsHomeUrl
+        ListsHomeUrl: initialData.ListsHomeUrl,
+        ListHelpUrl: initialData.ListHelpUrl
     };
 
     ko.applyBindings(vm);

@@ -8,36 +8,33 @@ using StateInterface.Properties;
 
 namespace StateInterface.Areas.Design.Models
 {
-    public class RequestFormModel
+    public class RequestFormDetailsModel
     {
         public int Id { get; set; }
         public string RecordsCenterName { get; set; }
-
         public string Version { get; set; }
         public string LastUpdated { get; set; }
-
         public string FormId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-
         public List<FormFieldModel> FormFields { get; set; }
-
-        public List<RequestFormCategoryModel> Categories { get; set; }
-
         public List<SelectItemModel> Applications { get; set; }
         public List<SelectItemModel> ApplicationsForEdit { get; set; }
+        public List<SelectItemModel> Categories { get; set; }
+        public List<SelectItemModel> CategoriesForEdit { get; set; }
         public string SubmissionMode { get; set; }
         public List<TransactionModel> Transactions { get; set; }
-
         public string InitialData { get; set; }
         public string FormHelpUrl { get; set; }
         public string PreviewFormUrl { get; set; }
         public bool CanDesignManage { get; set; }
         public string UpdateApplicationsAssociationUrl { get; set; }
+        public string UpdateCategoriesAssociationUrl { get; set; }
         public string DesignHomeUrl { get; set; }
         public string FormsHomeUrl { get; set; }
 
-        public RequestFormModel(RequestForm requestForm, string listDetailsUrl, string fieldDetailsUrl, IEnumerable<Application> availableApplications)
+        public RequestFormDetailsModel(RequestForm requestForm, string listDetailsUrl, string fieldDetailsUrl,
+            IEnumerable<Application> availableApplications, IEnumerable<Category> availableCategories)
             : this(requestForm, listDetailsUrl, fieldDetailsUrl)
         {
             var selectedApplications = this.Applications.ToList();
@@ -52,8 +49,20 @@ namespace StateInterface.Areas.Design.Models
                     IsSelected = selectedApplications.Any(x => x.Id == application.Id) 
                 });
             }
+
+            var selectedCategories = this.Categories.ToList();
+            this.Categories = new List<SelectItemModel>();
+            foreach (var category in availableCategories)
+            {
+                this.Categories.Add(new SelectItemModel()
+                {
+                    Id = category.Id,
+                    Name = category.Name,
+                    IsSelected = selectedCategories.Any(x => x.Id == category.Id)
+                });
+            }
         }
-        public RequestFormModel(RequestForm requestForm, string listDetailsUrl, string fieldDetailsUrl)
+        public RequestFormDetailsModel(RequestForm requestForm, string listDetailsUrl, string fieldDetailsUrl)
         {
             Id = requestForm.Id;
             RecordsCenterName = requestForm.RecordsCenter.Name;
@@ -77,10 +86,15 @@ namespace StateInterface.Areas.Design.Models
                 FormFields.Add(new FormFieldModel(formField, listDetailsUrl, fieldDetailsUrl));
             }
 
-            Categories = new List<RequestFormCategoryModel>();
+            Categories = new List<SelectItemModel>();
+            CategoriesForEdit = new List<SelectItemModel>();
             foreach (Category category in requestForm.Categories.OrderBy(x => x.Name))
             {
-                Categories.Add(new RequestFormCategoryModel(category));
+                Categories.Add(new SelectItemModel()
+                    {
+                        Id = category.Id,
+                        Name = category.Name,
+                    });
             }
 
             Applications = new List<SelectItemModel>();

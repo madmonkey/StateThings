@@ -1,5 +1,5 @@
 ﻿@* List Details Page *@
-@model StateInterface.Areas.Design.Models.OptionListModel
+@model StateInterface.Areas.Design.Models.OptionListDetailsModel
 <div class="row">
     <div class="col-xs-12">
         @* This is so that the navigation lines up when the recordsCenterSelector is not part of the page *@
@@ -8,16 +8,12 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <ol class="breadcrumb">
-            <li><a data-bind="attr: { href: DesignHomeUrl }">Design</a></li>
-            <li><a data-bind="attr: { href: ListsHomeUrl }">Lists</a></li>
-            <li class="active"><span data-bind="html: ListName"></span></li>
-        </ol>
+        <div data-bind="template: { name: 'breadcrumbs-template' }"></div>
     </div>
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <div class="padLeft">
+        <div class="padLeft padRight">
             <div data-bind="template: { name: 'optionListProperties-template' }"></div>
             <div data-bind="foreach: OptionListItems">
                 <div data-bind="template: { name: 'optionListItem-template' }"></div>
@@ -29,17 +25,25 @@
     </div>
 </div>
 
+<script type="text/html" id="breadcrumbs-template">
+    <ol class="breadcrumb">
+        <li><a data-bind="attr: { href: DesignHomeUrl }, html: RecordsCenterName"></a></li>
+        <li><a data-bind="attr: { href: ListsHomeUrl }">Lists</a></li>
+        <li class="active"><span data-bind="html: ListName"></span></li>
+    </ol>
+</script>
+
 <script type="text/html" id="optionListProperties-template">
     <div class="row">
         <div class="col-xs-12">
-            <div class="padTop">
-                <div>
-                    <span class="leadSmaller" data-bind="html: RecordsCenterName"></span>
-                </div>
+            <div>
                 <span class="leadLarger" data-bind="html:ListName"></span>
+                <div class="pull-right">
+                    <a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" data-bind="attr: { href: ListHelpUrl }"></a>
+                </div>
             </div>
             <div class="leadSmaller">
-                <span>Tiers</span>
+                <span class="labelColor">Tiers</span>
                 <span class="padLeft" data-bind="foreach: OptionListTiers">
                     <span data-bind="html: Name"></span>
                 </span>
@@ -50,10 +54,10 @@
                     <span data-bind="html: LastUpdated"></span>
                 </div>
                 <br />
-                <div>FORM (FIELD) using this List</div>
+                <div class="labelColor">FORM (FIELD) using this List</div>
                 <div data-bind="foreach: FormFieldsUsing">
                     <div class="inlineBlock padRight">
-                        <a target="_blank" data-bind="attr: { href: FormDetailsUrl }">
+                        <a data-bind="attr: { href: FormDetailsUrl }">
                             <span data-bind="html: RequestFormName"></span>
                         </a>
                         <span>
@@ -70,7 +74,7 @@
 <script type="text/html" id="optionListItem-template">
     <div class="row">
         <div class="col-xs-12">
-            <span class="leadSmaller" style="font-weight: bold" data-bind="html: Code"></span>
+            <span class="leadSmaller bold" data-bind="html: Code"></span>
             <span class="leadSmaller" data-bind="html: Description"></span>
             <br />
             <div class="col-xs-12" data-bind="foreach: OptionListItems">

@@ -1,3 +1,4 @@
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\Designer.Tasks\bin\Debug\Designer.Tasks.dll.config
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\Designer.Tasks\bin\Debug\Designer.Tasks.dll
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\Designer.Tasks\bin\Debug\Designer.Tasks.pdb
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\Designer.Tasks\bin\Debug\StateInterface.Designer.Model.dll
@@ -13,4 +14,3 @@ C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\Designer.Ta
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\Designer.Tasks\obj\Debug\Designer.Tasks.csprojResolveAssemblyReference.cache
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\Designer.Tasks\obj\Debug\Designer.Tasks.dll
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\Designer.Tasks\obj\Debug\Designer.Tasks.pdb
-C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\Designer.Tasks\bin\Debug\Designer.Tasks.dll.config

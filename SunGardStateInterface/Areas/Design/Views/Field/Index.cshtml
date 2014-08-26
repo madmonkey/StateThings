@@ -9,15 +9,10 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <ol class="breadcrumb">
-            <li><a data-bind="attr: { href: DesignHomeUrl }">Design</a></li>
-            <li class="active">Fields</li>
-        </ol>
-        <div class="pull-left">
-            <h2 class="padLeft">Field Design</h2>
-        </div>
-        <div class="inlineBlock padLeft">
-            <div class="loading" style="margin-top: 16px;" data-bind="visible: fieldsAreLoading"></div>
+        <div data-bind="template: { name: 'breadcrumbs-template' }"></div>
+        <div class="inlineBlock">
+            <span class="padLeft leadLarger">Field Design</span>
+            <div class="loading inlineBlock padLeft" data-bind="visible: fieldsAreLoading"></div>
         </div>
     </div>
 </div>
@@ -27,9 +22,19 @@
         <div data-bind="template: { name: 'catalogItems-template' }"></div>
     </div>
 </div>
+
+<script type="text/html" id="breadcrumbs-template">
+    <ol class="breadcrumb">
+        <li><a data-bind="attr: { href: DesignHomeUrl }, html: RecordsCenterSelector.SelectedRecordsCenterName"></a></li>
+        <li class="active">Fields</li>
+    </ol>
+</script>
+
 <script type="text/html" id="noFieldsFound-template">
     <div class="row" data-bind="if: showNoFieldsFound() === true">
         <div class="col-xs-12">
+            <br />
+            <br />
             <h2 class="text-center text-danger">No fields were found in this Records Center</h2>
         </div>
     </div>

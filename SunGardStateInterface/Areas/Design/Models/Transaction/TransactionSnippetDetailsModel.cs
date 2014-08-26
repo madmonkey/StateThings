@@ -7,13 +7,12 @@ using System.Linq;
 
 namespace StateInterface.Areas.Design.Models
 {
-    public class TransactionSnippetModel
+    public class TransactionSnippetDetailsModel
     {
         private List<TransactionSnippetFieldModel> _transactionSnippetFieldModels;
         public string RecordsCenterName { get; set; }
         public int Id { get; set; }
-        public string Created { get; set; }
-        public string Updated { get; set; }
+        public string LastUpdated { get; set; }
         public  string TokenName { get; set; }
         public  string TransactionDefinition { get; set; }
         public string Criteria { get; set; }
@@ -40,15 +39,15 @@ namespace StateInterface.Areas.Design.Models
         public string DeleteSnippetFieldUrl { get; set; }
         public bool CanDesignManage { get; set; }
         
-        public TransactionSnippetModel(TransactionSnippet snippet, IEnumerable<KeyValuePair<string,string>> availableTypes)
+        public TransactionSnippetDetailsModel(TransactionSnippet snippet, IEnumerable<KeyValuePair<string,string>> availableTypes)
         {
             RecordsCenterName = snippet.RecordsCenter.Name;
             Id = snippet.Id;
-            Created = string.Format(Resources.DateTimeFormat, snippet.Created);
-            if (snippet.Updated != null)
-            {
-                Updated = string.Format(Resources.DateTimeFormat, snippet.Updated);
-            }
+
+            LastUpdated = snippet.Updated.HasValue
+                ? snippet.Updated.Value.ToString(Resources.DateTimeFormat)
+                : snippet.Created.ToString(Resources.DateTimeFormat);
+
             TokenName = snippet.TokenName;
             TransactionDefinition = snippet.TransactionDefinition;
             Criteria = snippet.Criteria;

@@ -13,6 +13,8 @@
     vm.SelectedField.Frequency.extend({ initializeValidation: '', validateIsPostiveInteger: '', validateIsMin: 0, validateIsMax: vm.MaxIntegerValue });
     vm.SelectedField.PadCharacterDec.extend({ initializeValidation: '', validateIsPostiveInteger: '', validateIsMin: 0, validateIsMax: 255 });
 
+    vm.propertiesAreLoading = ko.observable(false);
+
     vm.isSnippetFieldError = ko.computed(function () {
         return vm.SelectedField.TagName.hasError() || vm.SelectedField.Length.hasError() ||
             vm.SelectedField.TrimInputToLength.hasError() || vm.SelectedField.Frequency.hasError() || vm.SelectedField.PadCharacterDec.hasError();
@@ -410,9 +412,13 @@
     };
 
     vm.updateSnippet = function () {
+        vm.propertiesAreLoading(true);
+
         vm.services.postToServer(ko.toJSON(vm.SnippetForEdit), function (data) {
             ko.mapping.fromJS(data, {}, vm);
         }, vm.UpdateSnippetUrl());
+
+        vm.propertiesAreLoading(false);
     };
 
     ko.applyBindings(vm);

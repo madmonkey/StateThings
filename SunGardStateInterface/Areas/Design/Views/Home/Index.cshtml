@@ -2,36 +2,66 @@
 @model StateInterface.Areas.Design.Models.HomeModel
 <div class="row">
     <div class="col-xs-12">
-        <h2 class="padLeft">Design</h2>
+        <div class="pull-right padRight leadSmaller">
+            <span class="padRight">Records Center</span><select data-bind="options: RecordsCenterSelector.RecordsCenters, optionsText: 'Name', optionsValue: 'Name', value: RecordsCenterSelector.SelectedRecordsCenterName"></select>
+        </div>
     </div>
 </div>
-<br/>
 <div class="row">
-    <div class="col-xs-3">
-        <p class="text-center">
-            <a title="Forms" href="@Url.Action("Index", "Form")" class="dashboardIcon glyphicon glyphicon-file glyphicon-white"></a><br /><br /><span class="lead">Forms</span>
-        </p>
-    </div>
-    <div class="col-xs-3">
-        <p class="text-center">
-            <a title="Fields" href="@Url.Action("Index", "Field")" class="dashboardIcon glyphicon glyphicon-tag glyphicon-white"></a><br /><br /><span class="lead">Fields</span>
-        </p>
-    </div>
-    <div class="col-xs-3">
-        <p class="text-center">
-            <a title="Lists" href="@Url.Action("Index", "List")" class="dashboardIcon glyphicon glyphicon-list glyphicon-white"></a><br /><br /><span class="lead">Lists</span>
-        </p>
-    </div>
-    <div class="col-xs-3">
-        <p class="text-center">
-            <a title="Snippets" href="@Url.Action("Index", "Transaction")" class="dashboardIcon glyphicon glyphicon-picture glyphicon-white"></a><br /><br /><span class="lead">Transactions</span>
-        </p>
+    <div class="col-xs-12">
+        <ol class="breadcrumb">
+            <li>
+                <span class="active" data-bind="html: RecordsCenterSelector.SelectedRecordsCenterName"></span>
+            </li>
+        </ol>        
+        <span class="leadLarger padLeft">Design</span>
     </div>
 </div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="padLeft">
+            <br />
+            <div class="row">
+                <div class="col-xs-3">
+                    <span class="text-center">
+                        <a title="Forms" href="@Url.Action("Index", "Form")" class="dashboardIcon glyphicon glyphicon-file glyphicon-white"></a>
+                        <br />
+                        <br />
+                        <span class="lead">Forms</span>
+                    </span>
+                </div>
+                <div class="col-xs-3">
+                    <span class="text-center">
+                        <a title="Fields" href="@Url.Action("Index", "Field")" class="dashboardIcon glyphicon glyphicon-tag glyphicon-white"></a>
+                        <br />
+                        <br />
+                        <span class="lead">Fields</span>
+                    </span>
+                </div>
+                <div class="col-xs-3">
+                    <span class="text-center">
+                        <a title="Lists" href="@Url.Action("Index", "List")" class="dashboardIcon glyphicon glyphicon-list glyphicon-white"></a>
+                        <br />
+                        <br />
+                        <span class="lead">Lists</span>
+                    </span>
+                </div>
+                <div class="col-xs-3">
+                    <span class="text-center">
+                        <a title="Snippets" href="@Url.Action("Index", "Transaction")" class="dashboardIcon glyphicon glyphicon-picture glyphicon-white"></a>
+                        <br />
+                        <br />
+                        <span class="lead">Transactions</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     var initialData = @Html.Raw(Model.InitialData)
 </script>
-
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_design_home")
 }

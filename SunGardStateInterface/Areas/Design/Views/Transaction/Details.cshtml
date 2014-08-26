@@ -1,5 +1,5 @@
 ﻿@* TransactionSnippet Details Page *@
-@model StateInterface.Areas.Design.Models.TransactionSnippetModel
+@model StateInterface.Areas.Design.Models.TransactionSnippetDetailsModel
 <div class="row">
     <div class="col-xs-12">
         @* This is so that the navigation lines up when the recordsCenterSelector is not part of the page *@
@@ -8,16 +8,12 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <ol class="breadcrumb">
-            <li><a data-bind="attr: { href: DesignHomeUrl }">Design</a></li>
-            <li><a data-bind="attr: { href: TransactionsHomeUrl }">Transactions</a></li>
-            <li class="active"><span data-bind="html: TokenName"></span></li>
-        </ol>
+        <div data-bind="template: { name: 'breadcrumbs-template' }"></div>
     </div>
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <div class="padLeft">
+        <div class="padLeft padRight">
             <div data-bind="template: { name: 'snippetProperties-template' }"></div>
             <div data-bind="template: { name: 'snippetField-template' }"></div>
         </div>
@@ -234,40 +230,52 @@
     </div>
 </div>
 
+<script type="text/html" id="breadcrumbs-template">
+    <ol class="breadcrumb">
+        <li><a data-bind="attr: { href: DesignHomeUrl }, html: RecordsCenterName"></a></li>
+        <li><a data-bind="attr: { href: TransactionsHomeUrl }">Transactions</a></li>
+        <li class="active"><span data-bind="html: TokenName"></span></li>
+    </ol>
+</script>
+
 <script type="text/html" id="snippetProperties-template">
     <div class="row">
         <div class="col-xs-12">
-            <div class="padTop">
-                <div>
-                    <span class="leadSmaller" data-bind="html: RecordsCenterName"></span>
-                </div>
+            <div>
                 <span class="leadLarger" data-bind="html:TokenName"></span>
-                <a href="#" data-bind="visible: CanDesignManage, click: editSnippet" class="glyphicon glyphicon-edit padLeft" title="Edit Transaction Properties"></a>
-                <div class="pull-right padRight">
+                <span>
+                    <span class="inlineBlock text-nowrap padLeft">
+                        <a href="#" class="glyphicon glyphicon-edit padLeft" title="Edit Transaction Properties" data-bind="visible: CanDesignManage && !propertiesAreLoading(), click: editSnippet"></a>
+                        <span class="loading" data-bind="visible: propertiesAreLoading"></span>
+                    </span>
+                </span>
+                <div class="pull-right">
                     <a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" data-bind="attr: { href: SnippetHelpUrl }"></a>
                 </div>
             </div>
             <div><span class="leadSmaller" data-bind="html: Description"></span></div>
+            <div class="leadSmaller">
+                <span>Last Updated on</span>
+                <span data-bind="html: LastUpdated"></span>
+            </div>
             <br />
             <div class="leadSmaller">
-                <span>Definition: </span>
-                <span data-bind="html: TransactionDefinition"></span>
+                <span class="labelColor">Definition</span>
+                <span class="padLeft">
+                    <span data-bind="html: TransactionDefinition"></span>
+                </span>
             </div>
             <div class="leadSmaller">
-                <span>Criteria: </span>
-                <span data-bind="html: Criteria"></span>
+                <span class="labelColor">Criteria</span>
+                <span class="padLeft">
+                    <span data-bind="html: Criteria"></span>
+                </span>
             </div>
             <div class="leadSmaller">
-                <span>Include Prefix and Suffix: </span>
-                <span data-bind="html: IncludePrefixAndSuffix"></span>
-            </div>
-            <div class="leadSmaller">
-                <span>Created: </span>
-                <span data-bind="html: Created">/</span>
-            </div>
-            <div class="leadSmaller">
-                <span>Updated: </span>
-                <span data-bind="html: Updated"></span>
+                <span class="labelColor">Include Prefix and Suffix</span>
+                <span class="padLeft">
+                    <span data-bind="html: IncludePrefixAndSuffix"></span>
+                </span>
             </div>
         </div>
     </div>
@@ -280,7 +288,7 @@
                 <span>Fields</span>
                 <a href="#" data-bind="visible: $root.CanDesignManage, click: addField" class="glyphicon glyphicon-plus-sign padLeft" title="Add Field"></a>
             </h2>
-            <div class="row">
+            <div class="row" data-bind="visible: TransactionSnippetFields().length > 0">
                 <div class="col-xs-12">
                     <table class="fullWidthTable">
                         <thead>
@@ -321,7 +329,7 @@
                             <tr style="height:10px"></tr>
                         </thead>
                         <tbody data-bind="foreach: TransactionSnippetFields">
-                            <tr class="propertiesRow" style="vertical-align:top">
+                            <tr class="propertiesRow">
                                 <td>
                                     <div>
                                         <span class="formFieldName" data-bind="html: TagName"></span>
@@ -359,10 +367,10 @@
                                 <td>
                                     <span class="fieldPropertiesContent" data-bind="html: TrimInputToLength"></span>
                                 </td>
-                                <td>
+                                <td class="text-nowrap">
                                     <div>
-                                        <a href="#" data-bind="visible: $root.CanDesignManage, click: $parent.editField" class="glyphicon glyphicon-edit padHeaderSmall" title="Edit Field"></a>
-                                        <a href="#" data-bind="visible: $root.CanDesignManage, click: $parent.deleteField" class="glyphicon glyphicon-remove-circle padHeaderSmall" title="Delete Field"></a>
+                                        <a href="#" class="glyphicon glyphicon-edit" title="Edit Field" data-bind="visible: $root.CanDesignManage, click: $parent.editField"></a>
+                                        <a href="#" class="glyphicon glyphicon-remove-circle" title="Delete Field" data-bind="visible: $root.CanDesignManage, click: $parent.deleteField"></a>
                                     </div>
                                 </td>
                             </tr>

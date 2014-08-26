@@ -1,5 +1,5 @@
 ﻿@* RequestForm Index Page *@
-@model StateInterface.Areas.Design.Models.FormCatalogModel
+@model StateInterface.Areas.Design.Models.RequestFormCatalogModel
 <div class="row">
     <div class="col-xs-12">
         <div class="pull-right padRight leadSmaller">
@@ -9,15 +9,10 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <ol class="breadcrumb">
-            <li><a data-bind="attr: { href: DesignHomeUrl }">Design</a></li>
-            <li class="active">Forms</li>
-        </ol>
-        <div class="pull-left">
-            <h2 class="padLeft">Form Design</h2>
-        </div>
-        <div class="inlineBlock padLeft">
-            <div class="loading" style="margin-top:16px;" data-bind="visible: formsAreLoading"></div>
+        <div data-bind="template: { name: 'breadcrumbs-template' }"></div>
+        <div class="inlineBlock">
+            <span class="padLeft leadLarger">Form Design</span>
+            <span class="loading inlineBlock padLeft" data-bind="visible: formsAreLoading"></span>
         </div>
     </div>
 </div>
@@ -27,6 +22,14 @@
         <div data-bind="template: { name: 'catalogItems-template' }"></div>
     </div>
 </div>
+
+<script type="text/html" id="breadcrumbs-template">
+    <ol class="breadcrumb">
+        <li><a data-bind="attr: { href: DesignHomeUrl }, html: RecordsCenterSelector.SelectedRecordsCenterName"></a></li>
+        <li class="active">Forms</li>
+    </ol>
+</script>
+
 <script type="text/html" id="noFormsFound-template">
     <div class="row" data-bind="if: showNoFormsFound() === true">
         <div class="col-xs-12">

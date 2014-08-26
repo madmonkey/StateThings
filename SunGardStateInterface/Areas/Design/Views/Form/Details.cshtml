@@ -1,5 +1,5 @@
 ﻿@* RequestForm Details Page *@
-@model StateInterface.Areas.Design.Models.RequestFormModel
+@model StateInterface.Areas.Design.Models.RequestFormDetailsModel
 <div class="row">
     <div class="col-xs-12">
         @* This is so that the navigation lines up when the recordsCenterSelector is not part of the page *@
@@ -8,11 +8,7 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <ol class="breadcrumb">
-            <li><a data-bind="attr: { href: DesignHomeUrl }">Design</a></li>
-            <li><a data-bind="attr: { href: FormsHomeUrl }">Forms</a></li>
-            <li class="active"><span data-bind="html: FormId"></span></li>
-        </ol>
+        <div data-bind="template: { name: 'breadcrumbs-template' }"></div>
     </div>
 </div>
 <div class="row">
@@ -34,7 +30,7 @@
             </div>
             <form role="form">
                 <div class="modal-body">
-                    <span class="leadSmaller">Please select the applications that use this form</span>
+                    <p class="leadSmaller">Please select the applications that use this form</p>
                     <table class="fullWidthTable">
                         <tr class="bold leadSmaller" data-bind="foreach: ApplicationsForEdit">
                             <td>
@@ -53,13 +49,60 @@
     </div>
 </div>
 
+<div class="modal fade" data-bind="bootstrapShowModal: categoryAssociationModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+                <h3>Category Association<span data-bind="html: FormId"></span></h3>
+            </div>
+            <form role="form">
+                <div class="modal-body">
+                    <p class="leadSmaller">Please select the categories that apply to this form</p>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-6" data-bind="foreach: CategoriesForEdit.slice(0, categoriesItemsSplit())">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <span><input type="checkbox" data-bind="checked: IsSelected"></span>
+                                            <span data-bind="html: Name"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6" data-bind="foreach: CategoriesForEdit.slice(categoriesItemsSplit())">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <span><input type="checkbox" data-bind="checked: IsSelected"></span>
+                                            <span data-bind="html: Name"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" data-dismiss="modal" class="btn btn-primary" data-bind="click: saveCategories">Save</a>
+                    <a class="btn btn-default" data-dismiss="modal">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="breadcrumbs-template">
+    <ol class="breadcrumb">
+        <li><a data-bind="attr: { href: DesignHomeUrl }, html: RecordsCenterName"></a></li>
+        <li><a data-bind="attr: { href: FormsHomeUrl }">Forms</a></li>
+        <li class="active"><span data-bind="html: FormId"></span></li>
+    </ol>
+</script>
+
 <script type="text/html" id="properties-template">
     <div class="row">
         <div class="col-xs-12">
-            <div class="padTop">
-                <div>
-                    <span class="leadSmaller" data-bind="html: RecordsCenterName"></span>
-                </div>
+            <div>
                 <span class="leadLarger" data-bind="html:FormId"></span>
                 <div class="leadSmaller inlineBlock">
                     <span data-bind="html: Title"></span>
@@ -67,35 +110,39 @@
                     <span data-bind="html: Version"></span>
                 </div>
                 <div class="pull-right">
-                    <a target="_blank" title="Preview Form" class="padRight glyphicon glyphicon-eye-open" style="margin-top:14px;" data-bind="attr:{ href: PreviewFormUrl() }"></a>
+                    <a target="_blank" title="Preview Form" class="padRight glyphicon glyphicon-eye-open" data-bind="attr:{ href: PreviewFormUrl() }"></a>
                     <a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" data-bind="attr: { href: FormHelpUrl }"></a>
                 </div>
             </div>
             <div class="leadSmaller">
                 <div data-bind="html: Description"></div>
-                <br />
                 <div>
                     <span>Last Updated on</span>
                     <span data-bind="html: LastUpdated"></span>
                 </div>
                 <br />
                 <div>
-                    <span>Submission Mode:</span>
-                    <span data-bind="html: SubmissionMode"></span>
+                    <span class="labelColor">Submission Mode</span>
+                    <span class="padLeft" data-bind="html: SubmissionMode"></span>
                 </div>
                 <div>
-                    <span>Categories:</span>
-                    <span data-bind="foreach: Categories">
-                        <span data-bind="html: Name"></span>
+                    <span class="labelColor">Categories</span>
+                    <span class="padLeft">
+                        <span data-bind="foreach: Categories">
+                            <span data-bind="html: Name, visible: IsSelected"></span>
+                        </span>
+                        <span data-bind="visible: !areSelectedCategories()">Uncategorized</span>
+                        <a href="#" title="Update Category Association" class="glyphicon glyphicon-edit padLeft" data-bind="visible: CanDesignManage, click: updateCategories"></a>
+
                     </span>
-                    <span data-bind="visible: Categories.length > 0">Uncategorized</span>
                 </div>
                 <div>
-                    <span>Applications:</span>
-                    <span data-bind="foreach: Applications">
-                        <span data-bind="html: Name, visible: IsSelected"></span>
-                    </span>
-                    <a href="#" title="Update Association" class="glyphicon glyphicon-edit padLeft" data-bind="visible: CanDesignManage, click: updateApplications"></a>
+                    <span class="labelColor">Applications</span>
+                    <span class="padLeft">
+                        <span data-bind="foreach: Applications">
+                            <span data-bind="html: Name, visible: IsSelected"></span>
+                        </span>
+                        <a href="#" title="Update Association" class="glyphicon glyphicon-edit padLeft" data-bind="visible: CanDesignManage, click: updateApplications"></a>
                 </div>
             </div>
         </div>
@@ -117,7 +164,7 @@
                         <table class="fullWidthTable">
                             <thead>
                                 <tr class="fieldPropertiesTableHeader">
-                                    <td></td>
+                                    <th></th>
                                     <th>
                                         <span class="fieldPropertiesColumnHeader">Type</span>
                                     </th>
@@ -146,14 +193,13 @@
                                 <tr class="propertiesRow">
                                     <td>
                                         <div>
-                                            <a target="_blank" data-bind="attr: { href: FieldDetailsUrl }">
+                                            <a data-bind="attr: { href: FieldDetailsUrl }">
                                                 <span class="formFieldName" data-bind="html: Name"></span>
                                             </a>
                                             <span class="formFieldTooltip" data-bind="html: Tooltip"></span>
                                             <div class="additionalFieldDetails" data-bind="visible: OptionListName().length > 0">
-                                                <a target="_blank" data-bind="attr: { href: ListDetailsUrl }">
+                                                <a data-bind="attr: { href: ListDetailsUrl }">
                                                     <span data-bind="html: OptionListName"></span>
-                                                    @*<span>list</span>*@
                                                 </a>
                                             </div>
                                             <div class="additionalFieldDetails" data-bind="visible: IsHiddenField">
@@ -209,7 +255,9 @@
                                 <div data-bind="foreach: Transactions">
                                     <h3 data-bind="html: Name"></h3>
                                     <div data-bind="foreach: TxNodes">
-                                        <span data-bind="css: { fieldNode: IsField, textNode: !IsField() }"><span class="leadSmaller" data-bind="html: DisplayValue"></span></span>
+                                        <span class="transactionNode inlineBlock" data-bind="css: { fieldNode: IsField, textNode: !IsField() }">
+                                            <span class="leadSmaller" data-bind="html: DisplayValue"></span>
+                                        </span>
                                     </div>
                                     <div data-bind="template: { name: 'criteria-template' }"></div>
                                 </div>
@@ -231,8 +279,8 @@
                     <table>
                         <tbody>
                             <tr>
-                                <td style="vertical-align: top" class="padRight padBottom">
-                                    <span class="leadSmaller padRight">Required</span>
+                                <td style="vertical-align: top" class="padBottom">
+                                    <span class="leadSmaller labelColor">Required</span>
                                 </td>
                                 <td class="padBottom" data-bind="foreach: RequiredFields">
                                     <span class="leadSmaller padLeft" data-bind="html: Name"></span>
@@ -241,8 +289,8 @@
                         </tbody>
                         <tbody data-bind="visible: ConditionalFields().length > 0">
                             <tr>
-                                <td style="vertical-align: top" class="padRight padBottom">
-                                    <span class="leadSmaller padRight">Conditional</span>
+                                <td style="vertical-align: top" class="padBottom">
+                                    <span class="leadSmaller labelColor">Conditional</span>
                                 </td>
                                 <td class="padBottom" data-bind="foreach: ConditionalFields">
                                     <div class="inlineBlock leadSmaller">
@@ -255,19 +303,14 @@
                         </tbody>
                         <tbody data-bind="visible: OptionalFields().length > 0">
                             <tr>
-                                <td style="vertical-align: top" class="padRight padBottom">
-                                    <span class="leadSmaller padRight">Optional</span>
+                                <td style="vertical-align: top" class="padBottom">
+                                    <span class="leadSmaller labelColor">Optional</span>
                                 </td>
                                 <td class="padBottom" data-bind="foreach: OptionalFields">
                                     <span class="leadSmaller padLeft" data-bind="html: Name"></span>
                                 </td>
                             </tr>
                         </tbody>
-                        <tr>
-                            <td>
-                                <br />
-                            </td>
-                        </tr>
                     </table>
                 </div>
             </div>

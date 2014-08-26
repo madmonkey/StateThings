@@ -12,7 +12,6 @@ namespace StateInterface.Areas.Design.Models
         public SnippetsParametersModel SnippetsParameters { get; set; }
         public SnippetParametersModel SnippetParameters { get; set; }
         public string GetSnippetsUrl { get; set; }
-        public string SnippetDetailsUrl { get; set; }
         public string CreateSnippetUrl { get; set; }
         public string DeleteSnippetUrl { get; set; }
         public bool CanDesignManage { get; set; }

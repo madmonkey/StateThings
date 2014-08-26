@@ -9,12 +9,14 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <ol class="breadcrumb">
-            <li><a data-bind="attr: { href: DesignHomeUrl }">Design</a></li>
-            <li class="active">Transactions</li>
-        </ol>
-        <div class="h2 padLeft">Transactions Design<a href="#" data-bind="visible: CanDesignManage, click: addSnippet" class="glyphicon glyphicon-plus-sign padLeft" title="Add Transaction"></a></div>
-        <div class="loading" style="margin-left: 350px; margin-top: -40px;" data-bind="visible: snippetsAreLoading"></div>
+        <div data-bind="template: { name: 'breadcrumbs-template' }"></div>
+        <div class="inlineBlock">
+            <span class="padLeft leadLarger">Transactions Design</span>
+            <a title="Add Transaction" href="#" data-bind="visible: CanDesignManage, click: addSnippet">
+                <span class="glyphicon glyphicon-plus-sign padLeft"></span>
+            </a>
+            <span class="loading inlineBlock padLeft" data-bind="visible: snippetsAreLoading"></span>
+        </div>
     </div>
 </div>
 <div data-bind="template: { name: 'noSnippetFound-template' }"></div>
@@ -52,6 +54,13 @@
         </div>
     </div>
 </div>
+
+<script type="text/html" id="breadcrumbs-template">
+    <ol class="breadcrumb">
+        <li><a data-bind="attr: { href: DesignHomeUrl }, html: RecordsCenterSelector.SelectedRecordsCenterName"></a></li>
+        <li class="active">Transactions</li>
+    </ol>
+</script>
 
 <script type="text/html" id="noSnippetFound-template">
     <div class="row" data-bind="visible: showNoSnippetFound()">

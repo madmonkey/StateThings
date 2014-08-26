@@ -20,7 +20,14 @@ namespace StateInterface.Areas.Design.Controllers
         }
         public ActionResult Index()
         {
-            var homeModel = new HomeModel(Url.Action("Index", "Form"));
+            var recordCenters = _designerTasks.GetRecordsCenters(User.Identity.Name);
+            var user = _designerTasks.GetUser(User.Identity.Name);
+
+            var homeModel = new HomeModel(user, recordCenters)
+                {
+                    RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) },
+                    GetFormUrl = Url.Action("Index", "Form")
+                };
 
             homeModel.InitialData = JsonConvert.SerializeObject(homeModel);
 

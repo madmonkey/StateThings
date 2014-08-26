@@ -1,7 +1,6 @@
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Domain\bin\Debug\StateInterface.Designer.Model.dll
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Domain\bin\Debug\StateInterface.Designer.Model.pdb
-C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Domain\obj\Debug\StateInterface.Designer.Model.dll
-C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Domain\obj\Debug\StateInterface.Designer.Model.pdb
-C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Domain\obj\Debug\StateInterface.Designer.Model.csprojResolveAssemblyReference.cache
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Domain\obj\Debug\StateInterface.Designer.Model.Properties.Resources.resources
 C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Domain\obj\Debug\StateInterface.Designer.Model.csproj.GenerateResource.Cache
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Domain\obj\Debug\StateInterface.Designer.Model.dll
+C:\tfsdev\Beatles\StateInterfacePortal\Dev\Dev\SunGardStateInterface\StateInterface.Designer.Domain\obj\Debug\StateInterface.Designer.Model.pdb

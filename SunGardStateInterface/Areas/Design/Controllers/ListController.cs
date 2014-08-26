@@ -23,11 +23,10 @@ namespace StateInterface.Areas.Design.Controllers
             var recordCenters = _designerTasks.GetRecordsCenters(User.Identity.Name);
             var user = _designerTasks.GetUser(User.Identity.Name);
 
-            var model = new ListCatalogModel(user, recordCenters)
+            var model = new OptionListCatalogModel(user, recordCenters)
                 {
                     RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) },
                     GetListsUrl = Url.Action("GetLists"),
-                    ListDetailsUrl = Url.Action("Details"),
                     CatalogItems = getCatalogItemModels(user.CurrentRecordsCenter.Name),
                     DesignHomeUrl = Url.Action("Index", "Home")
                 };
@@ -39,6 +38,13 @@ namespace StateInterface.Areas.Design.Controllers
         }
 
         [HttpGet]
+        public ActionResult Help()
+        {
+            ViewBag.Title = "List Help";
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult Details(string recordsCenterName, string listName)
         {
             var user = _designerTasks.GetUser(User.Identity.Name);
@@ -47,9 +53,12 @@ namespace StateInterface.Areas.Design.Controllers
 
             var list = _designerTasks.GetList(User.Identity.Name, recordsCenter.Id, listName);
             var formFieldsUsing = _designerTasks.GetFormFieldProjectionsUsingOptionList(User.Identity.Name, list);
-            var listModel = new OptionListModel(list, formFieldsUsing, Url.Action("Details", "Form"));
-            listModel.DesignHomeUrl = Url.Action("Index", "Home");
-            listModel.ListsHomeUrl = Url.Action("Index");
+            var listModel = new OptionListDetailsModel(list, formFieldsUsing, Url.Action("Details", "Form"))
+                {
+                    DesignHomeUrl = Url.Action("Index", "Home"),
+                    ListsHomeUrl = Url.Action("Index"),
+                    ListHelpUrl = Url.Action("Help")
+                };
 
             listModel.InitialData = JsonConvert.SerializeObject(listModel);
 

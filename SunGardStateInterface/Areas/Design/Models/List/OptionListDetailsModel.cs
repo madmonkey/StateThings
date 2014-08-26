@@ -9,7 +9,7 @@ using StateInterface.Designer.Model.Projections;
 
 namespace StateInterface.Areas.Design.Models
 {
-    public class OptionListModel
+    public class OptionListDetailsModel
     {
         public int Id { get; set; }
         public string RecordsCenterName { get; set; }
@@ -22,9 +22,10 @@ namespace StateInterface.Areas.Design.Models
         public string InitialData { get; set; }
         public string DesignHomeUrl { get; set; }
         public string ListsHomeUrl { get; set; }
+        public string ListHelpUrl { get; set; }
         public bool CanDesignManage { get; set; }
 
-        public OptionListModel(OptionList optionList, IEnumerable<FormFieldProjection> formFieldsUsing, string formDetailsUrl)
+        public OptionListDetailsModel(OptionList optionList, IEnumerable<FormFieldProjection> formFieldsUsing, string formDetailsUrl)
         {
             Id = optionList.Id;
             RecordsCenterName = optionList.RecordsCenter.Name;

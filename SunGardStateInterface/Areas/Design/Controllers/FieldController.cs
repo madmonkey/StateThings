@@ -27,7 +27,6 @@ namespace StateInterface.Areas.Design.Controllers
                     RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) },
                     CatalogItems = getFieldModels(user.CurrentRecordsCenter.Name),
                     GetFieldsUrl = Url.Action("GetFields"),
-                    FieldDetailsUrl = Url.Action("Details"),
                     DesignHomeUrl = Url.Action("Index", "Home")
                 };
 
@@ -36,15 +35,26 @@ namespace StateInterface.Areas.Design.Controllers
             ViewBag.Title = "Field Design";
             return View(model);
         }
+
+        [HttpGet]
+        public ActionResult Help()
+        {
+            ViewBag.Title = "Field Help";
+            return View();
+        }
+
         [HttpGet]
         public ActionResult Details(string recordsCenterName, string tagName)
         {
             //todo: add validation (consider user vs. system) - recordcenter and tagname exist, msg if not
             var field = _designerTasks.GetField(User.Identity.Name, recordsCenterName, tagName);
             var formsUsing = _designerTasks.GetFormProjectionsUsingField(User.Identity.Name, field);
-            var model = new FieldDetailsModel(field, formsUsing, Url.Action("Details", "Form"));
-            model.DesignHomeUrl = Url.Action("Index", "Home");
-            model.FieldsHomeUrl = Url.Action("Index");
+            var model = new FieldDetailsModel(field, formsUsing, Url.Action("Details", "Form"))
+                {
+                    DesignHomeUrl = Url.Action("Index", "Home"),
+                    FieldsHomeUrl = Url.Action("Index"),
+                    FieldHelpUrl = Url.Action("Help")
+                };
 
             model.InitialData = JsonConvert.SerializeObject(model);
 
@@ -77,7 +87,7 @@ namespace StateInterface.Areas.Design.Controllers
                     catalogItems.Add(new CatalogItemModel()
                         {
                             Name = field.TagName,
-                            Description = field.Description,
+                            Description = string.IsNullOrWhiteSpace(field.Description) ? field.ToolTip : field.Description,
                             DetailsUrl = string.Format("{0}/{1}/{2}", Url.Action("Details"), recordsCenter.Name, field.TagName)
                         });
                 }
