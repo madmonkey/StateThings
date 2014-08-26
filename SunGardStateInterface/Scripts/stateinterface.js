@@ -6,8 +6,10 @@ $(function () {
         var self = this;
         self.services = new function () {
             var self = this;
-            self.postToServer = function (data, callBack, url) {
-                self.submitToServer('POST', data, callBack, url);
+            self.errorModal = ko.observable(false);
+            self.errorMessage = ko.observable('');
+            self.postToServer = function (data, callBack, url, errorCallBack) {
+                self.submitToServer('POST', data, callBack, url, errorCallBack);
             };
 
             self.putToServer = function (data, callBack, url) {
@@ -22,7 +24,8 @@ $(function () {
                 self.submitToServer('GET', data, callBack, url);
             }
 
-            self.submitToServer = function (verb, data, callBack, url) {
+            self.submitToServer = function (verb, data, callBack, url, errorCallBack) {
+                self.errorMessage('');
                 $.ajax({
                     url: url,
                     type: verb,
@@ -32,7 +35,31 @@ $(function () {
                     success: function (result) {
                         callBack(result);
                     },
-                    error: function (result) { alert("error"); }
+                    error: function (error) {                                                
+                        var errorObject = ko.utils.parseJson(error.statusText);
+                        var isSystemError = false;
+                        var isError = false;
+                        var message = '';
+                        for (var i = 0; i < errorObject.Information.length; i++) {
+                            if (errorObject.Information[i].IsSystemError) {
+                                message += errorObject.Information[i].Message;
+                                message += "<br>";
+                                isSystemError = true;
+                            }
+                            if (errorObject.Information[i].IsError) {
+                                isError = true;
+                            }
+                        }
+                        if (isSystemError) {
+                            self.errorMessage(message);
+                            self.errorModal(self);
+                        }
+                        if (isError) {
+                            if ((errorCallBack !== "undefined") || (errorCallBack !== null)) {
+                                errorCallBack(errorObject);
+                            }
+                        }
+                    }
                 });
             };
 

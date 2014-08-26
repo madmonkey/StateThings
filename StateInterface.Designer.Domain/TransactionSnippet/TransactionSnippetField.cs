@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StateInterface.Designer.Model.Properties;
+using System;
 
 namespace StateInterface.Designer.Model
 {
@@ -30,6 +31,18 @@ namespace StateInterface.Designer.Model
             CanTrimInputToLength();
             CanHaveDefaultValue();
             CanHaveTransformFormatString();
+            MustHaveSeparator();
+        }
+
+        private void MustHaveSeparator()
+        {
+            if(Frequency >= 1)
+            {
+                if(string.IsNullOrEmpty(Separator))
+                {
+                    throw new ApplicationException(Resources.MustHaveSeparator);
+                }
+            }
         }
         private void CanHaveTransformFormatString()
         {
@@ -41,7 +54,7 @@ namespace StateInterface.Designer.Model
                 case FormatMaskType.Counter:
                     if (!string.IsNullOrWhiteSpace(TransformFormat))
                     {
-                        throw new ApplicationException("TransformFormat");
+                        throw new ApplicationException(string.Format(Resources.CanHaveTransformFormatString, FormatMask.ToString()));
                     }
                     break;
             }
@@ -56,7 +69,7 @@ namespace StateInterface.Designer.Model
                 case FormatMaskType.Counter:
                     if (!string.IsNullOrWhiteSpace(DefaultValue))
                     {
-                        throw new ApplicationException("DefaultValue");
+                        throw new ApplicationException(string.Format(Resources.CanHaveDefaultValue, FormatMask.ToString()));
                     }
                     break;
 
@@ -67,35 +80,31 @@ namespace StateInterface.Designer.Model
         {
             if (string.IsNullOrWhiteSpace(TagName) || TagName.Length > 50)
             {
-                throw new ApplicationException("TagName");
-            }
-            if (!string.IsNullOrWhiteSpace(TransformFormat) && TransformFormat.Length > 2000)
-            {
-                throw new ArgumentException("TransformFormat");
+                throw new ApplicationException(string.Format( Resources.PropertyCannotBeSaved, "TagName", "cannot be blank or greater than 50 characters"));
             }
             if (!string.IsNullOrWhiteSpace(Prefix) && Prefix.Length > 250)
             {
-                throw new ArgumentException("Prefix");
+                throw new ArgumentException(string.Format(Resources.PropertyCannotBeSaved, "Prefix", "cannot greater than 250 characters"));
             }
             if (!string.IsNullOrWhiteSpace(Suffix) && Suffix.Length > 250)
             {
-                throw new ArgumentException("Suffix");
+                throw new ArgumentException(string.Format(Resources.PropertyCannotBeSaved, "Suffix", "cannot greater than 250 characters"));
             }
             if (!string.IsNullOrWhiteSpace(ToolTip) && ToolTip.Length > 100)
             {
-                throw new ArgumentException("ToolTip");
+                throw new ArgumentException(string.Format(Resources.PropertyCannotBeSaved, "ToolTip", "cannot greater than 100 characters"));
             }
             if (!string.IsNullOrWhiteSpace(DefaultValue) && DefaultValue.Length > 50)
             {
-                throw new ArgumentException("DefaultValue");
+                throw new ArgumentException(string.Format(Resources.PropertyCannotBeSaved, "DefaultValue", "cannot greater than 50 characters"));
             }
             if (!string.IsNullOrWhiteSpace(TransformFormat) && TransformFormat.Length > 50)
             {
-                throw new ArgumentException("TransformFormat");
+                throw new ArgumentException(string.Format(Resources.PropertyCannotBeSaved, "TransformFormat", "cannot greater than 50 characters"));
             }
             if (!string.IsNullOrWhiteSpace(Separator) && Separator.Length > 5)
             {
-                throw new ArgumentException("Separator");
+                throw new ArgumentException(string.Format(Resources.PropertyCannotBeSaved, "Separator", "cannot greater than 5 characters"));
             }
         }
 
@@ -107,11 +116,11 @@ namespace StateInterface.Designer.Model
                 case FormatMaskType.SystemDate:
                     if (Frequency > 0)
                     {
-                        throw new ArgumentException("Frequency");
+                        throw new ArgumentException(string.Format(Resources.CanHaveFrequency, FormatMask.ToString()));
                     }
                     else if (!string.IsNullOrWhiteSpace(Separator))
                     {
-                        throw new ArgumentException("Separator");
+                        throw new ArgumentException(string.Format(Resources.CanHaveSeparator, FormatMask.ToString()));
                     }
                     break;
             }
@@ -123,14 +132,14 @@ namespace StateInterface.Designer.Model
             {
                 if (Length != 9)
                 {
-                    throw new ArgumentException("Length");
+                    throw new ArgumentException(string.Format(Resources.CanLengthBeInferred, "Social Security Number"));
                 }
             }
             if (FormatMask == FormatMaskType.Date)
             {
                 if (Length != TransformFormat.Length)
                 {
-                    throw new ArgumentException("Length");
+                    throw new ArgumentException(string.Format(Resources.CanLengthBeInferred, "Date"));
                 }
             }
         }
@@ -148,7 +157,7 @@ namespace StateInterface.Designer.Model
                 case FormatMaskType.StateProvinceRegion:
                     if (TrimInputToLength > 0)
                     {
-                        throw new ArgumentException("TrimInputToLength");
+                        throw new ArgumentException(string.Format(Resources.CanTrimInputToLength, FormatMask.ToString()));
                     }
                     break;
             }
@@ -168,7 +177,7 @@ namespace StateInterface.Designer.Model
                 case FormatMaskType.StateProvinceRegion:
                     if (AcceptCarriageReturns)
                     {
-                        throw new ArgumentException("AcceptCarriageReturns");
+                        throw new ArgumentException(string.Format(Resources.CanAcceptCarriageReturns, FormatMask.ToString()));
                     }
                     break;
             }
@@ -185,7 +194,7 @@ namespace StateInterface.Designer.Model
                 case FormatMaskType.SystemDate:
                     if (MakeUpperCase)
                     {
-                        throw new ArgumentException("MakeUpperCase");
+                        throw new ArgumentException(string.Format(Resources.CanMakeUpperCase,FormatMask.ToString()));
                     }
                     break;
             }

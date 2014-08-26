@@ -170,6 +170,11 @@
     <Compile Include="Form\StyleDefinition.cs" />
     <Compile Include="Projections\TransactionProjection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="TransactionSnippet\TransactionSnippet.cs" />
     <Compile Include="TransactionSnippet\TransactionSnippetField.cs" />
     <Compile Include="Transaction\TextNodeType.cs" />
@@ -188,7 +193,12 @@
     <None Include="ClassDiagram.cd" />
     <None Include="ICAKey.snk" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

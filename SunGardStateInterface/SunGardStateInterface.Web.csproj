@@ -234,19 +234,19 @@
     <Compile Include="Areas\Design\Models\CatalogItemModel.cs" />
     <Compile Include="Areas\Design\Models\Field\FieldCatalogModel.cs" />
     <Compile Include="Areas\Design\Models\Field\FieldDetailsModel.cs" />
-    <Compile Include="Areas\Design\Models\Field\FormFieldModel.cs" />
     <Compile Include="Areas\Design\Models\Field\FieldsParametersModel.cs" />
     <Compile Include="Areas\Design\Models\Field\UsesField.cs" />
     <Compile Include="Areas\Design\Models\FormRequestModel.cs" />
+    <Compile Include="Areas\Design\Models\Form\FormFieldModel.cs" />
     <Compile Include="Areas\Design\Models\Form\UpdateFormCategoriesModel.cs" />
     <Compile Include="Areas\Design\Models\Form\UpdateFormApplicationsModel.cs" />
     <Compile Include="Areas\Design\Models\Form\SelectItemModel.cs" />
     <Compile Include="Areas\Design\Models\Form\CriteriaModel.cs" />
     <Compile Include="Areas\Design\Models\Form\CriteriaNodeModel.cs" />
-    <Compile Include="Areas\Design\Models\Form\FormCatalogModel.cs" />
+    <Compile Include="Areas\Design\Models\Form\RequestFormCatalogModel.cs" />
     <Compile Include="Areas\Design\Models\Form\FormsParametersModel.cs" />
     <Compile Include="Areas\Design\Models\Form\RequestFormCategoryModel.cs" />
-    <Compile Include="Areas\Design\Models\Form\RequestFormModel.cs" />
+    <Compile Include="Areas\Design\Models\Form\RequestFormDetailsModel.cs" />
     <Compile Include="Areas\Design\Models\Form\RequestFormCatalogProjectionModel.cs" />
     <Compile Include="Areas\Design\Models\Form\TransactionModel.cs" />
     <Compile Include="Areas\Design\Models\Form\TxFieldNodeModel.cs" />
@@ -256,10 +256,10 @@
     <Compile Include="Areas\Design\Models\Layout\ControlModel.cs" />
     <Compile Include="Areas\Design\Models\Layout\StyleModel.cs" />
     <Compile Include="Areas\Design\Models\Associations\RecordsCenterModel.cs" />
-    <Compile Include="Areas\Design\Models\List\ListCatalogModel.cs" />
+    <Compile Include="Areas\Design\Models\List\OptionListCatalogModel.cs" />
     <Compile Include="Areas\Design\Models\List\ListsParametersModel.cs" />
     <Compile Include="Areas\Design\Models\List\OptionListTierModel.cs" />
-    <Compile Include="Areas\Design\Models\List\OptionListModel.cs" />
+    <Compile Include="Areas\Design\Models\List\OptionListDetailsModel.cs" />
     <Compile Include="Areas\Design\Models\List\OptionListItemModel.cs" />
     <Compile Include="Areas\Design\Models\List\UsesList.cs" />
     <Compile Include="Areas\Design\Models\Transaction\SnippetParametersModel.cs" />
@@ -267,13 +267,15 @@
     <Compile Include="Areas\Design\Models\Transaction\TransactionSnippetCatalogModel.cs" />
     <Compile Include="Areas\Design\Models\Transaction\TransactionSnippetFieldModel.cs" />
     <Compile Include="Areas\Design\Models\Transaction\TransactionSnippetFieldTypeHelper.cs" />
-    <Compile Include="Areas\Design\Models\Transaction\TransactionSnippetModel.cs" />
+    <Compile Include="Areas\Design\Models\Transaction\TransactionSnippetDetailsModel.cs" />
     <Compile Include="Controllers\StateConnectContollerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Exceptions\StateInterfaceParameterValidationException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AjaxInformationModel.cs" />
+    <Compile Include="Models\AjaxResponseModel.cs" />
     <Compile Include="Models\RecordsCenterParametersModel.cs" />
     <Compile Include="Models\RecordsCenterSelectorModel.cs" />
     <Compile Include="Models\NameValueModel.cs" />
@@ -390,6 +392,8 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Unauthorized.html" />
     <Content Include="Areas\Design\Views\Shared\_catalogItemsTemplate.cshtml" />
+    <Content Include="Areas\Design\Views\List\Help.cshtml" />
+    <Content Include="Areas\Design\Views\Field\Help.cshtml" />
     <None Include="Properties\PublishProfiles\localhost.pubxml" />
     <None Include="Properties\PublishProfiles\PSJDevTest Debug.pubxml" />
     <None Include="Properties\PublishProfiles\PSJDevTest Release.pubxml" />

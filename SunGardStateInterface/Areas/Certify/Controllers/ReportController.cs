@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Designer.Tasks;
 using StateInterface.Properties;
 using StateInterface.Controllers;
+using StateInterface.Designer;
 
 namespace StateInterface.Areas.Certify.Controllers
 {
@@ -40,7 +41,7 @@ namespace StateInterface.Areas.Certify.Controllers
         [HttpGet]
         public ActionResult Status(string recordsCenterName)
         {
-            if (String.IsNullOrEmpty(recordsCenterName))
+            if (string.IsNullOrEmpty(recordsCenterName))
             {
                 throw new StateInterfaceParameterValidationException(Resources.RecordsCenterInvalid);
             }
@@ -49,7 +50,7 @@ namespace StateInterface.Areas.Certify.Controllers
 
             if (recordsCenter == null)
             {
-                throw new StateInterfaceParameterValidationException(string.Format(Resources.RecordsCenterNotFound));
+                throw new ObjectNotFoundException(string.Format(Resources.RecordsCenterNotFound));
             }
 
             var statisticsRecordsCenter = _designerTasks.GetStatisticsForRecordsCenter(User.Identity.Name,recordsCenter.Name);
@@ -65,7 +66,7 @@ namespace StateInterface.Areas.Certify.Controllers
         [HttpGet]
         public ActionResult Print(string recordsCenterName)
         {
-            if (String.IsNullOrEmpty(recordsCenterName))
+            if (string.IsNullOrEmpty(recordsCenterName))
             {
                 throw new StateInterfaceParameterValidationException(Resources.RecordsCenterInvalid);
             }
@@ -74,7 +75,7 @@ namespace StateInterface.Areas.Certify.Controllers
 
             if (recordsCenter == null)
             {
-                throw new StateInterfaceParameterValidationException(Resources.RecordsCenterNotFound);
+                throw new ObjectNotFoundException(Resources.RecordsCenterNotFound);
             }
 
             var statisticsRecordsCenter = _designerTasks.GetStatisticsForRecordsCenter(User.Identity.Name, recordsCenter.Name);
@@ -87,7 +88,7 @@ namespace StateInterface.Areas.Certify.Controllers
         [HttpGet]
         public ActionResult OpenIssues(string recordsCenterName)
         {
-            if (String.IsNullOrEmpty(recordsCenterName))
+            if (string.IsNullOrEmpty(recordsCenterName))
             {
                 throw new StateInterfaceParameterValidationException(Resources.RecordsCenterInvalid);
             }
@@ -96,7 +97,7 @@ namespace StateInterface.Areas.Certify.Controllers
 
             if (recordsCenter == null)
             {
-                throw new StateInterfaceParameterValidationException(Resources.RecordsCenterNotFound);
+                throw new ObjectNotFoundException(Resources.RecordsCenterNotFound);
             }
 
             var openIssues = _designerTasks.GetOpenIssues(User.Identity.Name, recordsCenterName);

@@ -49,12 +49,32 @@ $(function () {
         }, vm.GetSnippetsUrl());
     };
 
+    vm.isError = ko.observable(false);
+    vm.errorMessage = ko.observable('');
     vm.createSnippet = function () {
+        vm.isError(false);
+        vm.errorMessage('');
         var newTab = window.open('', '_blank');
         vm.SnippetParameters.RecordsCenterName(vm.RecordsCenterSelector.SelectedRecordsCenterName());
-        vm.services.postToServer(ko.toJSON(vm.SnippetParameters), function (data) {
+        vm.services.postToServer(
+            ko.toJSON(vm.SnippetParameters),
+            function (data) {
             newTab.location = data.DetailsUrl;
-        }, vm.CreateSnippetUrl());
+            },
+            vm.CreateSnippetUrl(),
+            function (error) {                
+                var message = '';
+                for (var i = 0; i < error.Information.length; i++) {
+                    if (error.Information[i].IsError) {
+                        message += error.Information[i].Message;
+                        message += "<br>";
+                        vm.isError(true);
+                    }
+                }
+                vm.errorMessage(message);
+                
+            }
+        );
     };
 
     vm.evaluateShowNoSnippetsMessage();

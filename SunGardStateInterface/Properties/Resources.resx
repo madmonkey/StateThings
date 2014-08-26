@@ -174,4 +174,7 @@
   <data name="SnippetNotFound" xml:space="preserve">
     <value>The requested snippet was not found.</value>
   </data>
+  <data name="UnspecifiedError" xml:space="preserve">
+    <value>An unspecified error occurred.</value>
+  </data>
 </root>

@@ -128,18 +128,18 @@ a:link {
     color: red;
 }
 
-.glyphicon{
-    font-size:18px;
+.glyphicon {
+    font-size: 18px;
 }
 
 .glyphicon-white, .glyphicon-white a {
     color: #fff;
 }
 
-.dashboardIcon{
+.dashboardIcon {
     font-size: 120px;
-    background-color:#2672ec;
-    padding:20px;
+    background-color: #2672ec;
+    padding: 20px;
 }
 
 .medium-header {
@@ -160,7 +160,7 @@ a:link {
 
 .application {
     font-size: 2.4em;
-    color:black;
+    color: black;
     display: inline;
 }
 
@@ -184,7 +184,7 @@ a:link {
     border: 1px;
     border-style: solid;
     border-color: red;
-    outline-color:  red;
+    outline-color: red;
 }
 
 .errorMessage {
@@ -221,9 +221,21 @@ a:link {
     padding-top: 17px;
 }
 
+.dialog-header-information {
+    background-color: #428bca;
+}
+
+.highlight-text {
+    color: white;
+}
+
+.dialog-header-error.h4 {
+    color: white;
+}
+
 /* -------------- Generic  -------------- */
 .recordsCenterSelectorPlaceHolder {
-    padding-bottom: 24px;
+    padding-bottom: 23px;
 }
 
 .itemUsingItem {
@@ -231,7 +243,11 @@ a:link {
 }
 
 .inlineBlock {
-    display: inline-block
+    display: inline-block;
+}
+
+.labelColor {
+    color: #999999;
 }
 
 /* -------------- Form -------------- */
@@ -243,7 +259,6 @@ a:link {
 .formFieldName {
     font-weight: bolder;
     font-size: 1.12em;
-    line-height:28px
 }
 
 .formFieldTooltip {
@@ -254,25 +269,24 @@ a:link {
 .additionalFieldDetails {
     font-size: .85em;
     line-height: 10px;
-    margin: 8px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 10px;
+}
+
+.transactionNode {
+    font-weight: bold;
+    border: 1px solid;
+    margin: 3px 1px;
+    padding: 1px 4px 1px 4px;
 }
 
 .fieldNode {
-    font-weight: bold;
     color: #0b0b80;
-    border: 1px solid;
-    margin: 3px 3px 3px 3px;
-    padding: 3px 4px 3px 4px;
-    line-height: 30px;
 }
 
 .textNode {
-    font-weight: bold;
     color: #0FAA0F;
-    border: 1px solid;
-    margin: 3px 3px 3px 3px;
-    padding: 3px 4px 3px 4px;
-    line-height: 30px;
 }
 
 .listLink {
@@ -292,16 +306,17 @@ a:link {
 
 .fieldPropertiesContent {
     font-size: 12pt;
-    padding-left:10px;
+    padding-left: 10px;
 }
 
 .propertiesRow {
     border-bottom: 1pt solid;
     border-color: #cccccc;
+    vertical-align: top;
 }
 
-.panel-heading , .panel-body {
-padding: 3px;
+.panel-heading, .panel-body {
+    padding: 3px;
 }
 
 /* -------------- Loader -------------- */

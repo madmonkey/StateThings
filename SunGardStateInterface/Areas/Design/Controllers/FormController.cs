@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using StateInterface.Properties;
 using Designer.Tasks;
 using StateInterface.Controllers;
+using StateInterface.Designer;
 
 namespace StateInterface.Areas.Design.Controllers
 {
@@ -25,12 +26,11 @@ namespace StateInterface.Areas.Design.Controllers
             var recordCenters = _designerTasks.GetRecordsCenters(User.Identity.Name);
             var user = _designerTasks.GetUser(User.Identity.Name);
 
-            var model = new FormCatalogModel(user, recordCenters)
+            var model = new RequestFormCatalogModel(user, recordCenters)
                 {
                     RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) },
                     CatalogItems = getCatalogItemModels(user.CurrentRecordsCenter.Name),
                     GetFormsUrl = Url.Action("GetForms"),
-                    FormDetailsUrl = Url.Action("Details"),
                     DesignHomeUrl = Url.Action("Index", "Home"),
                 };
 
@@ -48,14 +48,16 @@ namespace StateInterface.Areas.Design.Controllers
             {
                 var requestForm = _designerTasks.GetForm(User.Identity.Name, recordsCenter.Id, formId);
                 var availableApplications = _designerTasks.GetApplications(User.Identity.Name);
+                var availableCategories = _designerTasks.GetCategories(User.Identity.Name);
                 User user = _designerTasks.GetUser(User.Identity.Name);
 
-                var formModel = new RequestFormModel(requestForm, Url.Action("Details", "List"), Url.Action("Details", "Field"), availableApplications)
+                var formModel = new RequestFormDetailsModel(requestForm, Url.Action("Details", "List"), Url.Action("Details", "Field"), availableApplications, availableCategories)
                 {
                     FormHelpUrl = Url.Action("Help"),
                     PreviewFormUrl = string.Format("{0}/{1}/{2}", Url.Action("Preview", "Layout"), requestForm.RecordsCenter.Name, requestForm.FormId),
                     CanDesignManage = user.CanDesignManage,
                     UpdateApplicationsAssociationUrl = Url.Action("UpdateFormApplications", new { }),
+                    UpdateCategoriesAssociationUrl = Url.Action("UpdateFormCategories", new { }),
                     DesignHomeUrl = Url.Action("Index", "Home"),
                     FormsHomeUrl = Url.Action("Index")
                 };
@@ -88,20 +90,17 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpPost]
         public ActionResult UpdateFormApplications(UpdateFormApplicationsModel model)
         {
+            throw new ObjectNotFoundException("These are not the droids you are looking for");
             if (_designerTasks.GetUser(User.Identity.Name).CanDesignManage)
             {
                 if (model != null)
                 {
                     model.Validate();
                     var selectedApplicationIds = model.Applications.Where(x => x.IsSelected == true).Select(x => x.Id);
-
                     var requestForm = _designerTasks.UpdateRequestFormApplications(User.Identity.Name,
                         model.RecordsCenterName, model.FormId, selectedApplicationIds);
-
                     var applications = _designerTasks.GetApplications(User.Identity.Name);
-
                     model = new UpdateFormApplicationsModel(requestForm, applications);
-
                     return Json(model);
                 }
                 throw new ApplicationException(Resources.ParameterInvalid);
@@ -116,13 +115,9 @@ namespace StateInterface.Areas.Design.Controllers
                 {
                     model.Validate();
                     var selectedCategoryIds = model.Categories.Where(x => x.IsSelected == true).Select(x => x.Id);
-
                     var requestForm = _designerTasks.UpdateRequestFormCategrories(User.Identity.Name, model.RecordsCenterName, model.FormId, selectedCategoryIds);
-
                     var categories = _designerTasks.GetCategories(User.Identity.Name);
-
                     model = new UpdateRequestFormCategoriesModel(requestForm, categories);
-
                     return Json(model);
                 }
                 throw new ApplicationException(Resources.ParameterInvalid);

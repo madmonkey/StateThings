@@ -51,5 +51,26 @@
     @Scripts.Render("~/bundles/moment")
     @Scripts.Render("~/bundles/stateinterface")
     @RenderSection("scripts", required: false)
+
+    <div class="modal fade" data-bind="bootstrapShowModal: services.errorModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a class="close" data-dismiss="modal" aria-hidden="true">×</a>
+                    <h4 class="modal-title text-danger"><span class="glyphicon glyphicon-warning-sign"></span> Error</h4>
+                </div>
+                <form role="form">
+                    <div class="modal-body">
+                        <h4><span data-bind="html: services.errorMessage"></span></h4>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" data-dismiss="modal" class="btn btn-primary">Close</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+
+
