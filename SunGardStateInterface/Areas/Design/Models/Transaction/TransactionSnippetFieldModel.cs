@@ -167,18 +167,10 @@ namespace StateInterface.Areas.Design.Models
                     if (Frequency > 0)
                     {
                         Frequency = 0;
-                        //throw new ApplicationException(string.Format
-                        //        (Resources.SnippetFieldParamterInvalidForType,
-                        //            FormatMask.ToString(),
-                        //            "Frequency"));
                     }
                     if (!string.IsNullOrWhiteSpace(Separator))
                     {
                         Separator = string.Empty;
-                        //throw new ApplicationException(string.Format
-                        //        (Resources.SnippetFieldParamterInvalidForType,
-                        //            FormatMask.ToString(),
-                        //            "Separator"));
                     }
                     break;
             }
@@ -194,10 +186,6 @@ namespace StateInterface.Areas.Design.Models
                     if (!string.IsNullOrWhiteSpace(DefaultValue))
                     {
                         DefaultValue = string.Empty;
-                        //throw new ApplicationException(string.Format
-                        //    (Resources.SnippetFieldParamterInvalidForType,
-                        //        FormatMask.ToString(),
-                        //        "DefaultValue"));
                     }
                     break;
 
@@ -241,10 +229,6 @@ namespace StateInterface.Areas.Design.Models
                 if (MakeUpperCase)
                 {
                     MakeUpperCase = false;
-                    //throw new ApplicationException(string.Format
-                    //    (Resources.SnippetFieldParamterInvalidForType,
-                    //        FormatMask.ToString(),
-                    //        "MakeUpperCase"));
                 }
                 break;
             }
@@ -260,10 +244,6 @@ namespace StateInterface.Areas.Design.Models
                     if (AcceptCarriageReturns)
                     {
                         AcceptCarriageReturns = false;
-                        //throw new ApplicationException(string.Format
-                        //    (Resources.SnippetFieldParamterInvalidForType,
-                        //        FormatMask.ToString(),
-                        //        "AcceptCarriageReturns"));
                     }
                     break;
             }

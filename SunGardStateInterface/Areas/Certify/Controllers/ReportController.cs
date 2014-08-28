@@ -47,7 +47,7 @@ namespace StateInterface.Areas.Certify.Controllers
             var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name, recordsCenterName);
             if (recordsCenter == null)
             {
-                throw new ObjectNotFoundException(string.Format(Resources.RecordsCenterNotFound));
+                throw new ObjectNotFoundException(string.Format(Resources.RecordsCenterNotFound, recordsCenterName.ToUpper()));
             }
             var statisticsRecordsCenter = _designerTasks.GetStatisticsForRecordsCenter(User.Identity.Name,recordsCenter.Name);
             var statistics = new StatisticsRecordsCenterModel(statisticsRecordsCenter)
@@ -68,7 +68,7 @@ namespace StateInterface.Areas.Certify.Controllers
             var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name, recordsCenterName);
             if (recordsCenter == null)
             {
-                throw new ObjectNotFoundException(Resources.RecordsCenterNotFound);
+                throw new ObjectNotFoundException(string.Format(Resources.RecordsCenterNotFound, recordsCenterName.ToUpper()));
             }
             var statisticsRecordsCenter = _designerTasks.GetStatisticsForRecordsCenter(User.Identity.Name, recordsCenter.Name);
             var statistics = new StatisticsRecordsCenterModel(statisticsRecordsCenter);
@@ -86,7 +86,7 @@ namespace StateInterface.Areas.Certify.Controllers
             var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name,recordsCenterName);
             if (recordsCenter == null)
             {
-                throw new ObjectNotFoundException(Resources.RecordsCenterNotFound);
+                throw new ObjectNotFoundException(string.Format(Resources.RecordsCenterNotFound, recordsCenterName.ToUpper()));
             }
             var openIssues = _designerTasks.GetOpenIssues(User.Identity.Name, recordsCenterName);
             var openIssuesModel = new OpenIssuesModel(recordsCenter, openIssues, Url.Action("Details", "Form", new { area = "Design" }), Url.Action("UpdateForm", "Update"));

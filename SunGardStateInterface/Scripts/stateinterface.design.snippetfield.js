@@ -375,6 +375,7 @@
     });
 
     vm.editField = function (item) {
+        vm.services.isError(false);
         vm.indexId(item.Id);
         vm.fieldNameWarning(false);
         warningSubscription.dispose();
@@ -391,6 +392,7 @@
     };
 
     vm.addField = function () {
+        vm.services.isError(false);
         vm.fieldNameWarning(false);
         warningSubscription.dispose();
         vm.copyNewToSelectedField();
@@ -398,11 +400,13 @@
     };
 
     vm.deleteField = function (item) {
+        vm.services.isError(false);
         vm.copyToSelectedField(item);
         vm.confirmDeleteModal(item);
     };
 
     vm.editSnippet = function () {
+        vm.services.isError(false);
         vm.copyToSnippetForEdit(vm);
         vm.snippetPropertiesModal(vm);
         vm.snippetNameWarning(false);
@@ -411,12 +415,18 @@
     vm.updateSnippetField = function () {
         vm.finalizeSelectedField();
         vm.services.postToServer(ko.toJSON(vm.SelectedField), function (data) {
+            if (!vm.services.isError()) {
+                $(".modal").modal('hide');
+            }
             ko.mapping.fromJS(data, {}, vm);
         }, vm.UpdateSnippetFieldUrl());
     };
 
     vm.deleteSnippetField = function () {
         vm.services.postToServer(ko.toJSON(vm.SelectedField), function (data) {
+            if (!vm.services.isError()) {
+                $(".modal").modal('hide');
+            }
             ko.mapping.fromJS(data, {}, vm);
         }, vm.DeleteSnippetFieldUrl());
     };
@@ -425,6 +435,9 @@
         vm.propertiesAreLoading(true);
 
         vm.services.postToServer(ko.toJSON(vm.SnippetForEdit), function (data) {
+            if (!vm.services.isError()) {
+                $(".modal").modal('hide');
+            }
             ko.mapping.fromJS(data, {}, vm);
         }, vm.UpdateSnippetUrl());
 

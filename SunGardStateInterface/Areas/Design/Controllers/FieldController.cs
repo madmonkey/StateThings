@@ -89,7 +89,7 @@ namespace StateInterface.Areas.Design.Controllers
                 }
                 return catalogItems;
             }
-            throw new ObjectNotFoundException(Resources.RecordsCenterNotFound);
+            throw new ObjectNotFoundException(string.Format(Resources.RecordsCenterNotFound,recordsCenterName.ToUpper()));
         }
     }
 }

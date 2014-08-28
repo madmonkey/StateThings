@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace Designer.Tasks
 {
     //TODO: Consider where-when-how to apply the Nacho-Cheese exception
@@ -346,14 +347,22 @@ namespace Designer.Tasks
         }
         public TransactionSnippet UpdateTransactionSnippet(string currentUser, TransactionSnippet transactionsnippet)
         {
-            var user = validateUserContext(currentUser);
-            if(_repository.GetTransactionSnippet(transactionsnippet.RecordsCenter.Name,transactionsnippet.TokenName)!=null)
+            try
+            {
+                var user = validateUserContext(currentUser);
+                var snippet = _repository.GetTransactionSnippet(transactionsnippet.RecordsCenter.Name, transactionsnippet.TokenName);
+                if ((snippet != null) && (snippet.Id != transactionsnippet.Id))
+                {
+                    throw new DuplicateKeyException(string.Format("The TokenName '{0}' already exists for this records center", transactionsnippet.TokenName)); //Key already exists
+                }
+                transactionsnippet.Updated = DateTime.UtcNow;
+                _repository.Save<TransactionSnippet>(transactionsnippet);
+                return transactionsnippet;
+            }
+            catch
             {
                 throw new DuplicateKeyException(string.Format("The TokenName '{0}' already exists for this records center", transactionsnippet.TokenName)); //Key already exists
             }
-            transactionsnippet.Updated = DateTime.UtcNow;
-            _repository.Save<TransactionSnippet>(transactionsnippet);
-            return transactionsnippet;
         }
         public TransactionSnippet UpdateTransactionSnippetField(string currentUser, int parentSnippetId, TransactionSnippetField transactionSnippetField)
         {

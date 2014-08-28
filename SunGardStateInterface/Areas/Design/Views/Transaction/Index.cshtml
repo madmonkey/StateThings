@@ -8,15 +8,7 @@
         </div>
     </div>
 </div>
-<br data-bind="visible: services.isError"/>
-<div class="row">
-    <div class="col-xs-12">
-        <div class="alert alert-danger" data-bind="visible: services.isError">
-            <a href="#" class="close" onclick="$('.alert').hide()">&times;</a>
-            <span data-bind="html: services.errorMessage"></span>
-        </div>
-    </div>
-</div>
+
 <div class="row">
     <div class="col-xs-12">
         <div data-bind="template: { name: 'breadcrumbs-template' }"></div>
@@ -46,6 +38,10 @@
             <form role="form">
                 <div class="modal-body">
                     <div class="form-group">
+                        <div class="alert alert-danger fieldInputMedium" data-bind="visible: services.isError">
+                            <a href="#" class="close" onclick="$('.alert').hide()">&times;</a>
+                            <span data-bind="html: services.errorMessage"></span>
+                        </div>
                         <label>Name</label>
                         <input autofocus class="fieldInputMedium" type="text" maxlength="50" data-bind="value: SnippetParameters.Name, css: {error: SnippetParameters.Name.hasError}, valueUpdate:'afterkeydown'">
                         <span data-bind="visible: SnippetParameters.Name.hasError, text: SnippetParameters.Name.validationMessage" class="errorMessage"></span>
@@ -57,7 +53,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="#" data-dismiss="modal" class="btn btn-primary" data-bind="click: createSnippet, css: {linkDisabled: isSnippetError}">Save</a>
+                    <a href="#" class="btn btn-primary" data-bind="click: createSnippet, css: {linkDisabled: isSnippetError}">Save</a>
                     <a class="btn btn-default" data-dismiss="modal">Cancel</a>
                 </div>
             </form>

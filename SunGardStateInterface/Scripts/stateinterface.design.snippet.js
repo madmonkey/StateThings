@@ -31,6 +31,7 @@ $(function () {
 
     vm.addSnippet = function() {
         vm.initializeSnippet();
+        vm.services.isError(false);
         vm.snippetModal(vm);
     };
 

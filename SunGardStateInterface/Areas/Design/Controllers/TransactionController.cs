@@ -75,7 +75,7 @@ namespace StateInterface.Areas.Design.Controllers
                 }
                 return catalogItems; 
             }
-            throw new ObjectNotFoundException(Resources.RecordsCenterNotFound);
+            throw new ObjectNotFoundException(string.Format(Resources.RecordsCenterNotFound,recordsCenterName.ToUpper()));
         }
         [HttpGet]
         public ActionResult Details(string recordsCenterName, string tokenName)
@@ -105,7 +105,7 @@ namespace StateInterface.Areas.Design.Controllers
                 }
                 throw new ObjectNotFoundException(Resources.SnippetNotFound);
             }
-            throw new ObjectNotFoundException(Resources.RecordsCenterNotFound);
+            throw new ObjectNotFoundException(string.Format(Resources.RecordsCenterNotFound,recordsCenterName.ToUpper()));
         }
         [HttpPost]
         public ActionResult CreateSnippet(SnippetParametersModel snippetParameters)
@@ -132,7 +132,7 @@ namespace StateInterface.Areas.Design.Controllers
             }
             catch (DuplicateKeyException duplicateKeyException)
             {
-                errorList.Add( new InformationModel (true,duplicateKeyException.Message));
+                errorList.Add( new InformationModel (true, duplicateKeyException.Message));
                 return Json(new ResponseModel(errorList));
             }
             
@@ -158,7 +158,6 @@ namespace StateInterface.Areas.Design.Controllers
             var snippet = _designerTasks.GetTransactionSnippet(User.Identity.Name, snippetParameters.Id);
             if (snippet == null)
             {
-                //throw new ObjectNotFoundException(Resources.SnippetNotFound);
                 errorList.Add(new InformationModel(true, Resources.SnippetNotFound));
                 return Json(new ResponseModel(errorList));
             }
@@ -167,7 +166,16 @@ namespace StateInterface.Areas.Design.Controllers
             snippet.TransactionDefinition = snippetParameters.Definition;
             snippet.Criteria = snippetParameters.Criteria;
             snippet.IncludePrefixAndSuffix = snippetParameters.IncludePrefixAndSuffix;
-            var transactionSnippet = new TransactionSnippetDetailsModel(_designerTasks.UpdateTransactionSnippet(User.Identity.Name, snippet), TransactionSnippetFieldTypeHelper.TypeValues());
+            TransactionSnippet updateSnippet;
+            try
+            {
+                updateSnippet = _designerTasks.UpdateTransactionSnippet(User.Identity.Name, snippet);
+            }
+            catch(DuplicateKeyException ex)
+            {
+                return Json(new ResponseModel(new InformationModel(true, ex.Message)));
+            }
+            var transactionSnippet = new TransactionSnippetDetailsModel(updateSnippet, TransactionSnippetFieldTypeHelper.TypeValues());
             setProperties(transactionSnippet, snippetParameters.RecordsCenterName, user);
             return Json(new ResponseModel<TransactionSnippetDetailsModel>(transactionSnippet));
         }

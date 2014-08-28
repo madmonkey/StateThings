@@ -7,15 +7,6 @@
         <div class="recordsCenterSelectorPlaceHolder"></div>
     </div>
 </div>
-<br data-bind="visible: services.isError" />
-<div class="row">
-    <div class="col-xs-12">
-        <div class="alert alert-danger" data-bind="visible: services.isError">
-            <a href="#" class="close" onclick="$('.alert').hide()">&times;</a>
-            <span data-bind="html: services.errorMessage"></span>
-        </div>
-    </div>
-</div>
 <div class="row">
     <div class="col-xs-12">
         <div data-bind="template: { name: 'breadcrumbs-template' }"></div>
@@ -40,6 +31,10 @@
             <form role="form">
                 <div class="modal-body">
                     <div class="form-group">
+                        <div class="alert alert-danger fieldInputMedium" data-bind="visible: services.isError">
+                            <a href="#" class="close" onclick="$('.alert').hide()">&times;</a>
+                            <span data-bind="html: services.errorMessage"></span>
+                        </div>
                         <div>
                             <span data-bind="visible: snippetNameWarning, text: 'Warning: Changing Transaction Name may break forms that are using this transaction!'" class="errorMessage"></span>
                         </div>
@@ -65,7 +60,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="#" data-dismiss="modal" class="btn btn-primary" data-bind="click: updateSnippet, css: {linkDisabled: isSnippetError}">Save</a>
+                    <a href="#" class="btn btn-primary" data-bind="click: updateSnippet, css: {linkDisabled: isSnippetError}">Save</a>
                     <a class="btn btn-default" data-dismiss="modal">Cancel</a>
                 </div>
             </form>

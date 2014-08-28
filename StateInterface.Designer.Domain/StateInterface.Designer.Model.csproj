@@ -139,6 +139,7 @@
     <Compile Include="Exceptions\DuplicateKeyException.cs" />
     <Compile Include="Exceptions\ObjectNotFoundException.cs" />
     <Compile Include="Exceptions\SecurityAccessDeniedException.cs" />
+    <Compile Include="Exceptions\UniqueKeyViolationException.cs" />
     <Compile Include="Exceptions\ValidationException.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Certification\TestCaseCriteriaNode.cs" />

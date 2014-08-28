@@ -120,6 +120,9 @@
   <data name="ApplicationAssociationNotFound" xml:space="preserve">
     <value>Application Association is not found.</value>
   </data>
+  <data name="DateIsInvalid" xml:space="preserve">
+    <value>{0} is an invalid date.</value>
+  </data>
   <data name="DateTimeFormat" xml:space="preserve">
     <value>MM/dd/yy H:mm:ss</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="NameInvalid" xml:space="preserve">
     <value>The name is invalid.</value>
+  </data>
+  <data name="NumberMustBeGreaterThanZero" xml:space="preserve">
+    <value>The {0} entered must be a value greater than zero.</value>
   </data>
   <data name="ParameterEmpty" xml:space="preserve">
     <value>Parameter is empty.</value>
@@ -148,7 +154,7 @@
     <value>The Records Center name is invalid.</value>
   </data>
   <data name="RecordsCenterNotFound" xml:space="preserve">
-    <value>The Records Center is not found.</value>
+    <value>The Records Center '{0}' could not be found.</value>
   </data>
   <data name="SnippetCriteriaInvalid" xml:space="preserve">
     <value>The snippet criteria is invalid.</value>
@@ -162,7 +168,7 @@
   <data name="SnippetFieldNotFound" xml:space="preserve">
     <value>The requested snippet field was not found.</value>
   </data>
-  <data name="SnippetFieldParamterInvalidForType" xml:space="preserve">
+  <data name="SnippetFieldParameterInvalidForType" xml:space="preserve">
     <value>The {0} field type has {1} property which is invalid.</value>
   </data>
   <data name="SnippetFormatInvalid" xml:space="preserve">

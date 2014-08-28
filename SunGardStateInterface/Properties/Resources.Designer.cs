@@ -70,6 +70,15 @@ namespace StateInterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} is an invalid date..
+        /// </summary>
+        public static string DateIsInvalid {
+            get {
+                return ResourceManager.GetString("DateIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MM/dd/yy H:mm:ss.
         /// </summary>
         public static string DateTimeFormat {
@@ -102,6 +111,15 @@ namespace StateInterface.Properties {
         public static string NameInvalid {
             get {
                 return ResourceManager.GetString("NameInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The {0} entered must be a value greater than zero..
+        /// </summary>
+        public static string NumberMustBeGreaterThanZero {
+            get {
+                return ResourceManager.GetString("NumberMustBeGreaterThanZero", resourceCulture);
             }
         }
         
@@ -151,7 +169,7 @@ namespace StateInterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Records Center is not found..
+        ///   Looks up a localized string similar to The Records Center &apos;{0}&apos; could not be found..
         /// </summary>
         public static string RecordsCenterNotFound {
             get {
@@ -198,9 +216,9 @@ namespace StateInterface.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The {0} field type has {1} property which is invalid..
         /// </summary>
-        public static string SnippetFieldParamterInvalidForType {
+        public static string SnippetFieldParameterInvalidForType {
             get {
-                return ResourceManager.GetString("SnippetFieldParamterInvalidForType", resourceCulture);
+                return ResourceManager.GetString("SnippetFieldParameterInvalidForType", resourceCulture);
             }
         }
         

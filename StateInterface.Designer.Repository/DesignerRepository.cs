@@ -47,10 +47,21 @@ namespace StateInterface.Designer.Repository
         }
         public void Save<T>(T item)
         {
-            using (var transaction = _session.BeginTransaction())
+            try
             {
-                _session.SaveOrUpdate(item);
-                transaction.Commit();
+                using (var transaction = _session.BeginTransaction())
+                {
+                    _session.SaveOrUpdate(item);
+                    transaction.Commit();
+                }
+            }
+            catch(ADOException ex)
+            {
+                throw;
+            }
+            catch(Exception exp)
+            {
+                throw;
             }
         }
         public void Remove<T>(T item)
