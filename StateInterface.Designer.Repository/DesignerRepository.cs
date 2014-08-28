@@ -612,5 +612,27 @@ namespace StateInterface.Designer.Repository
             }
             throw new ObjectNotFoundException();
         }
+
+
+        public TransactionSnippet GetTransactionSnippet(string recordsCenter, string tokenName)
+        {
+            using (var transaction = Session.BeginTransaction())
+            {
+                var snippet =_session.Query<TransactionSnippet>().FirstOrDefault(x => x.RecordsCenter.Name == recordsCenter && x.TokenName == tokenName);
+                transaction.Commit();
+                return snippet;
+            }
+            //if (transactionsnippet.Id == 0)
+            //{
+            //    if (_repository.GetAll<TransactionSnippet>()
+            //        .Where(x => string.Compare(x.RecordsCenter.Name, transactionsnippet.RecordsCenter.Name, StringComparison.InvariantCultureIgnoreCase) == 0
+            //            && string.Compare(x.TokenName, transactionsnippet.TokenName, StringComparison.InvariantCultureIgnoreCase) == 0)
+            //        .FirstOrDefault() == null)
+            //    {
+            //        throw new DuplicateKeyException(string.Format("The TokenName value '{0}' already exists for this records center", transactionsnippet.TokenName));
+            //    }
+            //}
+            //throw new NotImplementedException();
+        }
     }
 }

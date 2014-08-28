@@ -1,10 +1,7 @@
 ﻿using Designer.Tasks;
 using StateInterface.Designer.Model;
+using StateInterface.Models;
 using SunGardStateInterface.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace StateInterface.Controllers
@@ -24,10 +21,8 @@ namespace StateInterface.Controllers
         [HttpPost]
         public ActionResult SetRecordsCenter(RecordsCenterParametersModel model)
         {
-            //User.Identity.Name, model.RecordsCenterName
             _designerTasks.SetRecordsCenterForUser(User.Identity.Name, model.RecordsCenterName);
-
-            return Json(model);
+            return Json(new ResponseModel<RecordsCenterParametersModel>(model));
         }
         [HttpGet]
         public ActionResult Error()

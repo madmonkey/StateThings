@@ -13,11 +13,11 @@ namespace StateInterface.Areas.Certify.Models
         {
             if(string.IsNullOrWhiteSpace(RecordsCenterName))
             {
-                throw new StateInterfaceParameterValidationException(Resources.ParameterInvalid);
+                throw new ViewModelValidationException(Resources.ParameterInvalid);
             }
             if (CategoryId == 0)
             {
-                throw new StateInterfaceParameterValidationException(Resources.ParameterInvalid);
+                throw new ViewModelValidationException(Resources.ParameterInvalid);
             }
         }
     }

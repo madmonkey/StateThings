@@ -33,7 +33,7 @@ namespace StateInterface.Areas.Design.Controllers
 
                 return View(new ControlsModel(requestForm).Controls);
             }
-            return View(); //
+            return View();
         }
     }
 }

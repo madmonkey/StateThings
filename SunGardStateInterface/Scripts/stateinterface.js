@@ -7,9 +7,13 @@ $(function () {
         self.services = new function () {
             var self = this;
             self.errorModal = ko.observable(false);
+            self.isError = ko.observable(false);
             self.errorMessage = ko.observable('');
-            self.postToServer = function (data, callBack, url, errorCallBack) {
-                self.submitToServer('POST', data, callBack, url, errorCallBack);
+            self.isSystemError = ko.observable(false);
+            self.systemErrorMessage = ko.observable('');
+            
+            self.postToServer = function (data, callBack, url) {
+                self.submitToServer('POST', data, callBack, url);
             };
 
             self.putToServer = function (data, callBack, url) {
@@ -24,40 +28,48 @@ $(function () {
                 self.submitToServer('GET', data, callBack, url);
             }
 
-            self.submitToServer = function (verb, data, callBack, url, errorCallBack) {
+            self.submitToServer = function (verb, data, callBack, url) {
+                self.isError(false);
                 self.errorMessage('');
+                self.isSystemError(false);
+                self.systemErrorMessage('');
                 $.ajax({
                     url: url,
                     type: verb,
                     data: data,
                     datatype: "json",
                     contentType: "application/json charset=utf-8",
-                    success: function (result) {
-                        callBack(result);
+                    success: function (data) {
+                        var message = '';
+                        self.isError(false);
+                        self.errorMessage('');
+                        for (var i = 0; i < data.Information.length; i++) {
+                            if (data.Information[i].IsError) {
+                                message += data.Information[i].Message;
+                                message += "<br>";
+                                self.isError(true);
+                            }
+                        }
+                        if (self.isError) {
+                            self.errorMessage(message);
+                        }
+                        callBack(data.Result);
                     },
                     error: function (error) {                                                
                         var errorObject = ko.utils.parseJson(error.statusText);
-                        var isSystemError = false;
-                        var isError = false;
                         var message = '';
+                        self.isSystemError(false);
+                        self.systemErrorMessage('');
                         for (var i = 0; i < errorObject.Information.length; i++) {
-                            if (errorObject.Information[i].IsSystemError) {
+                            if (errorObject.Information[i].IsError) {
                                 message += errorObject.Information[i].Message;
                                 message += "<br>";
-                                isSystemError = true;
-                            }
-                            if (errorObject.Information[i].IsError) {
-                                isError = true;
+                                self.isSystemError(true);
                             }
                         }
-                        if (isSystemError) {
-                            self.errorMessage(message);
+                        if (self.isSystemError) {
+                            self.systemErrorMessage(message);
                             self.errorModal(self);
-                        }
-                        if (isError) {
-                            if ((errorCallBack !== "undefined") || (errorCallBack !== null)) {
-                                errorCallBack(errorObject);
-                            }
                         }
                     }
                 });

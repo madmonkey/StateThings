@@ -1,13 +1,13 @@
-﻿using System;
-using System.Globalization;
-using Newtonsoft.Json;
+﻿using Designer.Tasks;
+using ServiceStack.Text;
 using StateInterface.Areas.Certify.Models;
-using StateInterface.Designer.Model;
-using System.Web.Mvc;
-using Designer.Tasks;
-using StateInterface.Properties;
 using StateInterface.Controllers;
 using StateInterface.Designer;
+using StateInterface.Designer.Model;
+using StateInterface.Models;
+using StateInterface.Properties;
+using System.Globalization;
+using System.Web.Mvc;
 
 namespace StateInterface.Areas.Certify.Controllers
 {
@@ -27,10 +27,9 @@ namespace StateInterface.Areas.Certify.Controllers
                     GetCertificationStatusUrl = Url.Action("Status"),
                     GetOpenIssuesUrl = Url.Action("OpenIssues")
                 };
-
-            reportModel.InitialData = JsonConvert.SerializeObject(reportModel);
+            reportModel.InitialData = JsonSerializer.SerializeToString(reportModel);
             ViewBag.Title = "Certification";
-            return View(reportModel);
+            return View(new ResponseModel<ReportModel>(reportModel));
         }
         [HttpGet]
         public ActionResult Help()
@@ -43,78 +42,65 @@ namespace StateInterface.Areas.Certify.Controllers
         {
             if (string.IsNullOrEmpty(recordsCenterName))
             {
-                throw new StateInterfaceParameterValidationException(Resources.RecordsCenterInvalid);
+                throw new ViewModelValidationException(Resources.RecordsCenterInvalid);
             }
-
             var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name, recordsCenterName);
-
             if (recordsCenter == null)
             {
                 throw new ObjectNotFoundException(string.Format(Resources.RecordsCenterNotFound));
             }
-
             var statisticsRecordsCenter = _designerTasks.GetStatisticsForRecordsCenter(User.Identity.Name,recordsCenter.Name);
             var statistics = new StatisticsRecordsCenterModel(statisticsRecordsCenter)
                 {
                     GetAverageUrl = Url.Action("GetAverage", new { })
                 };
-
-            statistics.InitialData = JsonConvert.SerializeObject(statistics);
+            statistics.InitialData = JsonSerializer.SerializeToString(statistics);
             ViewBag.Title = string.Format("Certification Status - {0}", recordsCenter.Name);
-            return View(statistics);
+            return View(new ResponseModel<StatisticsRecordsCenterModel>(statistics));
         }
         [HttpGet]
         public ActionResult Print(string recordsCenterName)
         {
             if (string.IsNullOrEmpty(recordsCenterName))
             {
-                throw new StateInterfaceParameterValidationException(Resources.RecordsCenterInvalid);
+                throw new ViewModelValidationException(Resources.RecordsCenterInvalid);
             }
-
             var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name, recordsCenterName);
-
             if (recordsCenter == null)
             {
                 throw new ObjectNotFoundException(Resources.RecordsCenterNotFound);
             }
-
             var statisticsRecordsCenter = _designerTasks.GetStatisticsForRecordsCenter(User.Identity.Name, recordsCenter.Name);
             var statistics = new StatisticsRecordsCenterModel(statisticsRecordsCenter);
-
-            statistics.InitialData = JsonConvert.SerializeObject(statistics);
+            statistics.InitialData = JsonSerializer.SerializeToString(statistics);
             ViewBag.Title = string.Format("Certification Report - {0}", recordsCenter.Name);
-            return View(statistics);
+            return View(new ResponseModel<StatisticsRecordsCenterModel>(statistics));
         }
         [HttpGet]
         public ActionResult OpenIssues(string recordsCenterName)
         {
             if (string.IsNullOrEmpty(recordsCenterName))
             {
-                throw new StateInterfaceParameterValidationException(Resources.RecordsCenterInvalid);
+                throw new ViewModelValidationException(Resources.RecordsCenterInvalid);
             }
-
             var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name,recordsCenterName);
-
             if (recordsCenter == null)
             {
                 throw new ObjectNotFoundException(Resources.RecordsCenterNotFound);
             }
-
             var openIssues = _designerTasks.GetOpenIssues(User.Identity.Name, recordsCenterName);
             var openIssuesModel = new OpenIssuesModel(recordsCenter, openIssues, Url.Action("Details", "Form", new { area = "Design" }), Url.Action("UpdateForm", "Update"));
-
-            openIssuesModel.InitialData = JsonConvert.SerializeObject(openIssuesModel);
+            openIssuesModel.InitialData = JsonSerializer.SerializeToString(openIssuesModel);
             ViewBag.Title = string.Format("Open Issues - {0}", recordsCenter.Name);
-            return View(openIssuesModel);
+            return View(new ResponseModel<OpenIssuesModel>(openIssuesModel));
         }
         [HttpPost]
         public ActionResult GetAverage(StatisticsModel model)
         {
             if (model == null)
             {
-                throw new StateInterfaceParameterValidationException(Resources.ParameterNull);
+                throw new ViewModelValidationException(Resources.ParameterNull);
             }
-
             model.Validate();
             string result;
             if (model.IsAverageInput)
@@ -127,7 +113,7 @@ namespace StateInterface.Areas.Certify.Controllers
                 var calculatedAverage = StatisticsDetails.CalculateEstimatedAverage(model.CompletedDate, model.TestCases);
                 result = calculatedAverage.ToString(CultureInfo.InvariantCulture);
             }
-            return Json(new { text = result });
+            return Json(new ResponseModel<string>(result));
         }
     }
 }

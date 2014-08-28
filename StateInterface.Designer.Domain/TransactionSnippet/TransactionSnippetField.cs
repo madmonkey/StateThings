@@ -36,7 +36,7 @@ namespace StateInterface.Designer.Model
 
         private void MustHaveSeparator()
         {
-            if(Frequency >= 1)
+            if(Frequency > 1)
             {
                 if(string.IsNullOrEmpty(Separator))
                 {

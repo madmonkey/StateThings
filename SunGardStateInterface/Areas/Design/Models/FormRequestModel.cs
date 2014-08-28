@@ -14,7 +14,7 @@ namespace StateInterface.Areas.Design
         {
             if (RecordsCenterId == 0 || string.IsNullOrWhiteSpace(FormId) == true)
             {
-                throw new StateInterfaceParameterValidationException("Invalid parameters in FormRequestModel");
+                throw new ViewModelValidationException("Invalid parameters in FormRequestModel");
             }
         }
     }

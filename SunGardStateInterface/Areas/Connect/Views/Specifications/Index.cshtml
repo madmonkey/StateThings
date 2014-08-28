@@ -1,4 +1,6 @@
-﻿@model StateInterface.Areas.Connect.Models.SpecificationsModel
+﻿@* SpecificationHome Index Page *@
+@using StateInterface.Areas.Connect.Models
+@model StateInterface.Models.ResponseModel<SpecificationsModel>
 @{
     ViewBag.Title = "Specifications";
 }
@@ -37,7 +39,7 @@
 </script>
 
 <script type="text/javascript">
-    var initialData = @Html.Raw(Model.InitialData)
+    var initialData = @Html.Raw(Model.Result.InitialData)
 </script>
 
 @Html.Partial("_categoryTemplate")

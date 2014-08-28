@@ -66,9 +66,9 @@
 
         vm.services.postToServer(JSON.stringify(param), function (result) {
             if (vm.isAverageInput()) {
-                vm.date(result.text);
+                vm.date(result);
             } else {
-                vm.average(result.text);
+                vm.average(result);
             }
         }, vm.GetAverageUrl());
     };

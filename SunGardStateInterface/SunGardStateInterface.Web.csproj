@@ -89,8 +89,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Text">
-      <HintPath>..\packages\ServiceStack.Text.4.0.30\lib\net40\ServiceStack.Text.dll</HintPath>
+    <Reference Include="ServiceStack.Text, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ServiceStack.Text.3.9.71\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -270,12 +271,12 @@
     <Compile Include="Areas\Design\Models\Transaction\TransactionSnippetDetailsModel.cs" />
     <Compile Include="Controllers\StateConnectContollerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Exceptions\StateInterfaceParameterValidationException.cs" />
+    <Compile Include="Exceptions\ViewModelValidationException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AjaxInformationModel.cs" />
-    <Compile Include="Models\AjaxResponseModel.cs" />
+    <Compile Include="Models\InformationModel.cs" />
+    <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\RecordsCenterParametersModel.cs" />
     <Compile Include="Models\RecordsCenterSelectorModel.cs" />
     <Compile Include="Models\NameValueModel.cs" />
@@ -290,7 +291,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Serialize.cs" />
     <Compile Include="Serializers\StateConnectJsonResult.cs" />
   </ItemGroup>
   <ItemGroup>

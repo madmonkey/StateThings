@@ -1,4 +1,6 @@
-﻿using StateInterface.Designer.Model;
+﻿using StateInterface.Designer;
+using StateInterface.Designer.Model;
+using StateInterface.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,21 +34,25 @@ namespace StateInterface.Areas.Design.Models
                 });
             }
         }
-        public void Validate()
+        public void Validate(User currentUser, bool isReadOperation)
         {
+            if (!isReadOperation && !currentUser.CanDesignManage)
+            {
+                throw new SecurityAccessDeniedException(Resources.UserIsUnauthorized);
+            }
             if (string.IsNullOrWhiteSpace(FormId))
             {
-                throw new StateInterfaceParameterValidationException("Invalid FormId");
+                throw new ViewModelValidationException("Invalid FormId");
             }
 
             if (string.IsNullOrEmpty(RecordsCenterName))
             {
-                throw new StateInterfaceParameterValidationException("Invalid RecordCenter");
+                throw new ViewModelValidationException("Invalid RecordCenter");
             }
 
             if (Applications == null)
             {
-                throw new StateInterfaceParameterValidationException("Invalid Application Association");
+                throw new ViewModelValidationException("Invalid Application Association");
             }
         }
     }

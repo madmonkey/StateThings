@@ -1,5 +1,6 @@
 ﻿@* List Details Page *@
-@model StateInterface.Areas.Design.Models.OptionListDetailsModel
+@using StateInterface.Areas.Design.Models
+@model StateInterface.Models.ResponseModel<OptionListDetailsModel>
 <div class="row">
     <div class="col-xs-12">
         @* This is so that the navigation lines up when the recordsCenterSelector is not part of the page *@
@@ -85,7 +86,7 @@
 </script>
 
 <script type="text/javascript">
-    var initialData = @Html.Raw(Model.InitialData)
+    var initialData = @Html.Raw(Model.Result.InitialData)
 </script>
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_design_list_details")

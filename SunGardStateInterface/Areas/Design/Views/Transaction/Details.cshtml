@@ -1,9 +1,19 @@
 ﻿@* TransactionSnippet Details Page *@
-@model StateInterface.Areas.Design.Models.TransactionSnippetDetailsModel
+@using StateInterface.Areas.Design.Models
+@model StateInterface.Models.ResponseModel<TransactionSnippetDetailsModel>
 <div class="row">
     <div class="col-xs-12">
         @* This is so that the navigation lines up when the recordsCenterSelector is not part of the page *@
         <div class="recordsCenterSelectorPlaceHolder"></div>
+    </div>
+</div>
+<br data-bind="visible: services.isError" />
+<div class="row">
+    <div class="col-xs-12">
+        <div class="alert alert-danger" data-bind="visible: services.isError">
+            <a href="#" class="close" onclick="$('.alert').hide()">&times;</a>
+            <span data-bind="html: services.errorMessage"></span>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -383,7 +393,7 @@
 </script>
 
 <script type="text/javascript">
-    var initialData = @Html.Raw(Model.InitialData)
+    var initialData = @Html.Raw(Model.Result.InitialData)
 </script>
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_design_snippetfield")

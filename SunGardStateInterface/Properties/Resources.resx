@@ -159,6 +159,9 @@
   <data name="SnippetFieldNameAlreadyExists" xml:space="preserve">
     <value>The snippet field name already exists for this subtransaction.</value>
   </data>
+  <data name="SnippetFieldNotFound" xml:space="preserve">
+    <value>The requested snippet field was not found.</value>
+  </data>
   <data name="SnippetFieldParamterInvalidForType" xml:space="preserve">
     <value>The {0} field type has {1} property which is invalid.</value>
   </data>
@@ -176,5 +179,8 @@
   </data>
   <data name="UnspecifiedError" xml:space="preserve">
     <value>An unspecified error occurred.</value>
+  </data>
+  <data name="UserIsUnauthorized" xml:space="preserve">
+    <value>You do not have the required authorization to perform this action.</value>
   </data>
 </root>

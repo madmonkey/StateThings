@@ -221,18 +221,6 @@ a:link {
     padding-top: 17px;
 }
 
-.dialog-header-information {
-    background-color: #428bca;
-}
-
-.highlight-text {
-    color: white;
-}
-
-.dialog-header-error.h4 {
-    color: white;
-}
-
 /* -------------- Generic  -------------- */
 .recordsCenterSelectorPlaceHolder {
     padding-bottom: 23px;

@@ -1,4 +1,6 @@
-﻿@model StateInterface.Areas.Certify.Models.CertifyUpdateModel
+﻿@* UpdateHome Index Page *@
+@using StateInterface.Areas.Certify.Models
+@model StateInterface.Models.ResponseModel<CertifyUpdateModel>
 
 <div class="row">
     <div class="col-xs-12">
@@ -212,7 +214,7 @@
 </script>
 
 <script type="text/javascript">
-    var initialData = @Html.Raw(Model.InitialData)
+    var initialData = @Html.Raw(Model.Result.InitialData)
 </script>
 @Html.Partial("_testCaseHistoryTemplate")
 @Html.Partial("_requiredFieldTemplate")

@@ -1,5 +1,8 @@
 ﻿using System;
 using SunGardStateInterface;
+using StateInterface.Designer.Model;
+using StateInterface.Designer;
+using StateInterface.Properties;
 
 namespace StateInterface.Areas.Certify.Models
 {
@@ -18,27 +21,32 @@ namespace StateInterface.Areas.Certify.Models
             EntryDate = DateTime.Now.ToString("d");
         }
 
-        public void Validate()
+        public void Validate(User currentUser, bool isReadOperation = false)
         {
+            if (!isReadOperation && !currentUser.CanDesignManage)
+            {
+                throw new SecurityAccessDeniedException(Resources.UserIsUnauthorized);
+            }
+
             if (CriteriaId == 0)
             {
-                throw new StateInterfaceParameterValidationException("Invalid CriteriaId");
+                throw new ViewModelValidationException("Invalid CriteriaId");
             }
 
             if (string.IsNullOrWhiteSpace(TestCaseId))
             {
-                throw new StateInterfaceParameterValidationException("Invalid TestCaseId");
+                throw new ViewModelValidationException("Invalid TestCaseId");
             }
 
             DateTime entryDate;
             if( DateTime.TryParse(EntryDate, out entryDate) == false)
             {
-                throw new StateInterfaceParameterValidationException("Invalid EntryDate");
+                throw new ViewModelValidationException("Invalid EntryDate");
             }
 
             if (entryDate > DateTime.Now)
             {
-                throw new StateInterfaceParameterValidationException("Invalid EntryDate");
+                throw new ViewModelValidationException("Invalid EntryDate");
             }
         }
     }

@@ -136,6 +136,7 @@
     <Compile Include="Certification\StatisticsRecordsCenter.cs" />
     <Compile Include="Certification\StatisticsRequestForm.cs" />
     <Compile Include="Comparison.cs" />
+    <Compile Include="Exceptions\DuplicateKeyException.cs" />
     <Compile Include="Exceptions\ObjectNotFoundException.cs" />
     <Compile Include="Exceptions\SecurityAccessDeniedException.cs" />
     <Compile Include="Exceptions\ValidationException.cs" />

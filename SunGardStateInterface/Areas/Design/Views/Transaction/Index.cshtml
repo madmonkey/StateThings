@@ -1,9 +1,19 @@
 ﻿@* TransactionSnippet Index Page *@
-@model StateInterface.Areas.Design.Models.TransactionSnippetCatalogModel
+@using StateInterface.Areas.Design.Models
+@model StateInterface.Models.ResponseModel<TransactionSnippetCatalogModel>
 <div class="row">
     <div class="col-xs-12">
         <div class="pull-right padRight leadSmaller">
             <span class="padRight">Records Center</span><select data-bind="options: RecordsCenterSelector.RecordsCenters, optionsText: 'Name', optionsValue: 'Name', value: RecordsCenterSelector.SelectedRecordsCenterName"></select>
+        </div>
+    </div>
+</div>
+<br data-bind="visible: services.isError"/>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="alert alert-danger" data-bind="visible: services.isError">
+            <a href="#" class="close" onclick="$('.alert').hide()">&times;</a>
+            <span data-bind="html: services.errorMessage"></span>
         </div>
     </div>
 </div>
@@ -75,7 +85,7 @@
 @Html.Partial("_catalogItemsTemplate")
 
 <script type="text/javascript">
-    var initialData = @Html.Raw(Model.InitialData)
+    var initialData = @Html.Raw(Model.Result.InitialData)
 </script>
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_design_snippet")

@@ -1,6 +1,5 @@
 ﻿using Designer.Tasks;
 using StateInterface.Controllers;
-using StateInterface.Designer.Model;
 using System.Web.Mvc;
 
 namespace StateInterface.Areas.Certify.Controllers

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using StateInterface.Areas.Design.Models;
+﻿using StateInterface.Areas.Design.Models;
 using StateInterface.Designer.Model;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,8 @@ using StateInterface.Properties;
 using Designer.Tasks;
 using StateInterface.Controllers;
 using StateInterface.Designer;
+using ServiceStack.Text;
+using StateInterface.Models;
 
 namespace StateInterface.Areas.Design.Controllers
 {
@@ -25,7 +26,6 @@ namespace StateInterface.Areas.Design.Controllers
         {
             var recordCenters = _designerTasks.GetRecordsCenters(User.Identity.Name);
             var user = _designerTasks.GetUser(User.Identity.Name);
-
             var model = new RequestFormCatalogModel(user, recordCenters)
                 {
                     RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) },
@@ -34,23 +34,20 @@ namespace StateInterface.Areas.Design.Controllers
                     DesignHomeUrl = Url.Action("Index", "Home"),
                 };
 
-            model.InitialData = JsonConvert.SerializeObject(model);
-
+            model.InitialData = JsonSerializer.SerializeToString(model);
             ViewBag.Title = "Form Design";
-            return View(model);
+            return View(new ResponseModel<RequestFormCatalogModel>(model));
         }
         [HttpGet]
         public ActionResult Details(string recordsCenterName, string formId)
         {
             var recordsCenter = _designerTasks.GetRecordsCenters(User.Identity.Name).FirstOrDefault(x => x.Name.Equals(recordsCenterName, StringComparison.CurrentCultureIgnoreCase));
-
             if (recordsCenter != null)
             {
                 var requestForm = _designerTasks.GetForm(User.Identity.Name, recordsCenter.Id, formId);
                 var availableApplications = _designerTasks.GetApplications(User.Identity.Name);
                 var availableCategories = _designerTasks.GetCategories(User.Identity.Name);
                 User user = _designerTasks.GetUser(User.Identity.Name);
-
                 var formModel = new RequestFormDetailsModel(requestForm, Url.Action("Details", "List"), Url.Action("Details", "Field"), availableApplications, availableCategories)
                 {
                     FormHelpUrl = Url.Action("Help"),
@@ -62,24 +59,21 @@ namespace StateInterface.Areas.Design.Controllers
                     FormsHomeUrl = Url.Action("Index")
                 };
 
-                formModel.InitialData = JsonConvert.SerializeObject(formModel);
-
+                formModel.InitialData = JsonSerializer.SerializeToString(formModel);
                 ViewBag.Title = string.Format("{0} - {1}", formModel.FormId, formModel.RecordsCenterName);
-                return View(formModel);
+                return View(new ResponseModel<RequestFormDetailsModel>(formModel));
             }
-            throw new StateInterfaceParameterValidationException(Resources.RecordsCenterInvalid);
+            throw new ViewModelValidationException(Resources.RecordsCenterInvalid);
         }
         [HttpPost]
         public ActionResult GetForms(FormsParametersModel parameters)
         {
             if (parameters == null || string.IsNullOrWhiteSpace(parameters.RecordsCenterName))
             {
-                throw new ApplicationException(Resources.ParameterInvalid);
+                throw new ViewModelValidationException(Resources.ParameterInvalid);
             }
-
             List<CatalogItemModel> requestFormModels = getCatalogItemModels(parameters.RecordsCenterName);
-
-            return Json(requestFormModels);
+            return Json(new ResponseModel<List<CatalogItemModel>>(requestFormModels));
         }
         [HttpGet]
         public ActionResult Help()
@@ -90,45 +84,35 @@ namespace StateInterface.Areas.Design.Controllers
         [HttpPost]
         public ActionResult UpdateFormApplications(UpdateFormApplicationsModel model)
         {
-            throw new ObjectNotFoundException("These are not the droids you are looking for");
-            if (_designerTasks.GetUser(User.Identity.Name).CanDesignManage)
+            if (model != null)
             {
-                if (model != null)
-                {
-                    model.Validate();
-                    var selectedApplicationIds = model.Applications.Where(x => x.IsSelected == true).Select(x => x.Id);
-                    var requestForm = _designerTasks.UpdateRequestFormApplications(User.Identity.Name,
-                        model.RecordsCenterName, model.FormId, selectedApplicationIds);
-                    var applications = _designerTasks.GetApplications(User.Identity.Name);
-                    model = new UpdateFormApplicationsModel(requestForm, applications);
-                    return Json(model);
-                }
-                throw new ApplicationException(Resources.ParameterInvalid);
+                model.Validate(_designerTasks.GetUser(User.Identity.Name), false);
+                var selectedApplicationIds = model.Applications.Where(x => x.IsSelected == true).Select(x => x.Id);
+                var requestForm = _designerTasks.UpdateRequestFormApplications(User.Identity.Name,
+                    model.RecordsCenterName, model.FormId, selectedApplicationIds);
+                var applications = _designerTasks.GetApplications(User.Identity.Name);
+                model = new UpdateFormApplicationsModel(requestForm, applications);
+                return Json(new ResponseModel<UpdateFormApplicationsModel>(model));
             }
-            throw new System.Web.Http.HttpResponseException(new System.Net.Http.HttpResponseMessage(HttpStatusCode.Unauthorized));
+            throw new ViewModelValidationException(Resources.ParameterInvalid);
         }
         public ActionResult UpdateFormCategories(UpdateRequestFormCategoriesModel model)
         {
-            if (_designerTasks.GetUser(User.Identity.Name).CanDesignManage)
+            if (model != null)
             {
-                if (model != null)
-                {
-                    model.Validate();
-                    var selectedCategoryIds = model.Categories.Where(x => x.IsSelected == true).Select(x => x.Id);
-                    var requestForm = _designerTasks.UpdateRequestFormCategrories(User.Identity.Name, model.RecordsCenterName, model.FormId, selectedCategoryIds);
-                    var categories = _designerTasks.GetCategories(User.Identity.Name);
-                    model = new UpdateRequestFormCategoriesModel(requestForm, categories);
-                    return Json(model);
-                }
-                throw new ApplicationException(Resources.ParameterInvalid);
+                model.Validate(_designerTasks.GetUser(User.Identity.Name), false);
+                var selectedCategoryIds = model.Categories.Where(x => x.IsSelected == true).Select(x => x.Id);
+                var requestForm = _designerTasks.UpdateRequestFormCategrories(User.Identity.Name, model.RecordsCenterName, model.FormId, selectedCategoryIds);
+                var categories = _designerTasks.GetCategories(User.Identity.Name);
+                model = new UpdateRequestFormCategoriesModel(requestForm, categories);
+                return Json(new ResponseModel<UpdateRequestFormCategoriesModel>(model));
             }
-            throw new System.Web.Http.HttpResponseException(new System.Net.Http.HttpResponseMessage(HttpStatusCode.Unauthorized));
-
+            throw new ViewModelValidationException(Resources.ParameterInvalid);
         }
 
         private List<CatalogItemModel> getCatalogItemModels(string recordsCenterName)
         {
-            var recordsCenter = _designerTasks.GetRecordsCenters(User.Identity.Name).FirstOrDefault(x => x.Name.Equals(recordsCenterName));
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name, recordsCenterName);
             if (recordsCenter != null)
             {
                 var requestForms = _designerTasks.GetFormProjections(User.Identity.Name, recordsCenter.Id);
@@ -145,7 +129,7 @@ namespace StateInterface.Areas.Design.Controllers
                 return catalogItems;
             }
 
-            throw new StateInterfaceParameterValidationException(Resources.RecordsCenterNotFound);
+            throw new ObjectNotFoundException(Resources.RecordsCenterNotFound);
         }
     }
 }

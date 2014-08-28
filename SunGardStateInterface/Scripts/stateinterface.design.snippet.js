@@ -54,27 +54,17 @@ $(function () {
     vm.createSnippet = function () {
         vm.isError(false);
         vm.errorMessage('');
-        var newTab = window.open('', '_blank');
+        //var newTab = window.open('', '_blank');
         vm.SnippetParameters.RecordsCenterName(vm.RecordsCenterSelector.SelectedRecordsCenterName());
         vm.services.postToServer(
             ko.toJSON(vm.SnippetParameters),
             function (data) {
-            newTab.location = data.DetailsUrl;
-            },
-            vm.CreateSnippetUrl(),
-            function (error) {                
-                var message = '';
-                for (var i = 0; i < error.Information.length; i++) {
-                    if (error.Information[i].IsError) {
-                        message += error.Information[i].Message;
-                        message += "<br>";
-                        vm.isError(true);
-                    }
+                if (!vm.services.isError()) {
+                    //newTab.location = data.DetailsUrl;
+                    window.location = data.DetailsUrl;
                 }
-                vm.errorMessage(message);
-                
-            }
-        );
+            },
+            vm.CreateSnippetUrl());
     };
 
     vm.evaluateShowNoSnippetsMessage();

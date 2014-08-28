@@ -48,5 +48,6 @@ namespace StateInterface.Designer.Repository
         ApplicationFormProjection GetFormApplicationAssociations(RecordsCenter recordsCenter, string formId);
         ApplicationFormProjection UpdateFormApplicationAssociations(ApplicationFormProjection applicationFormProjection);
         TransactionSnippet UpdateTransactionSnippetField(int parentSnippetId, TransactionSnippetField transactionSnippetField);
+        TransactionSnippet GetTransactionSnippet(string recordsCenter, string tokenName);
     }
 }

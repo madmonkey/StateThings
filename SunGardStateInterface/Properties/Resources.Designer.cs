@@ -187,6 +187,15 @@ namespace StateInterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The requested snippet field was not found..
+        /// </summary>
+        public static string SnippetFieldNotFound {
+            get {
+                return ResourceManager.GetString("SnippetFieldNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The {0} field type has {1} property which is invalid..
         /// </summary>
         public static string SnippetFieldParamterInvalidForType {
@@ -237,6 +246,15 @@ namespace StateInterface.Properties {
         public static string UnspecifiedError {
             get {
                 return ResourceManager.GetString("UnspecifiedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You do not have the required authorization to perform this action..
+        /// </summary>
+        public static string UserIsUnauthorized {
+            get {
+                return ResourceManager.GetString("UserIsUnauthorized", resourceCulture);
             }
         }
     }

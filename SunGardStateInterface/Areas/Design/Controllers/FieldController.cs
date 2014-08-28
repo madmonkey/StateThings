@@ -1,12 +1,13 @@
-﻿using System.Linq;
-using Designer.Tasks;
-using Newtonsoft.Json;
+﻿using Designer.Tasks;
+using ServiceStack.Text;
 using StateInterface.Areas.Design.Models;
+using StateInterface.Controllers;
+using StateInterface.Designer;
+using StateInterface.Designer.Model;
+using StateInterface.Models;
+using StateInterface.Properties;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using StateInterface.Properties;
-using StateInterface.Designer.Model;
-using StateInterface.Controllers;
 
 namespace StateInterface.Areas.Design.Controllers
 {
@@ -30,10 +31,9 @@ namespace StateInterface.Areas.Design.Controllers
                     DesignHomeUrl = Url.Action("Index", "Home")
                 };
 
-            model.InitialData = JsonConvert.SerializeObject(model);
-
+            model.InitialData = JsonSerializer.SerializeToString(model);
             ViewBag.Title = "Field Design";
-            return View(model);
+            return View(new ResponseModel<FieldCatalogModel>(model));
         }
 
         [HttpGet]
@@ -56,24 +56,20 @@ namespace StateInterface.Areas.Design.Controllers
                     FieldHelpUrl = Url.Action("Help")
                 };
 
-            model.InitialData = JsonConvert.SerializeObject(model);
-
+            model.InitialData = JsonSerializer.SerializeToString(model);
             ViewBag.Title = string.Format("{0} - {1}", field.TagName, field.RecordsCenter.Name);
-            return View(model);
+            return View(new ResponseModel<FieldDetailsModel>(model));
         }
         [HttpPost]
         public ActionResult GetFields(FieldsParametersModel parameters)
         {
             if (parameters == null)
             {
-                throw new StateInterfaceParameterValidationException(Resources.ParentIdInvalid);
+                throw new ViewModelValidationException(Resources.ParentIdInvalid);
             }
-
             parameters.Validate();
-
             List<CatalogItemModel> fieldCatalogItemModels = getFieldModels(parameters.RecordsCenterName);
-
-            return Json(fieldCatalogItemModels);
+            return Json(new ResponseModel<List<CatalogItemModel>>(fieldCatalogItemModels));
         }
         private List<CatalogItemModel> getFieldModels(string recordsCenterName)
         {
@@ -93,8 +89,7 @@ namespace StateInterface.Areas.Design.Controllers
                 }
                 return catalogItems;
             }
-
-            throw new StateInterfaceParameterValidationException(Resources.RecordsCenterNotFound);
+            throw new ObjectNotFoundException(Resources.RecordsCenterNotFound);
         }
     }
 }

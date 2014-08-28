@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Newtonsoft.Json;
 using StateInterface.Areas.Design.Models;
 using Designer.Tasks;
 using StateInterface.Properties;
 using StateInterface.Designer.Model;
 using StateInterface.Controllers;
+using StateInterface.Designer;
+using ServiceStack.Text;
+using StateInterface.Models;
 
 namespace StateInterface.Areas.Design.Controllers
 {
@@ -22,7 +24,6 @@ namespace StateInterface.Areas.Design.Controllers
         {
             var recordCenters = _designerTasks.GetRecordsCenters(User.Identity.Name);
             var user = _designerTasks.GetUser(User.Identity.Name);
-
             var model = new OptionListCatalogModel(user, recordCenters)
                 {
                     RecordsCenterSelector = { SetRecordsCenterUrl = Url.Action("SetRecordsCenter", "Home", new { Area = "" }) },
@@ -31,10 +32,9 @@ namespace StateInterface.Areas.Design.Controllers
                     DesignHomeUrl = Url.Action("Index", "Home")
                 };
 
-            model.InitialData = JsonConvert.SerializeObject(model);
-
+            model.InitialData = JsonSerializer.SerializeToString(model);
             ViewBag.Title = "List Design";
-            return View(model);
+            return View(new ResponseModel<OptionListCatalogModel>(model));
         }
 
         [HttpGet]
@@ -48,9 +48,7 @@ namespace StateInterface.Areas.Design.Controllers
         public ActionResult Details(string recordsCenterName, string listName)
         {
             var user = _designerTasks.GetUser(User.Identity.Name);
-
-            var recordsCenter = _designerTasks.GetRecordsCenters(User.Identity.Name).FirstOrDefault(x => x.Name.Equals(recordsCenterName, StringComparison.CurrentCultureIgnoreCase));
-
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name, recordsCenterName);
             var list = _designerTasks.GetList(User.Identity.Name, recordsCenter.Id, listName);
             var formFieldsUsing = _designerTasks.GetFormFieldProjectionsUsingOptionList(User.Identity.Name, list);
             var listModel = new OptionListDetailsModel(list, formFieldsUsing, Url.Action("Details", "Form"))
@@ -59,11 +57,9 @@ namespace StateInterface.Areas.Design.Controllers
                     ListsHomeUrl = Url.Action("Index"),
                     ListHelpUrl = Url.Action("Help")
                 };
-
-            listModel.InitialData = JsonConvert.SerializeObject(listModel);
-
+            listModel.InitialData = JsonSerializer.SerializeToString(listModel);
             ViewBag.Title = string.Format("{0} - {1}", listModel.ListName, listModel.RecordsCenterName);
-            return View(listModel);
+            return View(new ResponseModel<OptionListDetailsModel>(listModel));
         }
 
         [HttpPost]
@@ -73,15 +69,13 @@ namespace StateInterface.Areas.Design.Controllers
             {
                 throw new ApplicationException(Resources.ParameterInvalid);
             }
-
             List<CatalogItemModel> listModels = getCatalogItemModels(parameters.RecordsCenterName);
-
-            return Json(listModels);
+            return Json(new ResponseModel<List<CatalogItemModel>>(listModels));
         }
 
         private List<CatalogItemModel> getCatalogItemModels(string recordsCenterName)
         {
-            var recordsCenter = _designerTasks.GetRecordsCenters(User.Identity.Name).FirstOrDefault(x => x.Name.Equals(recordsCenterName));
+            var recordsCenter = _designerTasks.GetRecordsCenterByName(User.Identity.Name, recordsCenterName);
             if (recordsCenter != null)
             {
                 var lists = _designerTasks.GetListProjections(User.Identity.Name,recordsCenter.Id);
@@ -97,7 +91,7 @@ namespace StateInterface.Areas.Design.Controllers
                 }
                 return catalogItems;
             }
-            throw new StateInterfaceParameterValidationException(Resources.RecordsCenterNotFound);
+            throw new ObjectNotFoundException(Resources.RecordsCenterNotFound);
         }
     }
 }

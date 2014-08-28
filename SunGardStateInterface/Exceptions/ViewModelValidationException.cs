@@ -5,9 +5,9 @@ using System.Web;
 
 namespace StateInterface
 {
-    public class StateInterfaceParameterValidationException : ApplicationException
+    public class ViewModelValidationException : ApplicationException
     {
-        public StateInterfaceParameterValidationException(string message)
+        public ViewModelValidationException(string message)
             : base(message)
         {
         }

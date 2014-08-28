@@ -1,4 +1,6 @@
-﻿@model StateInterface.Areas.Certify.Models.OpenIssuesModel
+﻿@* OpenIssues Page *@
+@using StateInterface.Areas.Certify.Models
+@model StateInterface.Models.ResponseModel<OpenIssuesModel>
 
 <div class="row">
     <div class="col-xs-12">
@@ -66,7 +68,7 @@
 </div>
 
 <script type="text/javascript">
-    var initialData = @Html.Raw(Model.InitialData)
+    var initialData = @Html.Raw(Model.Result.InitialData)
 </script>
 
 @section scripts{

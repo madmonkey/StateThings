@@ -17,7 +17,7 @@ namespace StateInterface.Areas.Certify.Models
             {
                 if (Average <= 0)
                 {
-                    throw new StateInterfaceParameterValidationException("Invalid Average");
+                    throw new ViewModelValidationException("Invalid Average");
                 }
             }
             else
@@ -25,12 +25,12 @@ namespace StateInterface.Areas.Certify.Models
                 DateTime entryDate;
                 if (DateTime.TryParse(CompletedDate, out entryDate) == false)
                 {
-                    throw new StateInterfaceParameterValidationException("Invalid entry date");
+                    throw new ViewModelValidationException("Invalid entry date");
                 }
 
                 if (entryDate < DateTime.Now.Date)
                 {
-                    throw new StateInterfaceParameterValidationException("Invalid entry date");
+                    throw new ViewModelValidationException("Invalid entry date");
                 }
             }
         }

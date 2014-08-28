@@ -1,158 +1,159 @@
 ﻿@* Field Details Page *@
-@model StateInterface.Areas.Design.Models.FieldDetailsModel
-<div class="row">
-    <div class="col-xs-12">
-        @* This is so that the navigation lines up when the recordsCenterSelector is not part of the page *@
-        <div class="recordsCenterSelectorPlaceHolder"></div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        <div data-bind="template: { name: 'breadcrumbs-template' }"></div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        <div class="padLeft padRight">
-            <div data-bind="template: { name: 'field-template' }"></div>
-        </div>
-    </div>
-</div>
-
-<script type="text/html" id="breadcrumbs-template">
-    <ol class="breadcrumb">
-        <li><a data-bind="attr: { href: DesignHomeUrl }, html: RecordsCenterName"></a></li>
-        <li><a data-bind="attr: { href: FieldsHomeUrl }">Fields</a></li>
-        <li class="active"><span data-bind="html: TagName"></span></li>
-    </ol>
-</script>
-
-<script type="text/html" id="field-template">
+@using StateInterface.Areas.Design.Models
+@model StateInterface.Models.ResponseModel<FieldDetailsModel>
     <div class="row">
         <div class="col-xs-12">
-            <div>
-                <span class="leadLarger" data-bind="html: TagName"></span>
-                <div class="leadSmaller inlineBlock">
-                    <span data-bind="html: ToolTip"></span>
-                </div>
-                <div class="pull-right">
-                    <a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" data-bind="attr: { href: FieldHelpUrl }"></a>
-                </div>
-            </div>
-            <div class="leadSmaller">
-                <div>
-                    <span data-bind="html: Description"></span>
-                </div>
-                <div data-bind="visible: IsHiddenField">
-                    <span>Hidden</span>
-                </div>
-                <div>
-                    <span>Last Updated on</span>
-                    <span data-bind="html: LastUpdated"></span>
-                </div>
-                <br />
-                <div class="labelColor">Forms Using This Field</div>
-                <div data-bind="foreach: FormsUsing">
-                    <a data-bind="attr: { href: FormDetailsUrl }">
-                        <span class="padRight" data-bind="html: RequestFormName"></span>
-                    </a>
-                </div>
-                <br />
-            </div>
+            @* This is so that the navigation lines up when the recordsCenterSelector is not part of the page *@
+            <div class="recordsCenterSelectorPlaceHolder"></div>
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-4">
-            <table>
-                <tr class="propertiesRow">
-                    <td>
-                        <span class="leadSmaller labelColor padRight">Field Type</span>
-                    </td>
-                    <td>
-                        <span class="leadSmaller padLeft" data-bind="html:Type"></span>
-                    </td>
-                </tr>
-                <tr class="propertiesRow">
-                    <td>
-                        <span class="leadSmaller labelColor padRight">Length</span>
-                    </td>
-                    <td>
-                        <span class="leadSmaller padLeft" data-bind="html:Length"></span>
-                    </td>
-                </tr>
-                <tr class="propertiesRow">
-                    <td>
-                        <span class="leadSmaller labelColor padRight">Frequency</span>
-                    </td>
-                    <td>
-                        <span class="leadSmaller padLeft" data-bind="html:Frequency"></span>
-                    </td>
-                </tr>
-                <tr class="propertiesRow">
-                    <td>
-                        <span class="leadSmaller labelColor padRight">Separator</span>
-                    </td>
-                    <td>
-                        <span class="leadSmaller padLeft" data-bind="html:Separator"></span>
-                    </td>
-                </tr>
-                <tr class="propertiesRow">
-                    <td>
-                        <span class="leadSmaller labelColor padRight">Prefix</span>
-                    </td>
-                    <td>
-                        <span class="leadSmaller padLeft" data-bind="html:Prefix"></span>
-                    </td>
-                </tr>
-                <tr class="propertiesRow">
-                    <td>
-                        <span class="leadSmaller labelColor padRight">Suffix</span>
-                    </td>
-                    <td>
-                        <span class="leadSmaller padLeft" data-bind="html:Suffix"></span>
-                    </td>
-                </tr>
-                <tr class="propertiesRow">
-                    <td>
-                        <span class="leadSmaller labelColor padRight">Value</span>
-                    </td>
-                    <td>
-                        <span class="leadSmaller padLeft" data-bind="html:DefaultValue"></span>
-                    </td>
-                </tr>
-                <tr class="propertiesRow">
-                    <td>
-                        <span class="leadSmaller labelColor padRight">Format</span>
-                    </td>
-                    <td>
-                        <span class="leadSmaller padLeft" data-bind="html:TransformFormat"></span>
-                    </td>
-                </tr>
-                <tr class="propertiesRow">
-                    <td>
-                        <span class="leadSmaller labelColor padRight">Accepts Return</span>
-                    </td>
-                    <td>
-                        <span class="leadSmaller padLeft" data-bind="html:AcceptReturn"></span>
-                    </td>
-                </tr>
-                <tr class="propertiesRow">
-                    <td>
-                        <span class="leadSmaller labelColor padRight">Make Uppercase</span>
-                    </td>
-                    <td>
-                        <span class="leadSmaller padLeft" data-bind="html:MakeUppercase"></span>
-                    </td>
-                </tr>
-            </table>
+        <div class="col-xs-12">
+            <div data-bind="template: { name: 'breadcrumbs-template' }"></div>
         </div>
     </div>
-</script>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="padLeft padRight">
+                <div data-bind="template: { name: 'field-template' }"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/html" id="breadcrumbs-template">
+        <ol class="breadcrumb">
+            <li><a data-bind="attr: { href: DesignHomeUrl }, html: RecordsCenterName"></a></li>
+            <li><a data-bind="attr: { href: FieldsHomeUrl }">Fields</a></li>
+            <li class="active"><span data-bind="html: TagName"></span></li>
+        </ol>
+    </script>
+
+    <script type="text/html" id="field-template">
+        <div class="row">
+            <div class="col-xs-12">
+                <div>
+                    <span class="leadLarger" data-bind="html: TagName"></span>
+                    <div class="leadSmaller inlineBlock">
+                        <span data-bind="html: ToolTip"></span>
+                    </div>
+                    <div class="pull-right">
+                        <a target="_blank" class="glyphicon glyphicon-question-sign" title="Help" data-bind="attr: { href: FieldHelpUrl }"></a>
+                    </div>
+                </div>
+                <div class="leadSmaller">
+                    <div>
+                        <span data-bind="html: Description"></span>
+                    </div>
+                    <div data-bind="visible: IsHiddenField">
+                        <span>Hidden</span>
+                    </div>
+                    <div>
+                        <span>Last Updated on</span>
+                        <span data-bind="html: LastUpdated"></span>
+                    </div>
+                    <br />
+                    <div class="labelColor">Forms Using This Field</div>
+                    <div data-bind="foreach: FormsUsing">
+                        <a data-bind="attr: { href: FormDetailsUrl }">
+                            <span class="padRight" data-bind="html: RequestFormName"></span>
+                        </a>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                <table>
+                    <tr class="propertiesRow">
+                        <td>
+                            <span class="leadSmaller labelColor padRight">Field Type</span>
+                        </td>
+                        <td>
+                            <span class="leadSmaller padLeft" data-bind="html:Type"></span>
+                        </td>
+                    </tr>
+                    <tr class="propertiesRow">
+                        <td>
+                            <span class="leadSmaller labelColor padRight">Length</span>
+                        </td>
+                        <td>
+                            <span class="leadSmaller padLeft" data-bind="html:Length"></span>
+                        </td>
+                    </tr>
+                    <tr class="propertiesRow">
+                        <td>
+                            <span class="leadSmaller labelColor padRight">Frequency</span>
+                        </td>
+                        <td>
+                            <span class="leadSmaller padLeft" data-bind="html:Frequency"></span>
+                        </td>
+                    </tr>
+                    <tr class="propertiesRow">
+                        <td>
+                            <span class="leadSmaller labelColor padRight">Separator</span>
+                        </td>
+                        <td>
+                            <span class="leadSmaller padLeft" data-bind="html:Separator"></span>
+                        </td>
+                    </tr>
+                    <tr class="propertiesRow">
+                        <td>
+                            <span class="leadSmaller labelColor padRight">Prefix</span>
+                        </td>
+                        <td>
+                            <span class="leadSmaller padLeft" data-bind="html:Prefix"></span>
+                        </td>
+                    </tr>
+                    <tr class="propertiesRow">
+                        <td>
+                            <span class="leadSmaller labelColor padRight">Suffix</span>
+                        </td>
+                        <td>
+                            <span class="leadSmaller padLeft" data-bind="html:Suffix"></span>
+                        </td>
+                    </tr>
+                    <tr class="propertiesRow">
+                        <td>
+                            <span class="leadSmaller labelColor padRight">Value</span>
+                        </td>
+                        <td>
+                            <span class="leadSmaller padLeft" data-bind="html:DefaultValue"></span>
+                        </td>
+                    </tr>
+                    <tr class="propertiesRow">
+                        <td>
+                            <span class="leadSmaller labelColor padRight">Format</span>
+                        </td>
+                        <td>
+                            <span class="leadSmaller padLeft" data-bind="html:TransformFormat"></span>
+                        </td>
+                    </tr>
+                    <tr class="propertiesRow">
+                        <td>
+                            <span class="leadSmaller labelColor padRight">Accepts Return</span>
+                        </td>
+                        <td>
+                            <span class="leadSmaller padLeft" data-bind="html:AcceptReturn"></span>
+                        </td>
+                    </tr>
+                    <tr class="propertiesRow">
+                        <td>
+                            <span class="leadSmaller labelColor padRight">Make Uppercase</span>
+                        </td>
+                        <td>
+                            <span class="leadSmaller padLeft" data-bind="html:MakeUppercase"></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </script>
 
 
-<script type="text/javascript">
-    var initialData = @Html.Raw(Model.InitialData)
-</script>
-@section scripts{
-    @Scripts.Render("~/bundles/stateinterface_design_field_Details")
-}
+    <script type="text/javascript">
+        var initialData = @Html.Raw(Model.Result.InitialData)
+    </script>
+    @section scripts{
+        @Scripts.Render("~/bundles/stateinterface_design_field_Details")
+    }

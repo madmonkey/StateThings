@@ -1,12 +1,8 @@
 ﻿using Designer.Tasks;
-using Newtonsoft.Json;
+using ServiceStack.Text;
 using StateInterface.Areas.Connect.Models;
 using StateInterface.Controllers;
-using StateInterface.Designer.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using StateInterface.Models;
 using System.Web.Mvc;
 
 namespace StateInterface.Areas.Connect.Controllers
@@ -22,9 +18,8 @@ namespace StateInterface.Areas.Connect.Controllers
         public ActionResult Index()
         {
             var homeModel = new HomeModel(Url.Action("Specifications"));
-
-            homeModel.InitialData = JsonConvert.SerializeObject(homeModel);
-            return View(homeModel);
+            homeModel.InitialData = JsonSerializer.SerializeToString(homeModel);
+            return View(new ResponseModel<HomeModel>(homeModel));
         }
     }
 }

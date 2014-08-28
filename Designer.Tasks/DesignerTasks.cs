@@ -347,6 +347,10 @@ namespace Designer.Tasks
         public TransactionSnippet UpdateTransactionSnippet(string currentUser, TransactionSnippet transactionsnippet)
         {
             var user = validateUserContext(currentUser);
+            if(_repository.GetTransactionSnippet(transactionsnippet.RecordsCenter.Name,transactionsnippet.TokenName)!=null)
+            {
+                throw new DuplicateKeyException(string.Format("The TokenName '{0}' already exists for this records center", transactionsnippet.TokenName)); //Key already exists
+            }
             transactionsnippet.Updated = DateTime.UtcNow;
             _repository.Save<TransactionSnippet>(transactionsnippet);
             return transactionsnippet;
@@ -360,7 +364,7 @@ namespace Designer.Tasks
                 transactionSnippetField.IsValid();
                 if (transactionSnippetField.Id == 0 && snippet.TransactionSnippetFields.Any(x => string.Compare(x.TagName, transactionSnippetField.TagName, StringComparison.InvariantCultureIgnoreCase) == 0))
                 {
-                    throw new ArgumentException("Key already exists"); //Key already exists
+                    throw new DuplicateKeyException(string.Format("The TagName '{0}' already exists for this records center", transactionSnippetField.TagName)); //Key already exists
                 }
                 return _repository.UpdateTransactionSnippetField(parentSnippetId, transactionSnippetField);
             }

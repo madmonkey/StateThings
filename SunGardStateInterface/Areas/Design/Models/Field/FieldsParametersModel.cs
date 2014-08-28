@@ -19,7 +19,7 @@ namespace StateInterface.Areas.Design.Models
         {
             if (string.IsNullOrWhiteSpace(RecordsCenterName))
             {
-                throw new StateInterfaceParameterValidationException("Record Center Name is null.");
+                throw new ViewModelValidationException("Record Center Name is null.");
             }
         }
     }

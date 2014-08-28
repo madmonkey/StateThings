@@ -50,6 +50,16 @@
         });
     };
 
+    var frequencySubscription = vm.SelectedField.Frequency.subscribeChanged(function (newValue, oldValue) {
+        if (newValue > 1) {
+            vm.isSeparator(true);
+        }
+        else {
+            vm.isSeparator(false);
+            vm.SelectedField.Separator('');
+        }
+    });
+
     var typeSubscription = vm.SelectedField.Field.subscribeChanged(function (newValue, oldValue) {
         switch (newValue) {
             case "Date": {

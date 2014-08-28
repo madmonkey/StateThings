@@ -1,4 +1,6 @@
-﻿@model StateInterface.Areas.Certify.Models.StatisticsRecordsCenterModel
+﻿@* Print Page *@
+@using StateInterface.Areas.Certify.Models
+@model StateInterface.Models.ResponseModel<StatisticsRecordsCenterModel>
 @{
     Layout = "../Shared/_ReportLayout.cshtml";
 }
@@ -52,7 +54,7 @@
 </script>
 
 <script type="text/javascript">
-    var initialData = @Html.Raw(Model.InitialData)
+    var initialData = @Html.Raw(Model.Result.InitialData)
 </script>
 @Html.Partial("_statisticsHeaderTemplate")
 @Html.Partial("_statisticsStatusCategoryTemplate")

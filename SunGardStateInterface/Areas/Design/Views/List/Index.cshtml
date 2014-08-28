@@ -1,5 +1,6 @@
 ﻿@* List Index Page *@
-@model StateInterface.Areas.Design.Models.OptionListCatalogModel
+@using StateInterface.Areas.Design.Models
+@model StateInterface.Models.ResponseModel<OptionListCatalogModel>
 <div class="row">
     <div class="col-xs-12">
         <div class="pull-right padRight leadSmaller">
@@ -43,7 +44,7 @@
 @Html.Partial("_catalogItemsTemplate")
 
 <script type="text/javascript">
-    var initialData = @Html.Raw(Model.InitialData)
+    var initialData = @Html.Raw(Model.Result.InitialData)
 </script>
 @section scripts{
     @Scripts.Render("~/bundles/stateinterface_design_list")

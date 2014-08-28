@@ -1,4 +1,6 @@
-﻿@model StateInterface.Areas.Connect.Models.HomeModel
+﻿@* ConnectHome Index Page *@
+@using StateInterface.Areas.Connect.Models
+@model StateInterface.Models.ResponseModel<HomeModel>
 @{
     ViewBag.Title = "Connect Home";
 }
@@ -8,7 +10,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    var initialData = @Html.Raw(Model.InitialData)
+    var initialData = @Html.Raw(Model.Result.InitialData)
 </script>
 
 @section scripts{
